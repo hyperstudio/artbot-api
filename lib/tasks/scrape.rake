@@ -1,7 +1,7 @@
 require 'net/http'
 require 'multi_json'
 
-sample_url = "http://artx.apiary.io/events"
+sample_url = "http://localhost:5000"
 
 namespace :scrape do
     desc 'run scrapers for museum websites'
