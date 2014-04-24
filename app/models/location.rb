@@ -1,5 +1,5 @@
-class Event < ActiveRecord::Base
+class Location < ActiveRecord::Base
     validates :name, presence: true
     validates :url, uniqueness: true
-    belongs_to :location
+    has_many :events
 end

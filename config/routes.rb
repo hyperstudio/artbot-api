@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get 'events/index'
-
-    root 'events#index'
-    resources :events
+  root 'events#index'
+  get 'events', to: 'events#index'
+  get 'events/:id', to: 'events#show'
+  get 'locations', to: 'locations#index'
+  get 'locations/:id', to: 'locations#show'
 end
