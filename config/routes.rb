@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  root 'events#index'
-  get 'events', to: 'events#index'
-  get 'events/:id', to: 'events#show'
-  get 'locations', to: 'locations#index'
-  get 'locations/:id', to: 'locations#show'
+
+  root to: 'home#index'
+  get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
+
+  devise_for :users, :path_names => {:sign_in => "login", :sign_out => "logout"}, :path => 'd'
+
+  resources :profiles, :only => [:dashboard]
+  resources :events
+  resources :locations
+
+  namespace :admin do
+    get '/' => 'users#index'
+    resources :users
+  end
 end

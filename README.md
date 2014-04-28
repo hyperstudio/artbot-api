@@ -6,3 +6,6 @@ To install:
 
 * run `bundle`
 * `bin/rake db:create db:migrate`
+* `rake db:seed`
+* Navigate to `localhost:3000` and sign up as a user.
+* For admin access, include [1] in your user's role_ids (either via the console or the admin interface, at /admin)

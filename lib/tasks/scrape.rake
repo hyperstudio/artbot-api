@@ -4,7 +4,7 @@ require 'multi_json'
 scraper_app_url = "http://localhost:8000"
 ner_app_url = "http://localhost:5000"
 
-def json_request(endpoint, method, data):
+def json_request(endpoint, method, data)
     url = URI.parse(endpoint)
     if method == 'GET'
         req = Net::HTTP::Get.new(url.path)
@@ -18,18 +18,21 @@ def json_request(endpoint, method, data):
         http.request(req)
     }
     return MultiJson.load(res.body)
+end
 
-def query_ner_app(payload):
+def query_ner_app(payload)
     endpoint = ner_app_url + "/stanford"
     post_data = {:payload => payload}
     categories = json_request(endpoint, 'POST', post_data)
     return categories
+end
 
-def query_scraper_app(event_index_url):
+def query_scraper_app(event_index_url)
     endpoint = scraper_app_url
-    query_params = {'url': event_index_url}
+    query_params = {:url => event_index_url}
     events = json_request(endpoint, 'GET', query_params)
     return events
+end
 
 namespace :scrape do
     desc 'run scrapers for museum websites'
@@ -44,11 +47,11 @@ namespace :scrape do
                     payload = r.name + " " + r.description
                     categories = query_ner_app(payload)
                     Event.create(
-                        name: r.name,
-                        description: r.description,
-                        location_id: u.location_id,
-                        image: r.image
-                        dbpedia_entities: categories)
+                        :name => r.name,
+                        :description => r.description,
+                        :location_id => u.location_id,
+                        :image => r.image,
+                        :dbpedia_entities => categories)
                 end
             end
         end
