@@ -74,10 +74,12 @@ namespace :scrape do
                     payload = r["name"] + " " + r["description"]
                     entities = query_ner_app(payload)
                     linked_entities = []
-                    entities.each do |e|
-                        unless e["uri"].nil?
-                            saved_entity = save_entity(e)
-                            linked_entities.push(saved_entity)
+                    ["PERSON", "LOCATION", "ORGANIZATION"].each do |type|
+                        entities[type].each do |e|
+                            unless e["uri"].nil?
+                                saved_entity = save_entity(e)
+                                linked_entities.push(saved_entity)
+                            end
                         end
                     end
                     event.name = r["name"],
