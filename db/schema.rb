@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428175240) do
+ActiveRecord::Schema.define(version: 20140501185443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20140428175240) do
     t.integer "refCount"
   end
 
+  create_table "dbpedia_entities_events", id: false, force: true do |t|
+    t.integer "event_id"
+    t.integer "dbpedia_entity_id"
+  end
+
   create_table "events", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -31,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140428175240) do
     t.string   "url"
     t.text     "description"
     t.string   "image"
+    t.string   "dates"
   end
 
   create_table "locations", force: true do |t|
@@ -58,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140428175240) do
   create_table "scraper_urls", force: true do |t|
     t.string  "url"
     t.integer "location_id"
+    t.string  "name"
   end
 
   create_table "users", force: true do |t|
