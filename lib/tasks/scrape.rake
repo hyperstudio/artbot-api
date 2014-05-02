@@ -45,10 +45,16 @@ def query_scraper_app(path)
 end
 
 def save_entity(ner_result)
-    dbpedia_entity = DbpediaEntity.find_or_initialize_by(url: ner_result["uri"])
+    if ner_result["uri"].nil?
+        dbpedia_entity = DbpediaEntity.find_or_initialize_by(stanford_name: ner_result["stanford_name"])
+    else
+        dbpedia_entity = DbpediaEntity.find_or_initialize_by(url: ner_result["uri"])
+    end
     dbpedia_entity.name = ner_result["label"]
     dbpedia_entity.description = ner_result["description"]
     dbpedia_entity.refCount = ner_result["refCount"]
+    dbpedia_entity.stanford_name = ner_result["stanford_name"]
+    dbpedia_entity.stanford_type = ner_result["stanford_type"]
     dbpedia_entity.save
     # FIGURE THIS OUT LATER
     # ner_result["categories"].each do |c|
@@ -59,19 +65,6 @@ def save_entity(ner_result)
     #     category.save
     # end
     return dbpedia_entity
-end
-
-def filter_and_save_entities(entities)
-    linked_entities = []
-    ["PERSON", "LOCATION", "ORGANIZATION"].each do |type|
-        entities[type].each do |e|
-            unless e["uri"].nil?
-                saved_entity = save_entity(e)
-                linked_entities.push(saved_entity)
-            end
-        end
-    end
-    return linked_entities
 end
 
 namespace :scrape do
@@ -86,24 +79,17 @@ namespace :scrape do
                 if event.new_record?
                     # This is where we query the NER app
                     payload = r["name"] + " " + r["description"]
-                    entities = query_ner_app(payload)
-                    linked_entities = filter_and_save_entities(entities)
+                    entities = query_ner_app(payload)["results"]
+                    saved_entities = entities.map { |e| save_entity(e) }
+                    # Now populate attributes for save
                     event.name = r["name"].strip
                     event.url = stripped_url
                     event.dates = r["dates"].strip
                     event.description = r["description"].strip
-                    # Currently the scraper app is returning either a single url or a list of them
-                    # This is a temporary fix until we decide how many images we want
-                    if r["image"].respond_to?(:to_str)
-                        image = r["image"]
-                    else
-                        image = r["image"][0]
-                    end
-                    # End temporary fix
-                    event.image = image
+                    event.image = r["image"]
                     event.location_id = u["location_id"]
                     event.save
-                    event.dbpedia_entities = linked_entities
+                    event.dbpedia_entities = saved_entities
                 else
                     # see if anything has changed about the event
                     changed = false
@@ -113,11 +99,18 @@ namespace :scrape do
                     end
                     if r["description"] != event.description
                         event.description = r["description"]
-                        # should we rerun categorization?
+                        payload = r["name"] + " " + r["description"]
+                        entities = query_ner_app(payload)["results"]
+                        saved_entities = entities.map { |e| save_entity(e) }
+                        event.dbpedia_entities = saved_entities
                         changed = true
                     end
                     if r["image"] != event.image
                         event.image = r["image"]
+                        changed = true
+                    end
+                    if r["dates"] != event.dates
+                        event.dates = r["dates"]
                         changed = true
                     end
                     if changed

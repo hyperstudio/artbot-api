@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501185443) do
+ActiveRecord::Schema.define(version: 20140502175849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20140501185443) do
     t.string  "url"
     t.text    "description"
     t.integer "refCount"
+    t.string  "stanford_type"
+    t.string  "stanford_name"
   end
 
   create_table "dbpedia_entities_events", id: false, force: true do |t|
