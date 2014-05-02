@@ -1,6 +1,9 @@
 require 'net/http'
 require 'multi_json'
 
+SCRAPER_APP_URL = "http://localhost:7000"
+NER_APP_URL = "http://localhost:5000"
+
 def strip_query_params_from_url(url)
     # Strips everything after a query param ("?") or hash ("#") in a URL string
     (0..url.length).each do |i|
@@ -29,16 +32,14 @@ def json_request(endpoint, method, data)
 end
 
 def query_ner_app(payload)
-    ner_app_url = "http://localhost:5000"
-    endpoint = ner_app_url + "/stanford"
+    endpoint = NER_APP_URL + "/stanford"
     post_data = {:payload => payload}
     categories = json_request(endpoint, 'POST', post_data)
     return categories
 end
 
 def query_scraper_app(path)
-    scraper_app_url = "http://localhost:7000"
-    endpoint = scraper_app_url + "/" + path
+    endpoint = SCRAPER_APP_URL + "/" + path
     events = json_request(endpoint, 'GET', {})
     return events
 end
@@ -91,7 +92,15 @@ namespace :scrape do
                     event.url = stripped_url
                     event.dates = r["dates"].strip
                     event.description = r["description"].strip
-                    event.image = r["image"]
+                    # Currently the scraper app is returning either a single url or a list of them
+                    # This is a temporary fix until we decide how many images we want
+                    if r["image"].respond_to?(:to_str)
+                        image = r["image"]
+                    else
+                        image = r["image"][0]
+                    end
+                    # End temporary fix
+                    event.image = image
                     event.location_id = u["location_id"]
                     event.save
                     event.dbpedia_entities = linked_entities

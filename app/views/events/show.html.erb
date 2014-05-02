@@ -1,5 +1,1 @@
-<p>Id: <%= @event.id %></p>
-<p>Name: <%= @event.name %></p>
-<p>URL: <%= @event.url %></p>
-<p>Description: <%= @event.description %></p>
-<p>Image: <img src=<%= @event.image %>></p>
+<%= render partial: "single_event", locals: {event: @event} %>

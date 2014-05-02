@@ -1,0 +1,15 @@
+    <div>
+        <p><strong>Id:</strong> <%= @event.id %></p>
+        <p><strong>Name:</strong> <%= @event.name %></p>
+        <p><strong>URL:</strong> <a href=<%= @event.url %> target="_blank"><%= @event.url %></a></p>
+        <p><strong>Location:</strong> <%= @event.location.name %></p>
+        <p><strong>Description:</strong> <%= @event.description %></p>
+        <p><strong>Categories:</strong>
+            <ul>
+                <% for @cat in @event.dbpedia_entities.each %>
+                    <li><a href=<%= @cat.url %> target="_blank"><%= @cat.name %></a></li>
+                <% end %>
+            </ul>
+        </p>
+        <p><strong>Image:</strong> <img src=<%= @event.image %>></p>
+    </div>
