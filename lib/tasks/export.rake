@@ -6,7 +6,7 @@ namespace :export do
     all_models.each do |m|
         klass = m.singularize.classify.constantize
         klass.order(:id).all.each do |instance|
-           puts "#{klass}.create(#{instance.serializable_hash.delete_if {|key, value| ['created_at','updated_at','id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
+           puts "#{klass}.create(#{instance.serializable_hash.delete_if {|key, value| ['created_at','updated_at'].include?(key)}.to_s.gsub(/[{}]/,'')})"
         end
     end
   end
