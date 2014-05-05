@@ -1,5 +1,5 @@
 namespace :export do
-  desc "Exports models in MODELS ENV to format for db:seed."
+  desc "Exports models in MODELS ENV to format for db:seed. e.g. `rake export:seeds_format MODELS=Event,Location`"
   task :seeds_format => :environment do
     puts "\n"
     all_models = ENV['MODELS'].split(",")
