@@ -1,15 +1,5 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-r = Role.create([
-    {:name => 'Admin'},
-    {:name => 'Registered'},
-])
+# This file contains a sample set of fixture data for testing and development purposes.
+# It removes the need for the scraper and NER apps if you only want to work on this app.
 
 Location.create("name"=>"Museum of Fine Arts, Boston", "url"=>"https://www.mfa.org/", "description"=>"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.", "image"=>"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg", "latitude"=>42.3394675, "longitude"=>-71.0948962)
 Location.create("name"=>"Peabody Essex Museum", "url"=>"http://www.pem.org", "description"=>"The mission of the Peabody Essex Museum is to celebrate outstanding artistic and cultural creativity by collecting, stewarding and interpreting objects of art and culture in ways that increase knowledge, enrich the spirit, engage the mind and stimulate the senses.", "image"=>"http://www.pem.org/writable/resources/image/feature/museum.jpg", "latitude"=>42.52173, "longitude"=>-70.89224)
