@@ -32,6 +32,9 @@ gem 'acts-as-taggable-on'
 gem 'devise'
 gem 'cancan'
 
+gem 'neat'
+gem 'high_voltage'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
