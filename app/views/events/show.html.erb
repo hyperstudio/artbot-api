@@ -1,1 +1,2 @@
-<%= render partial: "single_event", locals: {event: @event} %>
+<% content_for(:page_header) { 'Event' } %>
+<%= render "single_event", event: @event %>
