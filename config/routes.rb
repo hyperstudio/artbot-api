@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   devise_for :users, :path_names => {:sign_in => "login", :sign_out => "logout"}, :path => 'd'
 
   resources :profiles, :only => [:dashboard]
-  resources :events
+  resources :events do
+    resource :favorite, only: [:create]
+  end
   resources :locations
 
   namespace :admin do

@@ -3,6 +3,7 @@
 <%= image_tag event.image %>
 <%= link_to event.location_name, event.location %>
 <p class="date"><%= event.dates %></p>
+<%= link_to 'Favorite', event_favorite_path(event), method: :post %>
 
 <ul>
   <% for @cat in event.dbpedia_entities %>

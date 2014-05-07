@@ -14,6 +14,7 @@ feature 'User views event' do
     expect(page).to display_event_location(event)
     expect(page).to display_event_date(event)
     expect(page).to display_related_events_for(event)
+    expect(page).to display_ability_to_favorite(event)
   end
 
   def display_event_title(event)
@@ -39,5 +40,9 @@ feature 'User views event' do
   def display_related_events_for(event)
     event_names = event.related_events.map(&:name)
     have_css('.related', text: /#{event_names.join('.*')}/)
+  end
+
+  def display_ability_to_favorite(event)
+    have_link 'Favorite', event_favorite_path(event)
   end
 end
