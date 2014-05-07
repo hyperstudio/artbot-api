@@ -1,14 +1,17 @@
 FactoryGirl.define do
+  sequence(:url) { |n| "http://www.example.com/#{n}" }
+
   factory :event do
     location
+    url
+
     sequence(:name) { |n| "Event #{n}" }
-    sequence(:url) { |n| "https://www.mfa#{n}.org/event_id" }
 
     dates 'May 20, 2014 - June 1, 2014'
   end
 
   factory :location do
-    sequence(:url) { |n| "https://www.mfa#{n}.org" }
+    url
 
     name "Museum of Fine Arts, Boston"
     description "The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers."
