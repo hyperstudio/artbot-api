@@ -1,5 +1,5 @@
 class Guest
   def favorited_events
-    Event.order('created_at DESC').limit(5)
+    Event.newest(5)
   end
 end
