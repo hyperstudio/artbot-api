@@ -1,0 +1,208 @@
+{
+  "results": [
+    {
+      "categories": [
+        {
+          "label": "Ballet designers", 
+          "uri": "http://dbpedia.org/resource/Category:Ballet_designers"
+        }, 
+        {
+          "label": "Spanish expatriates in France", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_expatriates_in_France"
+        }, 
+        {
+          "label": "1881 births", 
+          "uri": "http://dbpedia.org/resource/Category:1881_births"
+        }, 
+        {
+          "label": "Modern painters", 
+          "uri": "http://dbpedia.org/resource/Category:Modern_painters"
+        }, 
+        {
+          "label": "Pablo Picasso", 
+          "uri": "http://dbpedia.org/resource/Category:Pablo_Picasso"
+        }, 
+        {
+          "label": "Cubism", 
+          "uri": "http://dbpedia.org/resource/Category:Cubism"
+        }, 
+        {
+          "label": "20th-century sculptors", 
+          "uri": "http://dbpedia.org/resource/Category:20th-century_sculptors"
+        }, 
+        {
+          "label": "Spanish potters", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_potters"
+        }, 
+        {
+          "label": "People from M\u00e1laga", 
+          "uri": "http://dbpedia.org/resource/Category:People_from_M%C3%A1laga"
+        }, 
+        {
+          "label": "1973 deaths", 
+          "uri": "http://dbpedia.org/resource/Category:1973_deaths"
+        }, 
+        {
+          "label": "Spanish communists", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_communists"
+        }, 
+        {
+          "label": "Lenin Peace Prize recipients", 
+          "uri": "http://dbpedia.org/resource/Category:Lenin_Peace_Prize_recipients"
+        }, 
+        {
+          "label": "Spanish people of the Spanish Civil War", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_people_of_the_Spanish_Civil_War"
+        }, 
+        {
+          "label": "Spanish sculptors", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_sculptors"
+        }, 
+        {
+          "label": "Spanish atheists", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_atheists"
+        }, 
+        {
+          "label": "Spanish painters", 
+          "uri": "http://dbpedia.org/resource/Category:Spanish_painters"
+        }, 
+        {
+          "label": "French Communist Party members", 
+          "uri": "http://dbpedia.org/resource/Category:French_Communist_Party_members"
+        }, 
+        {
+          "label": "People from Paris", 
+          "uri": "http://dbpedia.org/resource/Category:People_from_Paris"
+        }, 
+        {
+          "label": "Ballets designed by Pablo Picasso", 
+          "uri": "http://dbpedia.org/resource/Category:Ballets_designed_by_Pablo_Picasso"
+        }, 
+        {
+          "label": "School of Paris", 
+          "uri": "http://dbpedia.org/resource/Category:School_of_Paris"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "artist", 
+          "uri": "http://dbpedia.org/ontology/Artist"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://dbpedia.org/ontology/Person"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "agent", 
+          "uri": "http://dbpedia.org/ontology/Agent"
+        }, 
+        {
+          "label": "http://xmlns.com/foaf/0.1/ person", 
+          "uri": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://schema.org/Person"
+        }
+      ], 
+      "description": "Pablo Diego Jos\u00e9 Francisco de Paula Juan Nepomuceno Mar\u00eda de los Remedios Cipriano de la Sant\u00edsima Trinidad Ruiz y Picasso, known as Pablo Picasso (25 October 1881\u00a0\u2013 8 April 1973), was a Spanish painter, sculptor, printmaker, ceramicist, and stage designer who spent most of his adult life in France.", 
+      "label": "Pablo Picasso", 
+      "redirects": [], 
+      "refCount": 2193, 
+      "stanford_name": "Pablo Picasso", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Pablo_Picasso"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Dutch expatriates in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Dutch_expatriates_in_the_United_States"
+        }, 
+        {
+          "label": "1944 deaths", 
+          "uri": "http://dbpedia.org/resource/Category:1944_deaths"
+        }, 
+        {
+          "label": "People of the Edwardian era", 
+          "uri": "http://dbpedia.org/resource/Category:People_of_the_Edwardian_era"
+        }, 
+        {
+          "label": "Modern painters", 
+          "uri": "http://dbpedia.org/resource/Category:Modern_painters"
+        }, 
+        {
+          "label": "De Stijl", 
+          "uri": "http://dbpedia.org/resource/Category:De_Stijl"
+        }, 
+        {
+          "label": "Burials at Cypress Hills National Cemetery", 
+          "uri": "http://dbpedia.org/resource/Category:Burials_at_Cypress_Hills_National_Cemetery"
+        }, 
+        {
+          "label": "1872 births", 
+          "uri": "http://dbpedia.org/resource/Category:1872_births"
+        }, 
+        {
+          "label": "Dutch painters", 
+          "uri": "http://dbpedia.org/resource/Category:Dutch_painters"
+        }, 
+        {
+          "label": "Deaths from pneumonia", 
+          "uri": "http://dbpedia.org/resource/Category:Deaths_from_pneumonia"
+        }, 
+        {
+          "label": "People from Amersfoort", 
+          "uri": "http://dbpedia.org/resource/Category:People_from_Amersfoort"
+        }, 
+        {
+          "label": "Artists from New York", 
+          "uri": "http://dbpedia.org/resource/Category:Artists_from_New_York"
+        }, 
+        {
+          "label": "School of Paris", 
+          "uri": "http://dbpedia.org/resource/Category:School_of_Paris"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "artist", 
+          "uri": "http://dbpedia.org/ontology/Artist"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://dbpedia.org/ontology/Person"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "agent", 
+          "uri": "http://dbpedia.org/ontology/Agent"
+        }, 
+        {
+          "label": "http://xmlns.com/foaf/0.1/ person", 
+          "uri": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://schema.org/Person"
+        }
+      ], 
+      "description": "Pieter Cornelis \"Piet\" Mondriaan, after 1906 Mondrian (March 7, 1872 \u2013 February 1, 1944), was a Dutch painter. He was an important contributor to the De Stijl art movement and group, which was founded by Theo van Doesburg. He evolved a non-representational form which he termed Neo-Plasticism. This consisted of white ground, upon which was painted a grid of vertical and horizontal black lines and the three primary colors.", 
+      "label": "Piet Mondrian", 
+      "redirects": [], 
+      "refCount": 294, 
+      "stanford_name": "Piet Mondrian", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Piet_Mondrian"
+    }
+  ]
+}

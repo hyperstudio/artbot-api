@@ -55,6 +55,10 @@ def save_entity(ner_result)
     dbpedia_entity.refCount = ner_result["refCount"]
     dbpedia_entity.stanford_name = ner_result["stanford_name"]
     dbpedia_entity.stanford_type = ner_result["stanford_type"]
+
+    genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
+    dbpedia_entity.genre_list = genre_finder.find_as_tag_list
+
     dbpedia_entity.save
     # FIGURE THIS OUT LATER
     # ner_result["categories"].each do |c|

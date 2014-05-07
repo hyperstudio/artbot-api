@@ -1,0 +1,389 @@
+{
+  "results": [
+    {
+      "stanford_name": "Dick Albright", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "stanford_name": "Michael Lin", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Provinces of the People's Republic of China", 
+          "uri": "http://dbpedia.org/resource/Category:Provinces_of_the_People's_Republic_of_China"
+        }, 
+        {
+          "label": "Jilin", 
+          "uri": "http://dbpedia.org/resource/Category:Jilin"
+        }
+      ], 
+      "classes": [], 
+      "description": "Jilin, is a province of the People's Republic of China located in the northeastern part of the country. Jilin borders North Korea and Russia to the east, Heilongjiang to the north, Liaoning to the south, and Inner Mongolia to the west. The name was transliterated to Kirin before standardization to pinyin. The name \"Jilin\" probably originates from Girin ula \u1864\u1873\u1875\u1873\u1828 \u1860\u182f\u1820, a Manchu term meaning \"along the river\"; this was transcribed into Jilin wula in Chinese, then shortened to Jilin.", 
+      "label": "Jilin", 
+      "redirects": [], 
+      "refCount": 628, 
+      "stanford_name": "Lin", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Jilin"
+    }, 
+    {
+      "stanford_name": "Alfred D. Chandler III", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "categories": [
+        {
+          "label": "United Soccer Association imported teams", 
+          "uri": "http://dbpedia.org/resource/Category:United_Soccer_Association_imported_teams"
+        }, 
+        {
+          "label": "1909 establishments in Scotland", 
+          "uri": "http://dbpedia.org/resource/Category:1909_establishments_in_Scotland"
+        }, 
+        {
+          "label": "Football clubs in Scotland", 
+          "uri": "http://dbpedia.org/resource/Category:Football_clubs_in_Scotland"
+        }, 
+        {
+          "label": "Association football clubs established in 1909", 
+          "uri": "http://dbpedia.org/resource/Category:Association_football_clubs_established_in_1909"
+        }, 
+        {
+          "label": "Dundee United F.C.", 
+          "uri": "http://dbpedia.org/resource/Category:Dundee_United_F.C."
+        }, 
+        {
+          "label": "Scottish Premier League teams", 
+          "uri": "http://dbpedia.org/resource/Category:Scottish_Premier_League_teams"
+        }, 
+        {
+          "label": "Sport in Dundee", 
+          "uri": "http://dbpedia.org/resource/Category:Sport_in_Dundee"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "organization", 
+          "uri": "http://schema.org/Organization"
+        }, 
+        {
+          "label": "soccer club", 
+          "uri": "http://dbpedia.org/ontology/SoccerClub"
+        }, 
+        {
+          "label": "sports team", 
+          "uri": "http://schema.org/SportsTeam"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "agent", 
+          "uri": "http://dbpedia.org/ontology/Agent"
+        }, 
+        {
+          "label": "organisation", 
+          "uri": "http://dbpedia.org/ontology/Organisation"
+        }, 
+        {
+          "label": "sports team", 
+          "uri": "http://dbpedia.org/ontology/SportsTeam"
+        }
+      ], 
+      "description": "Dundee United Football Club is a Scottish professional football club located in the city of Dundee. Formed in 1909, originally as Dundee Hibernian, the club changed to the present name in 1923. United are nicknamed The Terrors or The Tangerines and the supporters are known as The Arabs. The club has played in tangerine kits since the 1960s and have played at the present ground, Tannadice Park, since their foundation in 1909.", 
+      "label": "Dundee United F.C.", 
+      "redirects": [], 
+      "refCount": 1251, 
+      "stanford_name": "Terry", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Dundee_United_F.C."
+    }, 
+    {
+      "stanford_name": "Fay Chandler", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "stanford_name": "Jeffrey P. Beale", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "stanford_name": "Susan Esco Chandler", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Populated places established in 1630", 
+          "uri": "http://dbpedia.org/resource/Category:Populated_places_established_in_1630"
+        }, 
+        {
+          "label": "Port settlements in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Port_settlements_in_the_United_States"
+        }, 
+        {
+          "label": "Irish American history", 
+          "uri": "http://dbpedia.org/resource/Category:Irish_American_history"
+        }, 
+        {
+          "label": "Irish-American culture", 
+          "uri": "http://dbpedia.org/resource/Category:Irish-American_culture"
+        }, 
+        {
+          "label": "Boston, Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Boston,_Massachusetts"
+        }, 
+        {
+          "label": "Cities in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Cities_in_Massachusetts"
+        }, 
+        {
+          "label": "Populated coastal places in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Populated_coastal_places_in_Massachusetts"
+        }, 
+        {
+          "label": "University towns in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:University_towns_in_the_United_States"
+        }, 
+        {
+          "label": "County seats in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:County_seats_in_Massachusetts"
+        }, 
+        {
+          "label": "Populated places in Suffolk County, Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Populated_places_in_Suffolk_County,_Massachusetts"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "populated place", 
+          "uri": "http://dbpedia.org/ontology/PopulatedPlace"
+        }, 
+        {
+          "label": "settlement", 
+          "uri": "http://dbpedia.org/ontology/Settlement"
+        }
+      ], 
+      "description": "Boston is the capital of and largest city in Massachusetts, and is one of the oldest cities in the United States. The largest city in New England, Boston is regarded as the unofficial \"Capital of New England\" for its economic and cultural impact on the entire New England region. The city proper, covering only 48.43 square miles, had a population of 617,594 according to the 2010 U.S. Census.", 
+      "label": "Boston", 
+      "redirects": [], 
+      "refCount": 20437, 
+      "stanford_name": "Boston", 
+      "stanford_type": "location", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Boston"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Countries bordering the South China Sea", 
+          "uri": "http://dbpedia.org/resource/Category:Countries_bordering_the_South_China_Sea"
+        }, 
+        {
+          "label": "Central Asian countries", 
+          "uri": "http://dbpedia.org/resource/Category:Central_Asian_countries"
+        }, 
+        {
+          "label": "States and territories established in 1949", 
+          "uri": "http://dbpedia.org/resource/Category:States_and_territories_established_in_1949"
+        }, 
+        {
+          "label": "Article Feedback 5 Additional Articles", 
+          "uri": "http://dbpedia.org/resource/Category:Article_Feedback_5_Additional_Articles"
+        }, 
+        {
+          "label": "Socialist states", 
+          "uri": "http://dbpedia.org/resource/Category:Socialist_states"
+        }, 
+        {
+          "label": "Countries bordering the Pacific Ocean", 
+          "uri": "http://dbpedia.org/resource/Category:Countries_bordering_the_Pacific_Ocean"
+        }, 
+        {
+          "label": "Member states of the United Nations", 
+          "uri": "http://dbpedia.org/resource/Category:Member_states_of_the_United_Nations"
+        }, 
+        {
+          "label": "Republics", 
+          "uri": "http://dbpedia.org/resource/Category:Republics"
+        }, 
+        {
+          "label": "G20 nations", 
+          "uri": "http://dbpedia.org/resource/Category:G20_nations"
+        }, 
+        {
+          "label": "Communist states", 
+          "uri": "http://dbpedia.org/resource/Category:Communist_states"
+        }, 
+        {
+          "label": "East Asian countries", 
+          "uri": "http://dbpedia.org/resource/Category:East_Asian_countries"
+        }, 
+        {
+          "label": "People's Republic of China", 
+          "uri": "http://dbpedia.org/resource/Category:People's_Republic_of_China"
+        }, 
+        {
+          "label": "Persian loanwords", 
+          "uri": "http://dbpedia.org/resource/Category:Persian_loanwords"
+        }, 
+        {
+          "label": "Chinese-speaking countries and territories", 
+          "uri": "http://dbpedia.org/resource/Category:Chinese-speaking_countries_and_territories"
+        }, 
+        {
+          "label": "China", 
+          "uri": "http://dbpedia.org/resource/Category:China"
+        }, 
+        {
+          "label": "Single-party states", 
+          "uri": "http://dbpedia.org/resource/Category:Single-party_states"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "country", 
+          "uri": "http://dbpedia.org/ontology/Country"
+        }, 
+        {
+          "label": "populated place", 
+          "uri": "http://dbpedia.org/ontology/PopulatedPlace"
+        }, 
+        {
+          "label": "country", 
+          "uri": "http://schema.org/Country"
+        }
+      ], 
+      "description": "China, officially the People's Republic of China (PRC), is the world's most-populous country, with a population of over 1.3\u00a0billion. Covering approximately 9.6\u00a0million square kilometres, the East Asian state is the world's second-largest country by land area, and the third- or fourth-largest in total area, depending on the definition of total area. The People's Republic of China is a single-party state governed by the Communist Party of China.", 
+      "label": "China", 
+      "redirects": [], 
+      "refCount": 54299, 
+      "stanford_name": "China", 
+      "stanford_type": "location", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/China"
+    }, 
+    {
+      "stanford_name": "Mellon Staircase", 
+      "stanford_type": "location", 
+      "uri": null
+    }, 
+    {
+      "stanford_name": "East India Marine Associates", 
+      "stanford_type": "organization", 
+      "uri": null
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Historic house museums in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Historic_house_museums_in_Massachusetts"
+        }, 
+        {
+          "label": "Marine art museums in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Marine_art_museums_in_the_United_States"
+        }, 
+        {
+          "label": "National Historic Landmarks in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:National_Historic_Landmarks_in_Massachusetts"
+        }, 
+        {
+          "label": "Decorative arts museums in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Decorative_arts_museums_in_the_United_States"
+        }, 
+        {
+          "label": "Houses on the National Register of Historic Places in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Houses_on_the_National_Register_of_Historic_Places_in_Massachusetts"
+        }, 
+        {
+          "label": "1799 establishments in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:1799_establishments_in_the_United_States"
+        }, 
+        {
+          "label": "Houses in Salem, Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Houses_in_Salem,_Massachusetts"
+        }, 
+        {
+          "label": "1992 establishments in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:1992_establishments_in_the_United_States"
+        }, 
+        {
+          "label": "Museums in Salem, Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Museums_in_Salem,_Massachusetts"
+        }, 
+        {
+          "label": "Art museums in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Art_museums_in_Massachusetts"
+        }, 
+        {
+          "label": "Peabody Essex Museum", 
+          "uri": "http://dbpedia.org/resource/Category:Peabody_Essex_Museum"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "building", 
+          "uri": "http://dbpedia.org/ontology/Building"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "architectural structure", 
+          "uri": "http://dbpedia.org/ontology/ArchitecturalStructure"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }
+      ], 
+      "description": "The Peabody Essex Museum (est. 1992) in Salem, Massachusetts, may be considered one of the oldest continuously operating museums in the United States. It combines the collections of the former Peabody Museum of Salem and the Essex Institute. The museum holds one of the major collections of Asian art in the US. Its total holdings include about 1.3 million pieces, as well as twenty-four historic buildings.", 
+      "label": "Peabody Essex Museum", 
+      "redirects": [], 
+      "refCount": 76, 
+      "stanford_name": "Peabody Essex", 
+      "stanford_type": "organization", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Peabody_Essex_Museum"
+    }
+  ]
+}

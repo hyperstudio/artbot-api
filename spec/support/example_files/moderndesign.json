@@ -1,0 +1,596 @@
+{
+  "results": [
+    {
+      "stanford_name": "Greta Magnusson Grossman", 
+      "stanford_type": "person", 
+      "uri": null
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Populated places established in 1670", 
+          "uri": "http://dbpedia.org/resource/Category:Populated_places_established_in_1670"
+        }, 
+        {
+          "label": "Populated places in Berkeley County, South Carolina", 
+          "uri": "http://dbpedia.org/resource/Category:Populated_places_in_Berkeley_County,_South_Carolina"
+        }, 
+        {
+          "label": "Port settlements in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Port_settlements_in_the_United_States"
+        }, 
+        {
+          "label": "United States colonial and territorial capitals", 
+          "uri": "http://dbpedia.org/resource/Category:United_States_colonial_and_territorial_capitals"
+        }, 
+        {
+          "label": "Former United States state capitals", 
+          "uri": "http://dbpedia.org/resource/Category:Former_United_States_state_capitals"
+        }, 
+        {
+          "label": "Charleston, South Carolina", 
+          "uri": "http://dbpedia.org/resource/Category:Charleston,_South_Carolina"
+        }, 
+        {
+          "label": "Charleston\u2013North Charleston\u2013Summerville metropolitan area", 
+          "uri": "http://dbpedia.org/resource/Category:Charleston%E2%80%93North_Charleston%E2%80%93Summerville_metropolitan_area"
+        }, 
+        {
+          "label": "Cities in South Carolina", 
+          "uri": "http://dbpedia.org/resource/Category:Cities_in_South_Carolina"
+        }, 
+        {
+          "label": "County seats in South Carolina", 
+          "uri": "http://dbpedia.org/resource/Category:County_seats_in_South_Carolina"
+        }, 
+        {
+          "label": "Populated places in Charleston County, South Carolina", 
+          "uri": "http://dbpedia.org/resource/Category:Populated_places_in_Charleston_County,_South_Carolina"
+        }, 
+        {
+          "label": "Regions of South Carolina", 
+          "uri": "http://dbpedia.org/resource/Category:Regions_of_South_Carolina"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "city", 
+          "uri": "http://schema.org/City"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "city", 
+          "uri": "http://dbpedia.org/ontology/City"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "populated place", 
+          "uri": "http://dbpedia.org/ontology/PopulatedPlace"
+        }, 
+        {
+          "label": "settlement", 
+          "uri": "http://dbpedia.org/ontology/Settlement"
+        }
+      ], 
+      "description": "Charleston is the second largest city in the U.S. state of South Carolina. It was made the county seat of Charleston County in 1901 when Charleston County was founded. The city's original name was Charles Towne in 1670, and it moved to its present location (Oyster Point) from a location on the west bank of the Ashley River (Albemarle Point) in 1680. It adopted its present name in 1783.", 
+      "label": "Charleston, South Carolina", 
+      "redirects": [], 
+      "refCount": 4181, 
+      "stanford_name": "Charles", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Charleston,_South_Carolina"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Naturalized citizens of the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Naturalized_citizens_of_the_United_States"
+        }, 
+        {
+          "label": "Austrian expatriates in Germany", 
+          "uri": "http://dbpedia.org/resource/Category:Austrian_expatriates_in_Germany"
+        }, 
+        {
+          "label": "American people of Austrian-Jewish descent", 
+          "uri": "http://dbpedia.org/resource/Category:American_people_of_Austrian-Jewish_descent"
+        }, 
+        {
+          "label": "People from Leopoldstadt", 
+          "uri": "http://dbpedia.org/resource/Category:People_from_Leopoldstadt"
+        }, 
+        {
+          "label": "International style architecture", 
+          "uri": "http://dbpedia.org/resource/Category:International_style_architecture"
+        }, 
+        {
+          "label": "Austrian Jews", 
+          "uri": "http://dbpedia.org/resource/Category:Austrian_Jews"
+        }, 
+        {
+          "label": "Austrian architects", 
+          "uri": "http://dbpedia.org/resource/Category:Austrian_architects"
+        }, 
+        {
+          "label": "California State Polytechnic University, Pomona faculty", 
+          "uri": "http://dbpedia.org/resource/Category:California_State_Polytechnic_University,_Pomona_faculty"
+        }, 
+        {
+          "label": "German architects", 
+          "uri": "http://dbpedia.org/resource/Category:German_architects"
+        }, 
+        {
+          "label": "20th-century architects", 
+          "uri": "http://dbpedia.org/resource/Category:20th-century_architects"
+        }, 
+        {
+          "label": "1892 births", 
+          "uri": "http://dbpedia.org/resource/Category:1892_births"
+        }, 
+        {
+          "label": "American architects", 
+          "uri": "http://dbpedia.org/resource/Category:American_architects"
+        }, 
+        {
+          "label": "Richard Neutra buildings", 
+          "uri": "http://dbpedia.org/resource/Category:Richard_Neutra_buildings"
+        }, 
+        {
+          "label": "1970 deaths", 
+          "uri": "http://dbpedia.org/resource/Category:1970_deaths"
+        }, 
+        {
+          "label": "20th-century Austrian people", 
+          "uri": "http://dbpedia.org/resource/Category:20th-century_Austrian_people"
+        }, 
+        {
+          "label": "Modernist architects", 
+          "uri": "http://dbpedia.org/resource/Category:Modernist_architects"
+        }, 
+        {
+          "label": "Commanders Crosses of the Order of Merit of the Federal Republic of Germany", 
+          "uri": "http://dbpedia.org/resource/Category:Commanders_Crosses_of_the_Order_of_Merit_of_the_Federal_Republic_of_Germany"
+        }, 
+        {
+          "label": "People from Wuppertal", 
+          "uri": "http://dbpedia.org/resource/Category:People_from_Wuppertal"
+        }, 
+        {
+          "label": "Austrian emigrants to the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Austrian_emigrants_to_the_United_States"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "architect", 
+          "uri": "http://dbpedia.org/ontology/Architect"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://dbpedia.org/ontology/Person"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "agent", 
+          "uri": "http://dbpedia.org/ontology/Agent"
+        }, 
+        {
+          "label": "http://xmlns.com/foaf/0.1/ person", 
+          "uri": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://schema.org/Person"
+        }
+      ], 
+      "description": "Richard Joseph Neutra (April 8, 1892 \u2013 April 16, 1970) is considered to have been one of modernism's most significant architects.", 
+      "label": "Richard Neutra", 
+      "redirects": [], 
+      "refCount": 158, 
+      "stanford_name": "Richard Neutra", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Richard_Neutra"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Harvard University faculty", 
+          "uri": "http://dbpedia.org/resource/Category:Harvard_University_faculty"
+        }, 
+        {
+          "label": "American industrial designers", 
+          "uri": "http://dbpedia.org/resource/Category:American_industrial_designers"
+        }, 
+        {
+          "label": "Cranbrook Academy of Art alumni", 
+          "uri": "http://dbpedia.org/resource/Category:Cranbrook_Academy_of_Art_alumni"
+        }, 
+        {
+          "label": "1907 births", 
+          "uri": "http://dbpedia.org/resource/Category:1907_births"
+        }, 
+        {
+          "label": "Designers from California", 
+          "uri": "http://dbpedia.org/resource/Category:Designers_from_California"
+        }, 
+        {
+          "label": "AIGA Medalists", 
+          "uri": "http://dbpedia.org/resource/Category:AIGA_Medalists"
+        }, 
+        {
+          "label": "American furniture designers", 
+          "uri": "http://dbpedia.org/resource/Category:American_furniture_designers"
+        }, 
+        {
+          "label": "1988 deaths", 
+          "uri": "http://dbpedia.org/resource/Category:1988_deaths"
+        }, 
+        {
+          "label": "Washington University in St. Louis alumni", 
+          "uri": "http://dbpedia.org/resource/Category:Washington_University_in_St._Louis_alumni"
+        }, 
+        {
+          "label": "1978 deaths", 
+          "uri": "http://dbpedia.org/resource/Category:1978_deaths"
+        }, 
+        {
+          "label": "American architects", 
+          "uri": "http://dbpedia.org/resource/Category:American_architects"
+        }, 
+        {
+          "label": "Architects from California", 
+          "uri": "http://dbpedia.org/resource/Category:Architects_from_California"
+        }, 
+        {
+          "label": "1912 births", 
+          "uri": "http://dbpedia.org/resource/Category:1912_births"
+        }, 
+        {
+          "label": "Modernist architects", 
+          "uri": "http://dbpedia.org/resource/Category:Modernist_architects"
+        }, 
+        {
+          "label": "Married couples", 
+          "uri": "http://dbpedia.org/resource/Category:Married_couples"
+        }, 
+        {
+          "label": "Recipients of the Royal Gold Medal", 
+          "uri": "http://dbpedia.org/resource/Category:Recipients_of_the_Royal_Gold_Medal"
+        }, 
+        {
+          "label": "Architects of Roman Catholic churches", 
+          "uri": "http://dbpedia.org/resource/Category:Architects_of_Roman_Catholic_churches"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "architect", 
+          "uri": "http://dbpedia.org/ontology/Architect"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://dbpedia.org/ontology/Person"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "agent", 
+          "uri": "http://dbpedia.org/ontology/Agent"
+        }, 
+        {
+          "label": "http://xmlns.com/foaf/0.1/ person", 
+          "uri": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+          "label": "person", 
+          "uri": "http://schema.org/Person"
+        }
+      ], 
+      "description": "Charles Ormond Eames, Jr (1907\u20131978) and Bernice Alexandra \"Ray\" Eames (1912\u20131988) were American designers, who worked in and made major contributions to modern architecture and furniture. They also worked in the fields of industrial and graphic design, fine art and film.", 
+      "label": "Charles and Ray Eames", 
+      "redirects": [], 
+      "refCount": 107, 
+      "stanford_name": "Ray Eames", 
+      "stanford_type": "person", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Charles_and_Ray_Eames"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "States of the United States", 
+          "uri": "http://dbpedia.org/resource/Category:States_of_the_United_States"
+        }, 
+        {
+          "label": "Former Spanish colonies", 
+          "uri": "http://dbpedia.org/resource/Category:Former_Spanish_colonies"
+        }, 
+        {
+          "label": "California", 
+          "uri": "http://dbpedia.org/resource/Category:California"
+        }, 
+        {
+          "label": "West Coast of the United States", 
+          "uri": "http://dbpedia.org/resource/Category:West_Coast_of_the_United_States"
+        }, 
+        {
+          "label": "States and territories established in 1850", 
+          "uri": "http://dbpedia.org/resource/Category:States_and_territories_established_in_1850"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "administrative region", 
+          "uri": "http://dbpedia.org/ontology/AdministrativeRegion"
+        }, 
+        {
+          "label": "administrative area", 
+          "uri": "http://schema.org/AdministrativeArea"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }, 
+        {
+          "label": "populated place", 
+          "uri": "http://dbpedia.org/ontology/PopulatedPlace"
+        }
+      ], 
+      "description": "California is a state located on the West Coast of the United States. It is by far the most populous U.S. state, and the third most extensive. It is home to the nation's second- and sixth-largest census statistical areas, and eight of the nation's fifty most populated cities. The capital city is Sacramento.", 
+      "label": "California", 
+      "redirects": [], 
+      "refCount": 51277, 
+      "stanford_name": "California", 
+      "stanford_type": "location", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/California"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Museums in Los Angeles, California", 
+          "uri": "http://dbpedia.org/resource/Category:Museums_in_Los_Angeles,_California"
+        }, 
+        {
+          "label": "1961 establishments in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:1961_establishments_in_the_United_States"
+        }, 
+        {
+          "label": "Art museums in California", 
+          "uri": "http://dbpedia.org/resource/Category:Art_museums_in_California"
+        }, 
+        {
+          "label": "Art museums established in 1961", 
+          "uri": "http://dbpedia.org/resource/Category:Art_museums_established_in_1961"
+        }, 
+        {
+          "label": "Institutions accredited by the American Association of Museums", 
+          "uri": "http://dbpedia.org/resource/Category:Institutions_accredited_by_the_American_Association_of_Museums"
+        }, 
+        {
+          "label": "William Pereira buildings", 
+          "uri": "http://dbpedia.org/resource/Category:William_Pereira_buildings"
+        }, 
+        {
+          "label": "Renzo Piano buildings", 
+          "uri": "http://dbpedia.org/resource/Category:Renzo_Piano_buildings"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "building", 
+          "uri": "http://dbpedia.org/ontology/Building"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "museum", 
+          "uri": "http://dbpedia.org/ontology/Museum"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "architectural structure", 
+          "uri": "http://dbpedia.org/ontology/ArchitecturalStructure"
+        }, 
+        {
+          "label": "museum", 
+          "uri": "http://schema.org/Museum"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }
+      ], 
+      "description": "The Los Angeles County Museum of Art (LACMA) is an art museum in Los Angeles, California. It is located on Wilshire Boulevard along Museum Row in the Miracle Mile vicinity of Los Angeles, adjacent to the George C. Page Museum and La Brea Tar Pits. LACMA is the largest encyclopedic museum west of Chicago and attracts nearly one million visitors annually. Its holdings include more than 100,000 works spanning the history of art from ancient times to the present.", 
+      "label": "Los Angeles County Museum of Art", 
+      "redirects": [], 
+      "refCount": 550, 
+      "stanford_name": "Los Angeles County Museum", 
+      "stanford_type": "location", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Los_Angeles_County_Museum_of_Art"
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Historic house museums in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Historic_house_museums_in_Massachusetts"
+        }, 
+        {
+          "label": "Marine art museums in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Marine_art_museums_in_the_United_States"
+        }, 
+        {
+          "label": "National Historic Landmarks in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:National_Historic_Landmarks_in_Massachusetts"
+        }, 
+        {
+          "label": "Decorative arts museums in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:Decorative_arts_museums_in_the_United_States"
+        }, 
+        {
+          "label": "Houses on the National Register of Historic Places in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Houses_on_the_National_Register_of_Historic_Places_in_Massachusetts"
+        }, 
+        {
+          "label": "1799 establishments in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:1799_establishments_in_the_United_States"
+        }, 
+        {
+          "label": "Houses in Salem, Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Houses_in_Salem,_Massachusetts"
+        }, 
+        {
+          "label": "1992 establishments in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:1992_establishments_in_the_United_States"
+        }, 
+        {
+          "label": "Museums in Salem, Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Museums_in_Salem,_Massachusetts"
+        }, 
+        {
+          "label": "Art museums in Massachusetts", 
+          "uri": "http://dbpedia.org/resource/Category:Art_museums_in_Massachusetts"
+        }, 
+        {
+          "label": "Peabody Essex Museum", 
+          "uri": "http://dbpedia.org/resource/Category:Peabody_Essex_Museum"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "building", 
+          "uri": "http://dbpedia.org/ontology/Building"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "architectural structure", 
+          "uri": "http://dbpedia.org/ontology/ArchitecturalStructure"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }
+      ], 
+      "description": "The Peabody Essex Museum (est. 1992) in Salem, Massachusetts, may be considered one of the oldest continuously operating museums in the United States. It combines the collections of the former Peabody Museum of Salem and the Essex Institute. The museum holds one of the major collections of Asian art in the US. Its total holdings include about 1.3 million pieces, as well as twenty-four historic buildings.", 
+      "label": "Peabody Essex Museum", 
+      "redirects": [], 
+      "refCount": 76, 
+      "stanford_name": "Peabody Essex", 
+      "stanford_type": "organization", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Peabody_Essex_Museum"
+    }, 
+    {
+      "stanford_name": "East India Marine Associates", 
+      "stanford_type": "organization", 
+      "uri": null
+    }, 
+    {
+      "categories": [
+        {
+          "label": "Museums in Los Angeles, California", 
+          "uri": "http://dbpedia.org/resource/Category:Museums_in_Los_Angeles,_California"
+        }, 
+        {
+          "label": "1961 establishments in the United States", 
+          "uri": "http://dbpedia.org/resource/Category:1961_establishments_in_the_United_States"
+        }, 
+        {
+          "label": "Art museums in California", 
+          "uri": "http://dbpedia.org/resource/Category:Art_museums_in_California"
+        }, 
+        {
+          "label": "Art museums established in 1961", 
+          "uri": "http://dbpedia.org/resource/Category:Art_museums_established_in_1961"
+        }, 
+        {
+          "label": "Institutions accredited by the American Association of Museums", 
+          "uri": "http://dbpedia.org/resource/Category:Institutions_accredited_by_the_American_Association_of_Museums"
+        }, 
+        {
+          "label": "William Pereira buildings", 
+          "uri": "http://dbpedia.org/resource/Category:William_Pereira_buildings"
+        }, 
+        {
+          "label": "Renzo Piano buildings", 
+          "uri": "http://dbpedia.org/resource/Category:Renzo_Piano_buildings"
+        }
+      ], 
+      "classes": [
+        {
+          "label": "building", 
+          "uri": "http://dbpedia.org/ontology/Building"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://dbpedia.org/ontology/Place"
+        }, 
+        {
+          "label": "museum", 
+          "uri": "http://dbpedia.org/ontology/Museum"
+        }, 
+        {
+          "label": "place", 
+          "uri": "http://schema.org/Place"
+        }, 
+        {
+          "label": "architectural structure", 
+          "uri": "http://dbpedia.org/ontology/ArchitecturalStructure"
+        }, 
+        {
+          "label": "museum", 
+          "uri": "http://schema.org/Museum"
+        }, 
+        {
+          "label": "owl#Thing", 
+          "uri": "http://www.w3.org/2002/07/owl#Thing"
+        }
+      ], 
+      "description": "The Los Angeles County Museum of Art (LACMA) is an art museum in Los Angeles, California. It is located on Wilshire Boulevard along Museum Row in the Miracle Mile vicinity of Los Angeles, adjacent to the George C. Page Museum and La Brea Tar Pits. LACMA is the largest encyclopedic museum west of Chicago and attracts nearly one million visitors annually. Its holdings include more than 100,000 works spanning the history of art from ancient times to the present.", 
+      "label": "Los Angeles County Museum of Art", 
+      "redirects": [], 
+      "refCount": 550, 
+      "stanford_name": "LACMA", 
+      "stanford_type": "organization", 
+      "templates": [], 
+      "uri": "http://dbpedia.org/resource/Los_Angeles_County_Museum_of_Art"
+    }
+  ]
+}

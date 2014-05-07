@@ -19,4 +19,9 @@ FactoryGirl.define do
     latitude 42.3394675
     longitude -71.0948962
   end
+
+  factory :dbpedia_entity do
+    sequence(:name) { |n| "Name #{n}" }
+    url "http://www.example.com/"
+  end
 end
