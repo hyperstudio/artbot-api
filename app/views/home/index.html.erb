@@ -1,3 +1,9 @@
 <div class="event primary">
   <%= render 'events/single_event', event: @primary_event %>
 </div>
+
+<div class="event favorites">
+  <% @favorited_events.each do |event| %>
+    <%= render 'events/single_event', event: event %>
+  <% end %>
+</div>
