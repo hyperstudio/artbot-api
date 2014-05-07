@@ -3,7 +3,5 @@
 </div>
 
 <div class="event favorites">
-  <% @favorited_events.each do |event| %>
-    <%= render 'events/single_event', event: event %>
-  <% end %>
+  <%= render 'events/thumbnail_list', events: @favorited_events %>
 </div>

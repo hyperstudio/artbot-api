@@ -11,6 +11,10 @@ feature 'User visits discover view' do
     expect(page).to display_primary_event(event)
     expect(page).to display_favorited_events(event_3, event_2)
     expect(page).not_to display_favorited_events(event)
+
+    click_on event_2.name
+
+    expect(current_path).to eq event_path(event_2)
   end
 
   def display_primary_event(event)
@@ -18,7 +22,7 @@ feature 'User visits discover view' do
   end
 
   def display_favorited_events(*events)
-    event_names = events.map &:name
+    event_names = events.map(&:name)
     have_css('.event.favorites', text: /#{event_names.join('.*')}/)
   end
 end
