@@ -1,1 +1,2 @@
 <h2><%= link_to event.name, event %></h2>
+<%= link_to 'Favorite', event_favorite_path(event), method: :post %>

@@ -11,6 +11,7 @@ feature 'User visits discover view' do
     expect(page).to display_primary_event(event)
     expect(page).to link_primary_event(event)
     expect(page).to display_favorited_events(event_3, event_2)
+    expect(page).to display_ability_to_favorite(event)
     expect(page).not_to display_favorited_events(event)
 
     click_on event_2.name
@@ -29,5 +30,9 @@ feature 'User visits discover view' do
   def display_favorited_events(*events)
     event_names = events.map(&:name)
     have_css('.event.favorites', text: /#{event_names.join('.*')}/)
+  end
+
+  def display_ability_to_favorite(event)
+    have_link 'Favorite', event_favorite_path(event)
   end
 end
