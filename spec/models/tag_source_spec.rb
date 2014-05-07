@@ -6,4 +6,8 @@ describe TagSource do
   context 'tagging' do
     it { should respond_to(:owned_taggings) }
   end
+
+  it 'has a dbpedia entity finder' do
+    expect(described_class.dbpedia).to be_instance_of(described_class)
+  end
 end

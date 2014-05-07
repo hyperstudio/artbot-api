@@ -45,6 +45,8 @@ def query_scraper_app(path)
 end
 
 def save_entity(ner_result)
+    dbpedia_tag_source = TagSource.dbpedia
+
     if ner_result["uri"].nil?
         dbpedia_entity = DbpediaEntity.find_or_initialize_by(stanford_name: ner_result["stanford_name"])
     else
@@ -56,8 +58,16 @@ def save_entity(ner_result)
     dbpedia_entity.stanford_name = ner_result["stanford_name"]
     dbpedia_entity.stanford_type = ner_result["stanford_type"]
 
-    # genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
-    # dbpedia_entity.genre_list = genre_finder.find_as_tag_list
+    genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
+
+    # You might want to set up the relations manually between
+    # ActsAsTaggableOn::Tag, ActsAsTaggableOn::Tagging manually here. They are
+    # actually pretty simple graphs.
+
+    dbpedia_tag_source.tag(
+      dbpedia_entity, on: :genre,
+      with: genre_finder.find_as_tag_list
+    )
 
     dbpedia_entity.save
     # FIGURE THIS OUT LATER
