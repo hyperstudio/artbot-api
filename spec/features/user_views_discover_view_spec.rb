@@ -9,12 +9,17 @@ feature 'User visits discover view' do
     visit root_path
 
     expect(page).to display_primary_event(event)
+    expect(page).to link_primary_event(event)
     expect(page).to display_favorited_events(event_3, event_2)
     expect(page).not_to display_favorited_events(event)
 
     click_on event_2.name
 
     expect(current_path).to eq event_path(event_2)
+  end
+
+  def link_primary_event(event)
+    have_link event.name, event_path(event)
   end
 
   def display_primary_event(event)
