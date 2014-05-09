@@ -56,8 +56,8 @@ def save_entity(ner_result)
     dbpedia_entity.stanford_name = ner_result["stanford_name"]
     dbpedia_entity.stanford_type = ner_result["stanford_type"]
 
-    genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
-    dbpedia_entity.genre_list = genre_finder.find_as_tag_list
+    # genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
+    # dbpedia_entity.genre_list = genre_finder.find_as_tag_list
 
     dbpedia_entity.save
     # FIGURE THIS OUT LATER
@@ -97,12 +97,12 @@ namespace :scrape do
                 else
                     # see if anything has changed about the event
                     changed = false
-                    if r["name"] != event.name
-                        event.name = r["name"]
+                    if r["name"].strip != event.name
+                        event.name = r["name"].strip
                         changed = true
                     end
-                    if r["description"] != event.description
-                        event.description = r["description"]
+                    if r["description"].strip != event.description
+                        event.description = r["description"].strip
                         payload = r["name"] + " " + r["description"]
                         entities = query_ner_app(payload)["results"]
                         saved_entities = entities.map { |e| save_entity(e) }
@@ -113,8 +113,8 @@ namespace :scrape do
                         event.image = r["image"]
                         changed = true
                     end
-                    if r["dates"] != event.dates
-                        event.dates = r["dates"]
+                    if r["dates"].strip != event.dates
+                        event.dates = r["dates"].strip
                         changed = true
                     end
                     if changed
