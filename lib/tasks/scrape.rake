@@ -51,33 +51,27 @@ def save_entity(ner_result)
         dbpedia_entity = DbpediaEntity.find_or_initialize_by(stanford_name: ner_result["stanford_name"])
     else
         dbpedia_entity = DbpediaEntity.find_or_initialize_by(url: ner_result["uri"])
+        genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
     end
     dbpedia_entity.name = ner_result["label"]
     dbpedia_entity.description = ner_result["description"]
-    dbpedia_entity.refCount = ner_result["refCount"]
+    dbpedia_entity.refcount = ner_result["refCount"]
     dbpedia_entity.stanford_name = ner_result["stanford_name"]
     dbpedia_entity.stanford_type = ner_result["stanford_type"]
-
-    genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
 
     # You might want to set up the relations manually between
     # ActsAsTaggableOn::Tag, ActsAsTaggableOn::Tagging manually here. They are
     # actually pretty simple graphs.
 
-    dbpedia_tag_source.tag(
-      dbpedia_entity, on: :genre,
-      with: genre_finder.find_as_tag_list
-    )
-
     dbpedia_entity.save
-    # FIGURE THIS OUT LATER
-    # ner_result["categories"].each do |c|
-    #     category_entity = DbpediaEntity.find_or_initialize_by(url: c['uri'])
-    #     category_entity.name = c["label"]
-    #     # I don't think this works because it would replace all other relationships...
-    #     category_entity.dbpedia_entity_id = dbpedia_entity.id
-    #     category.save
-    # end
+
+    unless genre_finder.nil?
+        dbpedia_tag_source.tag(
+          dbpedia_entity, on: :genres,
+          with: genre_finder.find_as_tag_list
+        )
+    end
+
     return dbpedia_entity
 end
 

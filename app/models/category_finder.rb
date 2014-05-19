@@ -14,13 +14,13 @@ class CategoryFinder
     context_patterns = PATTERNS[context]
     categories.find_all do |category|
       context_patterns.any? do |pattern|
-        category[:label].match(pattern)
+        category["label"].match(pattern)
       end
     end
   end
 
   def find_as_tag_list
-    find.map { |tag| tag[:label] }.join(', ')
+    find.map { |tag| tag["label"] }.join(', ')
   end
 
   private

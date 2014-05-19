@@ -1,5 +1,5 @@
 class DbpediaEntity < ActiveRecord::Base
-  acts_as_taggable_on :genre
+  acts_as_taggable_on :genres
   has_and_belongs_to_many :events
   # has_and_belongs_to_many :dbpedia_entities,
   #     class_name: "DbpediaEntity",
