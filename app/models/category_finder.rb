@@ -1,7 +1,7 @@
 class CategoryFinder
   PATTERNS={
     genre: [
-      %r(.+ism\Z)
+      %r(.+\Z)
       ]
   }
 

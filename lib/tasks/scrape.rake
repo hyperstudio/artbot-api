@@ -48,9 +48,9 @@ def save_entity(ner_result)
     dbpedia_tag_source = TagSource.dbpedia
 
     if ner_result["uri"].nil?
-        dbpedia_entity = DbpediaEntity.find_or_initialize_by(stanford_name: ner_result["stanford_name"])
+        dbpedia_entity = Entity.find_or_initialize_by(stanford_name: ner_result["stanford_name"])
     else
-        dbpedia_entity = DbpediaEntity.find_or_initialize_by(url: ner_result["uri"])
+        dbpedia_entity = Entity.find_or_initialize_by(url: ner_result["uri"])
         genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
     end
     dbpedia_entity.name = ner_result["label"]
@@ -63,15 +63,13 @@ def save_entity(ner_result)
     # ActsAsTaggableOn::Tag, ActsAsTaggableOn::Tagging manually here. They are
     # actually pretty simple graphs.
 
-    dbpedia_entity.save
-
     unless genre_finder.nil?
         dbpedia_tag_source.tag(
           dbpedia_entity, on: :genres,
           with: genre_finder.find_as_tag_list
         )
     end
-
+    dbpedia_entity.save
     return dbpedia_entity
 end
 
@@ -97,7 +95,7 @@ namespace :scrape do
                     event.image = r["image"]
                     event.location_id = u["location_id"]
                     event.save
-                    event.dbpedia_entities = saved_entities
+                    event.entities = saved_entities
                 else
                     # see if anything has changed about the event
                     changed = false
@@ -110,7 +108,7 @@ namespace :scrape do
                         payload = r["name"] + " " + r["description"]
                         entities = query_ner_app(payload)["results"]
                         saved_entities = entities.map { |e| save_entity(e) }
-                        event.dbpedia_entities = saved_entities
+                        event.entities = saved_entities
                         changed = true
                     end
                     if r["image"] != event.image

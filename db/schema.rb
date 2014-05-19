@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519193155) do
+ActiveRecord::Schema.define(version: 20140519223000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "dbpedia_entities", force: true do |t|
+  create_table "entities", force: true do |t|
     t.string  "name"
     t.string  "url"
     t.text    "description"
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 20140519193155) do
     t.string  "stanford_name"
   end
 
-  create_table "dbpedia_entities_events", id: false, force: true do |t|
+  create_table "entities_events", id: false, force: true do |t|
     t.integer "event_id"
-    t.integer "dbpedia_entity_id"
+    t.integer "entity_id"
   end
 
   create_table "events", force: true do |t|
