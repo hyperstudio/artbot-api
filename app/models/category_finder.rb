@@ -1,7 +1,18 @@
 class CategoryFinder
   PATTERNS={
     genre: [
-      %r(.+\Z)
+      %r((.+)?arch(.+)?)i,
+      %r((.+)?ism(.+)?)i,
+      %r((.+)?mural(.+)?)i,
+      %r((.+)?sculpt(.+)?)i,
+      %r((.+)?photo(.+)?)i,
+      %r((.+)?paint(.+)?)i,
+      %r((.+)?design(.+)?)i,
+      %r((.+)?curat(.+)?)i,
+      %r((.+)?print(.+)?)i,
+      %r(\Aart(.+)?)i,
+      %r((.+)art\s(.+)?)i,
+      %r((.+)\sart(.+)?)i
       ]
   }
 

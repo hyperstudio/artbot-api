@@ -14,10 +14,16 @@ class Event < ActiveRecord::Base
     related_events = []
     entities.each do |entity|
       entity.genres.includes(:taggings).where("taggings_count > 1").each do |genre|
-        entity_ids = genre.taggings.where("taggable_id != ?", entity.id).pluck('taggable_id')
-        Entity.where(id: entity_ids).each do |related_entity|
-          related_entity.events.each do |related_event|
-            related_events.push(related_event)
+        # FIX THIS
+        unless genre.name.downcase.include?("museum")
+          entity_ids = genre.taggings.where("taggable_id != ?", entity.id).pluck('taggable_id')
+          Entity.where(id: entity_ids).each do |related_entity|
+            related_entity.events.where.not(id: id).each do |related_event|
+              # puts "%s, %s and %s RELATED BECAUSE %s" % [related_event.name, entity.name, related_entity.name, genre.name]
+              unless related_events.include?(related_event)
+                related_events.push(related_event)
+              end
+            end
           end
         end
       end
