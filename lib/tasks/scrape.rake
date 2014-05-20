@@ -44,20 +44,29 @@ def query_scraper_app(path)
     return events
 end
 
+def split_downcase(array)
+    array.split.map {|i| i.downcase}
+end
+
+def shares_word(phrase1, phrase2)
+    split_downcase(phrase1) & split_downcase(phrase2)
+end
+
 def save_entity(ner_result)
     dbpedia_tag_source = TagSource.dbpedia
-
-    if ner_result["uri"].nil?
-        dbpedia_entity = Entity.find_or_initialize_by(stanford_name: ner_result["stanford_name"])
+    puts ner_result
+    # do a rough match of the entities to make sure at least one word matches. otherwise treat it as no match
+    if ner_result[:uri].present? and shares_word(ner_result[:label], ner_result[:stanford_name])
+        dbpedia_entity = Entity.find_or_initialize_by(url: ner_result[:uri])
+        genre_finder = CategoryFinder.new(ner_result[:categories].map {|c| c.symbolize_keys }, :genre)
+        dbpedia_entity.name = ner_result[:label]
+        dbpedia_entity.description = ner_result[:description]
+        dbpedia_entity.refcount = ner_result[:refCount]
     else
-        dbpedia_entity = Entity.find_or_initialize_by(url: ner_result["uri"])
-        genre_finder = CategoryFinder.new(ner_result['categories'], :genre)
+        dbpedia_entity = Entity.find_or_initialize_by(stanford_name: ner_result[:stanford_name])
     end
-    dbpedia_entity.name = ner_result["label"]
-    dbpedia_entity.description = ner_result["description"]
-    dbpedia_entity.refcount = ner_result["refCount"]
-    dbpedia_entity.stanford_name = ner_result["stanford_name"]
-    dbpedia_entity.stanford_type = ner_result["stanford_type"]
+    dbpedia_entity.stanford_name = ner_result[:stanford_name]
+    dbpedia_entity.stanford_type = ner_result[:stanford_type]
 
     # You might want to set up the relations manually between
     # ActsAsTaggableOn::Tag, ActsAsTaggableOn::Tagging manually here. They are
@@ -86,7 +95,7 @@ namespace :scrape do
                     # This is where we query the NER app
                     payload = r["name"] + " " + r["description"]
                     entities = query_ner_app(payload)["results"]
-                    saved_entities = entities.map { |e| save_entity(e) }
+                    saved_entities = entities.map { |e| save_entity(e.symbolize_keys) }
                     # Now populate attributes for save
                     event.name = r["name"].strip
                     event.url = stripped_url
