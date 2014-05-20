@@ -15,6 +15,12 @@ class CategoryFinder
       %r((.+)\sart(.+)?)i
       ]
   }
+  FLAGS={
+    genre: [
+      %r((.+)?article(.+)?)i,
+      %r((.+)?museum(.+)?)i
+    ]
+  }
 
   def initialize(categories = [], context)
     @categories = categories
