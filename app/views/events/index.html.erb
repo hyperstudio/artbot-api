@@ -1,4 +1,4 @@
 <% for @event in @events %>
     <hr><hr>
-    <%= render partial: "single_event", locals: {event: @event} %>
+    <%= render "single_event", event: @event %>
 <% end %>
