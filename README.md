@@ -12,11 +12,7 @@ To install:
 
 ### Data
 
-To get sample event/category data:
-
-* run `rake db:seed:20140505_seeds`
-
-Or to start getting live data:
+Sample locations are pre-populated. To start getting live data:
 
 * Install and run [artx-scraper](http://github.com/mailbackwards/artx-scraper)
 * Install and run [artx-ner](http://github.com/mailbackwards/artx-ner)
