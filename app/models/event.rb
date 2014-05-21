@@ -51,4 +51,12 @@ class Event < ActiveRecord::Base
   def select_related_events(count=4)
     self.all_related_events.shuffle.take(count)
   end
+
+  def payload
+    name + " " + description
+  end
+
+  def fetch_entities
+    NerQuerier.new('stanford').query_ner(self.payload)
+  end
 end

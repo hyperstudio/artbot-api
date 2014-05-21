@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DbpediaEntity do
+describe Entity do
   it { should validate_presence_of(:name) }
 
   it 'should be taggable on genre' do
