@@ -3,7 +3,7 @@ require 'multi_json'
 
 class JsonRequester
 
-    def access_json(endpoint, method, params, headers={}, limit=10)
+    def access_json(endpoint, method, params, limit=10)
         raise ArgumentError, 'too many HTTP redirects' if limit == 0
         
         url = URI.parse(endpoint)
@@ -26,7 +26,7 @@ class JsonRequester
         # Handle redirects recursively
         case response
         when Net::HTTPRedirection then
-            self.access_json(response['location'], method, params, headers, limit-1)
+            self.access_json(response['location'], method, params, limit-1)
         end
 
         return MultiJson.load(response.body)

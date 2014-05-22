@@ -12,9 +12,9 @@ namespace :scrape do
                     # Query the NER app here
                     event_creator.fetch_entities.each do |entity_result|
                         entity_creator = EntityCreator.new(entity_result)
-                        categories, entity = entity_creator.categorize_and_save
+                        entity_creator.save
                         # Tie it to its source
-                        EntityAssociator.new(event_creator.event, entity).process_dbpedia(categories) if categories.present?
+                        EntityAssociator.new(event_creator.event, entity).process_dbpedia(categories) if entity_creator.categories.present?
                     end
                 elsif event_creator.changed?
                     event_creator.save

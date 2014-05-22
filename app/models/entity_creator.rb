@@ -20,8 +20,11 @@ class EntityCreator
         (list1 & list2).any?
     end
 
-    def categorize_and_save
+    def categories
+        @categories
+    end
+
+    def save
         @entity.save
-        return [@categories, @entity]
     end
 end
