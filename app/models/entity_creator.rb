@@ -24,6 +24,10 @@ class EntityCreator
         @categories
     end
 
+    def entity
+        @entity
+    end
+
     def save
         @entity.save
     end

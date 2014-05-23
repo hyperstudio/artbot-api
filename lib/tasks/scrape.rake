@@ -14,7 +14,7 @@ namespace :scrape do
                         entity_creator = EntityCreator.new(entity_result)
                         entity_creator.save
                         # Tie it to its source
-                        EntityAssociator.new(event_creator.event, entity).process_dbpedia(categories) if entity_creator.categories.present?
+                        EntityAssociator.new(event_creator.event, entity_creator.entity).process_dbpedia(categories) if entity_creator.categories.present?
                     end
                 elsif event_creator.changed?
                     event_creator.save
