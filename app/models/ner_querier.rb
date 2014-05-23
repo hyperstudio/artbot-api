@@ -1,5 +1,5 @@
 class NerQuerier
-    NER_BASE_URL = "http://127.0.0.1:5000"
+    NER_BASE_URL = Rails.configuration.scraper_app_url
 
     def initialize(path)
         @path = path

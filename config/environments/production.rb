@@ -80,4 +80,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Production version of the scraper app to query
+  config.scraper_app_url = "http://artx-scraper.herokuapp.com"
 end

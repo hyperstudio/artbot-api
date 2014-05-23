@@ -1,5 +1,5 @@
 class ScraperQuerier
-    SCRAPER_BASE_URL = "http://127.0.0.1:5000/scrape"
+    SCRAPER_BASE_URL = Rails.configuration.scraper_app_url + "/scrape"
 
     def initialize(path)
         @path = path
