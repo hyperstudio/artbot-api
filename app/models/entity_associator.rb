@@ -6,11 +6,11 @@ class EntityAssociator
         @context = context
     end
 
-    def process_dbpedia(categories)
-        dbpedia_tag_source = TagSource.dbpedia
+    def process(source, categories)
         context_finder = CategoryFinder.new(categories, @context)
+        tag_source = TagSource.find_or_create_by(name: @entity.source_name.to_s)
 
-        dbpedia_tag_source.tag(
+        tag_source.tag(
             @entity, on: @context.to_s.pluralize.to_sym,
             with: context_finder.find_as_tag_list
         )

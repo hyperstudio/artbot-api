@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519223000) do
+ActiveRecord::Schema.define(version: 20140527201231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(version: 20140519223000) do
     t.integer "refcount"
     t.string  "stanford_type"
     t.string  "stanford_name"
+    t.string  "source_name"
+    t.string  "calais_entity_type"
+    t.float   "score"
+    t.string  "calais_type_group"
   end
 
   create_table "entities_events", id: false, force: true do |t|

@@ -30,3 +30,4 @@ ScraperUrl.create("id"=>6, "url"=>"http://listart.mit.edu", "location_id"=>5, "n
 ScraperUrl.create("id"=>7, "url"=>"http://www.mfa.org", "location_id"=>1, "name"=>"mfa")
 
 TagSource.create(name: 'DBpedia')
+TagSource.create(name: 'OpenCalais')

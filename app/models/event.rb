@@ -56,7 +56,17 @@ class Event < ActiveRecord::Base
     name + " " + description
   end
 
-  def fetch_entities
-    NerQuerier.new('stanford').query_ner(self.payload)
+  def fetch_entities(path)
+    NerQuerier.new(path).query_and_parse_results(self.payload)
+  end
+
+  def fetch_and_assign_tags(tag_source_path)
+    self.fetch_entities(tag_source_path).each do |entity_result|
+      entity_creator = EntityCreator.new(entity_result)
+      entity = entity_creator.entity
+      entity.save
+      # Now process the entities and tie them to events
+      EntityAssociator.new(self, entity).process(tag_source_path, entity_creator.categories) if entity_creator.categories.present?
+    end
   end
 end

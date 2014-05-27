@@ -9,30 +9,6 @@ class EventCreator
         @event.location_id = location_id
     end
 
-    def description_changed?
-        @event.description_changed?
-    end
-
-    def changed?
-        @event.changed?
-    end
-
-    def new_record?
-        @event.new_record?
-    end
-
-    def fetch_entities
-        @event.fetch_entities
-    end
-
-    def save
-        @event.save
-    end
-
-    def event
-        @event
-    end
-
     def strip_query_params_from_url(url)
         # Strips everything after a query param ("?") or hash ("#") in a URL string
         (0..url.length).each do |i|
@@ -43,4 +19,6 @@ class EventCreator
         end
         return url
     end
+
+    attr_reader :event
 end
