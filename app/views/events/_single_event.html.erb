@@ -9,7 +9,11 @@
   <% event.entities.each do |category| %>
     <li>
       <%= link_to category.name, category.url, target: '_blank' %>
-      (<%= category.stanford_name %> - <%= category.stanford_type %>)
+      <% if category.source_name == "DBpedia" %>
+        (<%= category.stanford_name %> - <%= category.stanford_type %>)
+      <% else %>
+        (<%= category.source_name %> - <%= category.calais_type_group %>)
+      <% end %>
     </li>
   <% end %>
 </ul>
