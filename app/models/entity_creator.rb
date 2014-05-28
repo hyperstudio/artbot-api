@@ -5,18 +5,17 @@ class EntityCreator
             # Check to see if it has a sensible DBpedia URI
             if ner_result[:uri].present? and self.shares_word?(ner_result[:label], ner_result[:stanford_name])
                 @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
-                self.add_attributes_to_entity(ner_result)
             else
-                # No good DBpedia URI, so just save its name
+                # No good DBpedia URI, so just save its name and remove any DBpedia metadata
                 @entity = Entity.find_or_initialize_by(stanford_name: ner_result[:stanford_name])
-                @entity.source_name = ner_result[:source_name]
+                ner_result.except!(:label, :description, :refcount, :categories)
             end
-            @entity.stanford_name = ner_result[:stanford_name]
-            @entity.stanford_type = ner_result[:stanford_type]
         elsif ner_result[:source_name] == "OpenCalais"
             @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
-            self.add_attributes_to_entity(ner_result)
+            # If it's a socialTag rather than entity, make it a category too.
+            ner_result[:categories] = [ner_result] if ner_result[:calais_type_group] == "socialTag"
         end
+        self.add_attributes_to_entity(ner_result)
     end
     
     def add_attributes_to_entity(ner_result)
@@ -27,11 +26,12 @@ class EntityCreator
         @entity.score = ner_result[:score]
         @entity.calais_entity_type = ner_result[:calais_entity_type]
         @entity.calais_type_group = ner_result[:calais_type_group]
+        @entity.stanford_name = ner_result[:stanford_name]
+        @entity.stanford_type = ner_result[:stanford_type]
         if ner_result[:categories].present?
             @categories = ner_result[:categories].map {|r| r.symbolize_keys}
         else
-            # It doesn't have specified tags, so treat the name itself as a tag
-            @categories = [ner_result[:label]]
+            @categories = []
         end
     end
 

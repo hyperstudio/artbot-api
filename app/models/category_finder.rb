@@ -10,6 +10,13 @@ class CategoryFinder
       %r((.+)?design(.+)?)i,
       %r((.+)?curat(.+)?)i,
       %r((.+)?print(.+)?)i,
+      %r((.+)?carv(.+)?)i,
+      %r((.+)?quilt(.+)?)i,
+      %r((.+)?stained\sg(.+)?)i,
+      %r((.+)?jewel(.+)?)i,
+      %r((.+)?callig(.+)?)i,
+      %r((.+)?film(.+)?)i,
+      %r((.+)?cinema(.+)?)i,
       %r(\Aart(.+)?)i,
       %r((.+)art\s(.+)?)i,
       %r((.+)\sart(.+)?)i

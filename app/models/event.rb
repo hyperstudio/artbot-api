@@ -63,14 +63,12 @@ class Event < ActiveRecord::Base
   def fetch_and_assign_tags(tag_source_path)
     fetch_entities(tag_source_path).each do |entity_result|
       entity_creator = EntityCreator.new(entity_result)
-      entity = entity_creator.entity
-      entity.save
       # Now process the entities and tie them to events
-      EntityAssociator.new(self, entity).process(tag_source_path, entity_creator.categories) if entity_creator.categories.present?
+      entity_associator = EntityAssociator.new(self, entity_creator.entity)
+      if entity_associator.valid_entity?
+        entity_creator.entity.save
+        entity_associator.process(entity_creator.categories)
+      end
     end
-  end
-
-  def print_calais
-    fetch_entities('calais').map {|result| result[:label]}.join(', ')
   end
 end
