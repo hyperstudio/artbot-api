@@ -30,6 +30,7 @@ class EntityCreator
         if ner_result[:categories].present?
             @categories = ner_result[:categories].map {|r| r.symbolize_keys}
         else
+            # It doesn't have specified tags, so treat the name itself as a tag
             @categories = [ner_result[:label]]
         end
     end

@@ -33,11 +33,11 @@ class JsonRequester
     end
 
     def get(endpoint, params)
-        self.access_json(endpoint, "GET", params)
+        access_json(endpoint, "GET", params)
     end
 
     def post(endpoint, data)
-        self.access_json(endpoint, "POST", data)
+        access_json(endpoint, "POST", data)
     end
 
 end

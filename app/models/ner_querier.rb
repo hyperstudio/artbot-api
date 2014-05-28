@@ -32,8 +32,8 @@ class NerQuerier
     end
 
     def query_and_parse_results(payload)
-        results = self.query_ner(payload)
+        results = query_ner(payload)
         tag_source = SOURCE_HASH[@path.to_sym]
-        results.map {|result| self.parse_ner_result(result, tag_source)}
+        results.map {|result| parse_ner_result(result, tag_source)}
     end
 end

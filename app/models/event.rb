@@ -15,15 +15,15 @@ class Event < ActiveRecord::Base
   end
 
   def taggings
-    self.genres.map {|genre| genre.taggings}.flatten
+    genres.map {|genre| genre.taggings}.flatten
   end
 
   def related_entities
-    Entity.where(id: self.taggings.map {|tagging| tagging.taggable_id}).includes(:events)
+    Entity.where(id: taggings.map {|tagging| tagging.taggable_id}).includes(:events)
   end
 
   def related_events
-    self.related_entities.map {|entity| entity.events.where.not(id:id).includes(entities: [:genres])}.flatten
+    related_entities.map {|entity| entity.events.where.not(id:id).includes(entities: [:genres])}.flatten
   end
 
   def all_related_events
@@ -49,7 +49,7 @@ class Event < ActiveRecord::Base
   end
 
   def select_related_events(count=4)
-    self.all_related_events.shuffle.take(count)
+    all_related_events.shuffle.take(count)
   end
 
   def payload
@@ -57,16 +57,20 @@ class Event < ActiveRecord::Base
   end
 
   def fetch_entities(path)
-    NerQuerier.new(path).query_and_parse_results(self.payload)
+    NerQuerier.new(path).query_and_parse_results(payload)
   end
 
   def fetch_and_assign_tags(tag_source_path)
-    self.fetch_entities(tag_source_path).each do |entity_result|
+    fetch_entities(tag_source_path).each do |entity_result|
       entity_creator = EntityCreator.new(entity_result)
       entity = entity_creator.entity
       entity.save
       # Now process the entities and tie them to events
       EntityAssociator.new(self, entity).process(tag_source_path, entity_creator.categories) if entity_creator.categories.present?
     end
+  end
+
+  def print_calais
+    fetch_entities('calais').map {|result| result[:label]}.join(', ')
   end
 end
