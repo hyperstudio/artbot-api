@@ -48,7 +48,15 @@ class CategoryFinder
   end
 
   def find_as_tag_list
-    find.map { |tag| tag[:label] }.join(', ')
+    as_tag_list(find)
+  end
+
+  def all_as_tag_list
+    as_tag_list(categories)
+  end
+
+  def as_tag_list(tags)
+    tags.map {|tag| tag[:label]}.join(', ')
   end
 
   private

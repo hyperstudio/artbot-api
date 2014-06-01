@@ -39,12 +39,13 @@ class EntityAssociator
     end
 
     def tag_entity(tags)
-        context_finder = CategoryFinder.new(tags, @context)
-        tag_source = TagSource.find_or_create_by(name: @entity.source_name.to_s)
+        category_finder = CategoryFind.ner(tags, @context)
+        tag_source = TagSource.find_or_create_by(name: @entity.source_name)
+        tag_list = (tag_source.name == "Admin" ? category_finder.all_as_tag_list : category_finder.find_as_tag_list)
 
         tag_source.tag(
             @entity, on: @context.to_s.pluralize.to_sym,
-            with: context_finder.find_as_tag_list
+            with: tag_list
         )
     end
 
