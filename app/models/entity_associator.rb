@@ -1,4 +1,7 @@
 class EntityAssociator
+    """
+    Serves two functions: 1) adds tags to entities via a specified tags source, 2) associate entities with events
+    """
     CALAIS_ENTITY_CUTOFFS = {
         'Person' => 0.15,
         'Technology' => 0.1,
@@ -6,43 +9,51 @@ class EntityAssociator
         'IndustryTerm' => 0.1
     }
 
-    def initialize(event, entity, context=:genre)
-        @event = event
+    def initialize(entity, event=nil, context=:genre)
         @entity = entity
+        @event = event
         @context = context
     end
 
     def valid_entity?
         # default to true
         if @entity.source_name == "OpenCalais"
-            if @entity.calais_type_group == "topics"
+            if @entity.type_group == "topics"
                 # Topics are not useful
                 response = false
-            elsif @entity.calais_type_group == "socialTag"
+            elsif @entity.type_group == "socialTag"
                 # Let it go for now
                 response = true
-            elsif @entity.calais_type_group == "entities"
+            elsif @entity.type_group == "entities"
                 # This is more complex. Cherry pick only certain entity types and score cutoffs
-                if CALAIS_ENTITY_CUTOFFS[@entity.calais_entity_type].present? and @entity.score >= CALAIS_ENTITY_CUTOFFS[@entity.calais_entity_type]
+                if CALAIS_ENTITY_CUTOFFS[@entity.entity_type].present? and @entity.score >= CALAIS_ENTITY_CUTOFFS[@entity.entity_type]
                     response = true
                 else
                     response = false
                 end
             end
-        elsif @entity.source_name == "DBpedia"
+        else
             response = true
         end
         !!response
     end
 
-    def process(categories)
-        context_finder = CategoryFinder.new(categories, @context)
+    def tag_entity(tags)
+        context_finder = CategoryFinder.new(tags, @context)
         tag_source = TagSource.find_or_create_by(name: @entity.source_name.to_s)
 
         tag_source.tag(
             @entity, on: @context.to_s.pluralize.to_sym,
             with: context_finder.find_as_tag_list
         )
-        @event.entities += [@entity]
+    end
+
+    def add_entity_to_event
+        @event.entities += [@entity] if @event.present?
+    end
+
+    def tag_and_relate_entity(categories)
+        tag_entity(categories)
+        add_entity_to_event
     end
 end

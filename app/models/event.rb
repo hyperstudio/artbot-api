@@ -57,17 +57,19 @@ class Event < ActiveRecord::Base
   end
 
   def fetch_entities(path)
-    NerQuerier.new(path).query_and_parse_results(payload)
+    NerQuerier.new(path).parsed_query(payload)
   end
 
   def fetch_and_assign_tags(tag_source_path)
     fetch_entities(tag_source_path).each do |entity_result|
       entity_creator = EntityCreator.new(entity_result)
+      entity = entity_creator.entity
       # Now process the entities and tie them to events
-      entity_associator = EntityAssociator.new(self, entity_creator.entity)
+      entity_associator = EntityAssociator.new(entity_creator.entity, self)
       if entity_associator.valid_entity?
         entity_creator.entity.save
-        entity_associator.process(entity_creator.categories)
+        entity_creator.entity.add_tags(entity_creator.categories)
+        entity_creator.entity.relate_to_event(self)
       end
     end
   end

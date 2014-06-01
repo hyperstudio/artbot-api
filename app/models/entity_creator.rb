@@ -7,13 +7,15 @@ class EntityCreator
                 @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
             else
                 # No good DBpedia URI, so just save its name and remove any DBpedia metadata
-                @entity = Entity.find_or_initialize_by(stanford_name: ner_result[:stanford_name])
+                @entity = Entity.find_or_initialize_by(name: ner_result[:label])
                 ner_result.except!(:label, :description, :refcount, :categories)
             end
         elsif ner_result[:source_name] == "OpenCalais"
             @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
             # If it's a socialTag rather than entity, make it a category too.
-            ner_result[:categories] = [ner_result] if ner_result[:calais_type_group] == "socialTag"
+            ner_result[:categories] = [ner_result] if ner_result[:type_group] == "socialTag"
+        elsif ner_result[:source_name] == "Admin"
+            @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
         end
         self.add_attributes_to_entity(ner_result)
     end
@@ -24,10 +26,9 @@ class EntityCreator
         @entity.description = ner_result[:description]
         @entity.refcount = ner_result[:refcount]
         @entity.score = ner_result[:score]
-        @entity.calais_entity_type = ner_result[:calais_entity_type]
-        @entity.calais_type_group = ner_result[:calais_type_group]
+        @entity.entity_type = ner_result[:entity_type]
+        @entity.type_group = ner_result[:type_group]
         @entity.stanford_name = ner_result[:stanford_name]
-        @entity.stanford_type = ner_result[:stanford_type]
         if ner_result[:categories].present?
             @categories = ner_result[:categories].map {|r| r.symbolize_keys}
         else

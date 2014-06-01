@@ -31,3 +31,4 @@ ScraperUrl.create("id"=>7, "url"=>"http://www.mfa.org", "location_id"=>1, "name"
 
 TagSource.create(name: 'DBpedia')
 TagSource.create(name: 'OpenCalais')
+TagSource.create(name: 'Admin')
