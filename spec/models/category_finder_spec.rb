@@ -10,12 +10,15 @@ describe CategoryFinder do
     expect(finder.find).not_to include(
       *excluded_categories
     )
+    expect(finder.find).not_to include(
+      *flagged_categories
+    )
   end
 
   it 'emits a comma-separated list of tags' do
     finder = described_class.new(example_categories, :genre)
 
-    expect(finder.find_as_tag_list).to eq 'Cubism, Surrealism'
+    expect(finder.find_as_tag_list).to eq 'Cubism, Surrealism, Land art'
   end
 
   def wanted_categories
@@ -27,6 +30,10 @@ describe CategoryFinder do
       {
         label: "Surrealism",
         uri: "http://example.com/uri3"
+      },
+      {
+        label: "Land art",
+        uri: "http://example.com/uri2"
       }
     ]
   end
@@ -40,7 +47,16 @@ describe CategoryFinder do
     ]
   end
 
+  def flagged_categories
+    [
+      {
+        label: "Article and Museum are flagged words",
+        uri: "http://example.com/uri4"
+      }
+    ]
+  end
+
   def example_categories
-    wanted_categories + excluded_categories
+    wanted_categories + excluded_categories + flagged_categories
   end
 end

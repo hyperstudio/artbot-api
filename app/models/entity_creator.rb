@@ -1,27 +1,45 @@
 class EntityCreator
+    """
+    Takes a single hash with properties and creates an entity and all associated tags
+    Current options for hash: {
+        :url => (the url),
+        :name => (label to search by),
+        :source_name => (name of the TagSource creating it),
+        :entity_type => (type of entity),
+        :type_group => (used for OpenCalais, 'socialTag' or 'entities'),
+        :score => (relevance or confidence score),
+        :refcount => (DBpedia refcount),
+        :description => (longer description),
+        :stanford_name => (in the case of DBpedia, the name of the stanford entity),
+        :tags => (tags for these entities)
+    }
+    """
     
-    def initialize(ner_result)
-        if ner_result[:source_name] == "DBpedia"
-            # Check to see if it has a sensible DBpedia URI
-            if ner_result[:uri].present? and self.shares_word?(ner_result[:label], ner_result[:stanford_name])
-                @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
-            else
-                # No good DBpedia URI, so just save its name and remove any DBpedia metadata
-                @entity = Entity.find_or_initialize_by(name: ner_result[:label])
-                ner_result.except!(:label, :description, :refcount, :categories)
-            end
-        elsif ner_result[:source_name] == "OpenCalais"
-            @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
-            # If it's a socialTag rather than entity, make it a category too.
-            ner_result[:categories] = [ner_result] if ner_result[:type_group] == "socialTag"
-        elsif ner_result[:source_name] == "Admin"
-            @entity = Entity.find_or_initialize_by(url: ner_result[:uri])
+    def initialize(ner_result, save=false, add_tags=false)
+        if ner_result[:url].present?
+            @entity = Entity.find_or_initialize_by(url: ner_result[:url])
+        elsif ner_result[:name].present?
+            @entity = Entity.find_or_initialize_by(name: ner_result[:name])
+        else
+            @entity = nil
         end
         self.add_attributes_to_entity(ner_result)
+        @tags = ner_result[:tags].present? ? ner_result[:tags] : []
+
+        if !!save
+            @entity.save
+        end
+        if !!add_tags
+            add_tags_to_entity
+        end
     end
-    
+
+    def add_tags_to_entity
+        @entity.add_tags(@tags)
+    end
+
     def add_attributes_to_entity(ner_result)
-        @entity.name = ner_result[:label]
+        @entity.name = ner_result[:name]
         @entity.source_name = ner_result[:source_name]
         @entity.description = ner_result[:description]
         @entity.refcount = ner_result[:refcount]
@@ -29,18 +47,7 @@ class EntityCreator
         @entity.entity_type = ner_result[:entity_type]
         @entity.type_group = ner_result[:type_group]
         @entity.stanford_name = ner_result[:stanford_name]
-        if ner_result[:categories].present?
-            @categories = ner_result[:categories].map {|r| r.symbolize_keys}
-        else
-            @categories = []
-        end
     end
 
-    def shares_word?(phrase1, phrase2)
-        list1 = phrase1.split.map {|i| i.downcase}
-        list2 = phrase2.split.map {|i| i.downcase}
-        (list1 & list2).any?
-    end
-
-    attr_reader :entity, :categories
+    attr_reader :entity, :tags
 end

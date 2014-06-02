@@ -7,16 +7,12 @@ class AdminMapper
             :label => entity_name,
             :categories => tags
         }
-        entity_creator = EntityCreator.new(new_entity)
-        entity_creator.entity.save
-        @entity = entity_creator.entity
-        @categories = entity_creator.categories
+        @entity = EntityCreator.new(new_entity, true, true).entity
     end
 
-    def process
-        @entity.add_tags(@categories)
+    def link_to_events
         @entity.events_with_matching_entities.map {|event| @entity.relate_to_event(event)}
     end
 
-    attr_reader :entity, :categories
+    attr_reader :entity, :tags
 end

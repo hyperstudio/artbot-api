@@ -22,6 +22,10 @@ class Event < ActiveRecord::Base
     Entity.where(id: taggings.map {|tagging| tagging.taggable_id}).includes(:events)
   end
 
+  def relate_to_entity(entity)
+    entities += [entity] if entity.present?
+  end
+
   def related_events
     related_entities.map {|entity| entity.events.where.not(id:id).includes(entities: [:genres])}.flatten
   end
@@ -60,17 +64,10 @@ class Event < ActiveRecord::Base
     NerQuerier.new(path).parsed_query(payload)
   end
 
-  def fetch_and_assign_tags(tag_source_path)
-    fetch_entities(tag_source_path).each do |entity_result|
-      entity_creator = EntityCreator.new(entity_result)
-      entity = entity_creator.entity
-      # Now process the entities and tie them to events
-      entity_associator = EntityAssociator.new(entity_creator.entity, self)
-      if entity_associator.valid_entity?
-        entity_creator.entity.save
-        entity_creator.entity.add_tags(entity_creator.categories)
-        entity_creator.entity.relate_to_event(self)
-      end
+  def get_and_process_entities(ner_path)
+    fetch_entities(ner_path).each do |entity_result|
+      entity = EntityCreator.new(entity_result, true, true).entity
+      entity.relate_to_event(self)
     end
   end
 end

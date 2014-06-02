@@ -1,4 +1,5 @@
 class CategoryFinder
+  ADMIN_TAGS=TagSource.admin.owned_tags.pluck('name')
   PATTERNS={
     genre: [
       %r((.+)?arch(.+)?)i,
@@ -35,28 +36,27 @@ class CategoryFinder
   end
 
   def find
+    admin_tags = ADMIN_TAGS
+    lowercase_tags = admin_tags.map {|tag| tag.downcase}
     context_patterns = PATTERNS[context]
     flag_patterns = FLAGS[context]
     categories.find_all do |category|
-      context_patterns.any? do |pattern|
-        # Check for flags before applying the match
-        unless flag_patterns.map {|flag_pattern| category[:label].match(flag_pattern)}.any?
-          category[:label].match(pattern)
+      # See if this is an admin-added tag-- if so, we want to let it through
+      if lowercase_tags.include? category.downcase
+        admin_tags[lowercase_tags.index(category.downcase)]
+      else
+        context_patterns.any? do |pattern|
+          # Check for flags before applying the match
+          unless flag_patterns.map {|flag_pattern| category.match(flag_pattern)}.any?
+            category.match(pattern)
+          end
         end
       end
     end
   end
 
   def find_as_tag_list
-    as_tag_list(find)
-  end
-
-  def all_as_tag_list
-    as_tag_list(categories)
-  end
-
-  def as_tag_list(tags)
-    tags.map {|tag| tag[:label]}.join(', ')
+    find.join(', ')
   end
 
   private

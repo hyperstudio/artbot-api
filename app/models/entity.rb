@@ -3,12 +3,12 @@ class Entity < ActiveRecord::Base
   acts_as_taggable_on :genres
   has_and_belongs_to_many :events
 
-  def add_tags(categories)
-    EntityAssociator.new(self).tag_entity(categories)
+  def add_tags(tags)
+    EntityAssociator.new(self).tag_entity(tags)
   end
 
   def relate_to_event(event)
-    EntityAssociator.new(self, event).add_entity_to_event
+    events += [event] if event.present?
   end
 
   def matching_entities
