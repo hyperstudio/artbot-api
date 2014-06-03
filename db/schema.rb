@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140601195818) do
+ActiveRecord::Schema.define(version: 20140603035811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20140601195818) do
     t.text    "description"
     t.integer "refcount"
     t.string  "stanford_name"
-    t.string  "source_name"
     t.string  "entity_type"
     t.float   "score"
     t.string  "type_group"
@@ -32,6 +31,14 @@ ActiveRecord::Schema.define(version: 20140601195818) do
     t.integer "event_id"
     t.integer "entity_id"
   end
+
+  create_table "entities_tag_sources", id: false, force: true do |t|
+    t.integer "entity_id",     null: false
+    t.integer "tag_source_id", null: false
+  end
+
+  add_index "entities_tag_sources", ["entity_id", "tag_source_id"], name: "index_entities_tag_sources_on_entity_id_and_tag_source_id", using: :btree
+  add_index "entities_tag_sources", ["tag_source_id", "entity_id"], name: "index_entities_tag_sources_on_tag_source_id_and_entity_id", using: :btree
 
   create_table "events", force: true do |t|
     t.datetime "created_at"

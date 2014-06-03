@@ -55,10 +55,6 @@ class CategoryFinder
     end
   end
 
-  def find_as_tag_list
-    find.join(', ')
-  end
-
   private
 
   attr_reader :categories, :context

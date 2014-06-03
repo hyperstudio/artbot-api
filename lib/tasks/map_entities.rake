@@ -6,7 +6,7 @@ namespace :map do
         headers = arr_of_arrs.shift
         for arr in arr_of_arrs
             # AdminMapper args: name, url, tags, source_name
-            admin_mapper_args = [arr[2], arr[3], [{:label => arr[0], :uri => arr[1]}]]
+            admin_mapper_args = [arr[2], arr[3], [arr[0]]]
             AdminMapper.new(*admin_mapper_args).link_to_events
         end
     end

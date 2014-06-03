@@ -3,7 +3,8 @@ class NerQuerier
     SOURCE_HASH = {
         :calais => TagSource.calais,
         :stanford => TagSource.stanford,
-        :dbpedia => TagSource.dbpedia
+        :dbpedia => TagSource.dbpedia,
+        :zemanta => TagSource.zemanta
     }
 
     def initialize(path)
@@ -24,11 +25,12 @@ class NerQuerier
                 source_key = :dbpedia
             end
             tag_source = SOURCE_HASH[source_key]
-
+        end
+        result[:source] = tag_source
         tag_source.clean(result)
     end
 
     def parsed_query(payload)
-        query_ner(payload).map {|result| parse_ner_result(result)}
+        query_ner(payload).map {|result| parse_ner_result(result)}.compact
     end
 end

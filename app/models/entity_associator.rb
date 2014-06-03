@@ -8,13 +8,18 @@ class EntityAssociator
         @context = context
     end
 
-    def tag_entity(tags)
-        category_finder = CategoryFinder.new(tags, @context)
-        tag_source = TagSource.find_or_create_by(name: @entity.source_name)
+    def tag_entity(tags, tag_source=nil)
+        unless tag_source.present?
+            tag_source = @entity.tag_sources[0]
 
         tag_source.tag(
             @entity, on: @context.to_s.pluralize.to_sym,
-            with: category_finder.find_as_tag_list
+            with: old_and_new_tags(tags).join(', ')
         )
+    end
+
+    def old_and_new_tags(new_tags)
+        category_finder = CategoryFinder.new(new_tags, @context)
+        @entity.genres.pluck('name') + category_finder.find
     end
 end
