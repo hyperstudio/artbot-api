@@ -99,6 +99,4 @@ class AdminMapper
         entity = EntityCreator.new(new_tag, true, true).entity
         entity.matching_entity_events.map {|event| entity.add_event(event)}
     end
-
-    attr_reader :result
 end

@@ -15,7 +15,6 @@ class EntityAssociator
 
         all_tags = old_and_new_tags(tags, tag_source).join(', ')
         if all_tags.present?
-            puts '.........TAGGING %s with %s using tag source %s' % [@entity.name, all_tags, tag_source.name]
             tag_source.tag(
                 @entity, on: @context.to_s.pluralize.to_sym,
                 with: all_tags
