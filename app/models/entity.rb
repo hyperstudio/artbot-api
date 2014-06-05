@@ -48,7 +48,11 @@ class Entity < ActiveRecord::Base
   end
 
   def related_entity_events
-    related_entities.includes(:events).where.not(events: {id: events}).map {|e| e.events}.flatten.uniq
+    related_events = []
+    matching_entities(:verified_only => false).includes(:genres).find_each do |entity|
+      related_events.push(Entity.tagged_with(entity.tag_list, :any => true).includes(:events).map {|e| e.events}.flatten)
+    end
+    related_events.flatten.uniq.select {|e| !events.include?(e)}
   end
 
   def tag_list

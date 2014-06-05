@@ -23,20 +23,29 @@
     <td><%= @entity.tag_list %></td>
   </tr>
   <tr>
-    <td>SIMILAR ENTITIES</td>
+    <td>MATCHING ENTITIES</td>
     <td>
-      <% for related_entity in @entity.matching_entities(:omit_self => true) %>
+      <% for related_entity in @entity.matching_entities(:omit_self => true).uniq %>
         <%= link_to related_entity.name, related_entity %></br>
       <% end %>
     </td>
   </tr>
   <tr>
-    <td>SIMILAR GENRES</td>
+    <td>MATCHING GENRES</td>
     <td>
-      <% for related_entity in @entity.matching_entities(:omit_self => true) %>
-        <%= related_entity.tag_list %><br />
+      <% for related_entity in @entity.matching_entities(:omit_self => true).uniq %>
+        <%= related_entity.tag_list %> (<%= related_entity.name %>) 
       <% end %>
     </td>
+  </tr>
+  <tr>
+    <td>RELATED ENTITIES</td>
+    <td>
+      <% for related_entity in @entity.related_entities %>
+        <% unless related_entity.id == @entity.id %>
+          <%= link_to related_entity.name, related_entity %>,
+        <% end %>
+      <% end %>
   </tr>
   <tr>
     <td>EVENTS</td>
@@ -49,10 +58,8 @@
   <tr>
     <td>RELATED EVENTS</td>
     <td>
-      <% for related_entity in @entity.matching_entities(:omit_self => true).includes(:events) %>
-        <% for related_event in related_entity.events %>
-          <%= link_to related_event.name, url_for(related_event) %></br>
-        <% end %>
+      <% for event in @entity.related_entity_events %>
+        <%= link_to event.name, url_for(event) %></br>
       <% end %>
     </td>
   </tr>
