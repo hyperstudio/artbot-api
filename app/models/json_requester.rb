@@ -36,6 +36,12 @@ class JsonRequester
         MultiJson.load(text, :symbolize_keys => symbolize_keys)
     end
 
+    def dump(hash_obj, outfile)
+        File.open(outfile, 'w+') do |f|
+            f << MultiJson.dump(hash_obj)
+        end
+    end
+
     def get(endpoint, params)
         access_json(endpoint, "GET", params)
     end

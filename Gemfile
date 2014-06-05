@@ -35,6 +35,8 @@ gem 'cancan'
 gem 'neat'
 gem 'high_voltage'
 
+gem 'roo'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'

@@ -1,34 +1,40 @@
 class AdminMapper
     ADMIN_SOURCE = TagSource.admin
+    @result = nil
 
-    def json_file_to_obj(filepath)
+    def json_from_path(filepath, symbolize_keys: false)
         json_file = nil
-        File.open(path, 'r') do |f|
-            json_file = JsonRequester.new.load(f, false)
+        File.open(filepath, 'r') do |f|
+            json_file = JsonRequester.new.load(f, symbolize_keys)
         end
-        json_file
+        @result = json_file
     end
 
-    def csv_file_to_obj(rows_or_filepath)
+    def json_from_file_obj(file)
+        @result = JsonRequester.new.load(file, false)
+    end
+
+    def csv_to_json(rows_or_filepath, outfile)
         """
         Rows should be [GENRE_NAME, URL_1, URL_2, etc. etc.] (e.g. from a CSV)
         Converts the urls to json paths, e.g. 'artsy.net/gene/abstract-expressionism' will look for '/artsy/abstract-expressionism.json'
         """
-        if rows_or_filepath.respond_to?(:to_s)
-            rows_or_filepath = CsvParser.new.read(rows)
+        unless rows_or_filepath.respond_to?(:to_ary)
+            rows_or_filepath = CsvParser.new.read(rows_or_filepath)
         end
         rows = rows_or_filepath
         final_mappings = {}
-        row_length = rows.empty? ? 0 : rows.first
         rows.each do |row|
             genre_name = row.shift
+            final_mappings[genre_name] = {}
             row.select {|u| !u.empty?}.each do |url|
-                final_mappings[genre_name][url] = get_entities_from_json(url)
+                final_mappings[genre_name][url] = get_entities_from_json(url, :by_file => true)
             end
         end
+        JsonRequester.new.dump(final_mappings, outfile)
     end
 
-    def get_entities_from_json(url)
+    def get_entities_from_json(url, by_file: false)
         """
         Used to import genres/tags from external sources.
         Example: get_entities_from_json('http://artsy.net/gene/abstract-expressionism') will look for a file called '/artsy/abstract-expressionism.json'
@@ -36,8 +42,12 @@ class AdminMapper
         """
         folder_path = url.split('/')[2].split('.')[0]
         genre_slug = url.split('/').pop
-        json_file = json_file_to_obj('%s/%s.json' % [folder_path, genre_slug])
-        json_file[:results][:collection1].map {|entity| process_entity(entity)}
+        if !!by_file
+            json_file = json_from_path('%s/%s.json' % [folder_path, genre_slug], :symbolize_keys => true)
+        else
+            json_file = JsonRequester.new.get(url)
+        end
+        json_file[:results][:collection1].map {|entity| process_entity(entity, folder_path)}
     end
 
     def process_entity(entity, folder_path)
@@ -63,15 +73,14 @@ class AdminMapper
 
     ### Methods for processing once the info has been ingested in a hash obj.
 
-    def process_incoming_mapping_hash(hash_obj)
-        hash_obj.map do |admin_tag, url_hash|
-            puts "On %s" % admin_tag
-            url_hash.map do |url, entity_list|
-                puts "...URL %s" % url
-                # save_and_relate_entity(admin_tag, url, [admin_tag], "", admin_source)
-                entity_list.each do |entity|
-                    entity.symbolize_keys!
-                    save_and_relate_entity(entity[:name], entity[:url], [admin_tag], "person", ADMIN_SOURCE)
+    def process_result
+        if @result.present?
+            @result.map do |admin_tag, url_hash|
+                url_hash.map do |url, entity_list|
+                    entity_list.each do |entity|
+                        entity.symbolize_keys!
+                        save_and_relate_entity(entity[:name], entity[:url], [admin_tag], "person", ADMIN_SOURCE)
+                    end
                 end
             end
         end
@@ -87,8 +96,9 @@ class AdminMapper
             :entity_type => entity_type,
             :source => source
         }
-        puts "...creating new entity %s" % new_tag
         entity = EntityCreator.new(new_tag, true, true).entity
         entity.matching_entity_events.map {|event| entity.add_event(event)}
     end
+
+    attr_reader :result
 end

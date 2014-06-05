@@ -18,4 +18,19 @@ class EntitiesController < ApplicationController
       format.json { render json: @event }
     end
   end
+
+  # GET /entities/import
+  # POST /entities/import
+  def import
+    if params[:file]
+      admin_mapper = AdminMapper.new
+      admin_mapper.json_from_file_obj(params[:file])
+      admin_mapper.process_result
+      redirect_to root_url, notice: "Import successful"
+    else
+      respond_to do |format|
+        format.html
+      end
+    end
+  end
 end

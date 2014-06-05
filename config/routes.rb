@@ -10,7 +10,12 @@ Rails.application.routes.draw do
     resource :favorite, only: [:create]
   end
   resources :locations
-  resources :entities
+  resources :entities do
+    collection do
+      get 'import'
+      post 'import'
+    end
+  end
 
   namespace :admin do
     get '/' => 'users#index'
