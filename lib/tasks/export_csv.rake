@@ -15,6 +15,8 @@ namespace :csv do
                 entity.event_list
                 ])
         end
-        CsvParser.new.write('entities.csv', rows, headers)
+        csv_string = CsvParser.new.write_to_string(rows, headers)
+        puts csv_string
+        csv_string
     end
 end
