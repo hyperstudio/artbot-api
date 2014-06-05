@@ -1,6 +1,5 @@
 class EventCreator
     def initialize(scraper_result, location_id)
-        scraper_result = scraper_result.symbolize_keys!
         @event = Event.find_or_initialize_by(url: self.strip_query_params_from_url(scraper_result[:url]))
         @event.name = scraper_result[:name].strip
         @event.description = scraper_result[:description].strip

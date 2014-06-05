@@ -10,4 +10,13 @@ describe TagSource do
   it 'has a dbpedia entity finder' do
     expect(described_class.dbpedia).to be_instance_of(described_class)
   end
+
+  it 'returns a hash when cleaned' do
+    tag_source = described_class.dbpedia
+    expect(described_class.dbpedia)
+  end
+
+  def sample_input
+    
+  end
 end

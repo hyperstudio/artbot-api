@@ -10,6 +10,10 @@ class TagSource < ActiveRecord::Base
       'IndustryTerm' => 0.1
   }
 
+  def self.insensitive_find(path)
+    where("lower(name) = ?", path.downcase).first
+  end
+
   def self.stanford
     find_or_create_by(name: 'Stanford')
   end
@@ -18,7 +22,7 @@ class TagSource < ActiveRecord::Base
     find_or_create_by(name: 'DBpedia')
   end
 
-  def self.calais
+  def self.opencalais
     find_or_create_by(name: 'OpenCalais')
   end
 
@@ -31,17 +35,21 @@ class TagSource < ActiveRecord::Base
   end
 
   def clean_dbpedia(ner_result)
-      ner_result[:name] = ner_result.delete :label
+      # Clean of any trailing parens (e.g. "William Wegman (photographer)")
+      name = ner_result.delete :label
+      name = name.include?("(") ? name.split("(")[0].strip : name
+      ner_result[:name] = name
       ner_result[:url] = ner_result.delete :uri
-      if self.shares_word?(ner_result[:label], ner_result[:stanford_name])
-          ner_result[:entity_type] = ner_result.delete :stanford_type
-          ner_result[:tags] = ner_result.delete :categories.map{|cat| cat["label"]}
-          ner_result
+      ner_result[:entity_type] = ner_result.delete :stanford_type
+      if self.shares_word?(ner_result[:name], ner_result[:stanford_name])
+          ner_result[:tags] = (ner_result.delete :categories).map{|cat| cat[:label]}
       else
           # treat the dbpedia mapping as erroneous, just use stanford
-          ner_result.except!(:uri, :label, :description, :refcount, :categories)
+          ner_result.except!(:url, :name, :description, :refCount, :categories)
+          ner_result[:name] = ner_result.delete :stanford_name
           ner_result[:source] = TagSource.stanford
       end
+      ner_result
   end
 
   def validate_opencalais(ner_result)
@@ -50,8 +58,8 @@ class TagSource < ActiveRecord::Base
     elsif ner_result[:type_group] == "socialTag"
       true
     elsif ner_result[:type_group] == "entities"
-      score_cutoff = OPENCALAIS_ENTITY_CUTOFFS[@entity.entity_type]
-      if score_cutoff.present? and @entity.score >= score_cutoff
+      score_cutoff = OPENCALAIS_ENTITY_CUTOFFS[ner_result[:entity_type]]
+      if score_cutoff.present? and ner_result[:score] >= score_cutoff
           true
       else
           false
@@ -62,6 +70,7 @@ class TagSource < ActiveRecord::Base
   def clean_opencalais(ner_result)
       ner_result[:url] = ner_result.delete :calais_id
       ner_result[:tags] = [ner_result[:name]] if ner_result[:type_group] == 'socialTag'
+      ner_result[:entity_type].downcase!
       ner_result
   end
 
@@ -100,6 +109,7 @@ class TagSource < ActiveRecord::Base
       ner_result[:name] = ner_result.delete :anchor
       ner_result[:score] = ner_result.delete :relevance
       ner_result[:tags] = ner_result[:entity_type].present? ? [] : [ner_result[:name]]
+      ner_result[:entity_type] = ner_result[:entity_type].split('/').pop
       ner_result.except!(:confidence, :targets)
       ner_result
   end
@@ -110,7 +120,7 @@ class TagSource < ActiveRecord::Base
       (list1 & list2).any?
   end
 
-  def valid?(ner_result)
+  def is_valid?(ner_result)
       method_name = 'validate_%s' % name.downcase
       if self.respond_to? method_name
         self.send(method_name, ner_result)
@@ -120,7 +130,7 @@ class TagSource < ActiveRecord::Base
   end
 
   def clean(ner_result)
-    if valid?(ner_result)
+    if is_valid?(ner_result)
       method_name = 'clean_%s' % name.downcase
       if self.respond_to? method_name
         self.send(method_name, ner_result)

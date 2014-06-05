@@ -29,6 +29,8 @@ ScraperUrl.create("id"=>5, "url"=>"http://brandeis.edu/rose", "location_id"=>7, 
 ScraperUrl.create("id"=>6, "url"=>"http://listart.mit.edu", "location_id"=>5, "name"=>"list")
 ScraperUrl.create("id"=>7, "url"=>"http://www.mfa.org", "location_id"=>1, "name"=>"mfa")
 
+TagSource.create(name: 'Stanford')
 TagSource.create(name: 'DBpedia')
 TagSource.create(name: 'OpenCalais')
+TagSource.create(name: 'Zemanta')
 TagSource.create(name: 'Admin')

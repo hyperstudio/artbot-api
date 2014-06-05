@@ -11,15 +11,24 @@ class EntityAssociator
     def tag_entity(tags, tag_source=nil)
         unless tag_source.present?
             tag_source = @entity.tag_sources[0]
+        end
 
-        tag_source.tag(
-            @entity, on: @context.to_s.pluralize.to_sym,
-            with: old_and_new_tags(tags).join(', ')
-        )
+        all_tags = old_and_new_tags(tags, tag_source).join(', ')
+        if all_tags.present?
+            puts '.........TAGGING %s with %s using tag source %s' % [@entity.name, all_tags, tag_source.name]
+            tag_source.tag(
+                @entity, on: @context.to_s.pluralize.to_sym,
+                with: all_tags
+            )
+        end
     end
 
-    def old_and_new_tags(new_tags)
-        category_finder = CategoryFinder.new(new_tags, @context)
-        @entity.genres.pluck('name') + category_finder.find
+    def old_and_new_tags(new_tags, tag_source)
+        unless tag_source == TagSource.admin
+            # Make sure these are legit names
+            category_finder = CategoryFinder.new(new_tags, @context)
+            new_tags = category_finder.find
+        end
+        new_tags | @entity.tags_sourced_by(tag_source)
     end
 end

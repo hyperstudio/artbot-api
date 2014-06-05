@@ -24,8 +24,15 @@ class EntityCreator
             @entity = nil
         end
 
-
-        unless @entity.sourced_by?("DBpedia") and ner_result[:source].name == "Zemanta"
+        if ner_result[:url].present? and ner_result[:url].include?("dbpedia.org") and @entity.sourced_by?("DBpedia")
+            # Make sure we aren't overriding the original dbpedia version.
+            if ner_result[:source].name == "Admin"
+                # Only add the new entity type, keep all else as-is
+                @entity.entity_type = ner_result[:entity_type]
+            elsif ner_result[:source].name == "Zemanta"
+                # Don't override anything
+            end
+        else
             add_attributes_to_entity(ner_result)
         end
 
@@ -47,11 +54,12 @@ class EntityCreator
     def add_attributes_to_entity(ner_result)
         @entity.name = ner_result[:name]
         @entity.description = ner_result[:description]
-        @entity.refcount = ner_result[:refcount]
+        @entity.refcount = ner_result[:refCount]
         @entity.score = ner_result[:score]
-        @entity.entity_type = ner_result[:entity_type]
-        @entity.type_group = ner_result[:type_group]
         @entity.stanford_name = ner_result[:stanford_name]
+        if ner_result[:entity_type].present?
+            @entity.entity_type = ner_result[:entity_type]
+        end
     end
 
     attr_reader :entity, :tags

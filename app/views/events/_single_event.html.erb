@@ -5,18 +5,18 @@
 <p class="date"><%= event.dates %></p>
 <%= render 'events/favorite_link', event: event %>
 
-<ul>
-  <% event.entities.each do |category| %>
-    <li>
-      <%= link_to category.name, category.url, target: '_blank' %>
-      <% if category.source_name == "DBpedia" %>
-        (<%= category.stanford_name %> - <%= category.stanford_type %>)
-      <% else %>
-        (<%= category.source_name %> - <%= category.calais_type_group %>)
-      <% end %>
-    </li>
+<table>
+  <tr>
+    <td>NAME</td><td>SOURCES</td><td>TYPE</td>
+  </tr>
+  <% event.entities.each do |entity| %>
+    <tr>
+      <td><%= link_to entity.name, entity, target: '_blank' %></td>
+      <td><%= entity.source_list %></td>
+      <td><%= entity.entity_type %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
 
 <div class="events-list related anchor-bottom">
   <h3>Related Events</h3>

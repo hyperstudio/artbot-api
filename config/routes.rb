@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resource :favorite, only: [:create]
   end
   resources :locations
+  resources :entities
 
   namespace :admin do
     get '/' => 'users#index'

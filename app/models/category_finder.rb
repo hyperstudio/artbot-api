@@ -2,7 +2,7 @@ class CategoryFinder
   ADMIN_TAGS=TagSource.admin.owned_tags.pluck('name')
   PATTERNS={
     genre: [
-      %r((.+)?arch(.+)?)i,
+      %r((.+)?archit(.+)?)i,
       %r((.+)?ism(.+)?)i,
       %r((.+)?mural(.+)?)i,
       %r((.+)?sculpt(.+)?)i,

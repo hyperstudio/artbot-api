@@ -7,6 +7,6 @@ class ScraperQuerier
 
     def query_scraper
         endpoint = SCRAPER_BASE_URL + "/" + @path
-        JsonRequester.new.get(endpoint, {})["results"]
+        JsonRequester.new.get(endpoint, {})[:results]
     end
 end

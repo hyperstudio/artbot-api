@@ -11,45 +11,60 @@ class Event < ActiveRecord::Base
   end
 
   def genres
-    entities.includes(genres: [:taggings]).map {|entity| entity.genres}.flatten
-  end
-
-  def taggings
-    genres.map {|genre| genre.taggings}.flatten
-  end
-
-  def related_entities
-    Entity.where(id: taggings.map {|tagging| tagging.taggable_id}).includes(:events)
+    genres = []
+    entities.each do |entity|
+      entity.matching_entities(false).find_each do |related_entity|
+        genres.push(related_entity.owner_tags_on(nil, :genres))
+      end
+    end
+    genres.flatten
   end
 
   def relate_to_entity(entity)
-    entities += [entity] if entity.present?
+    if entity.present? and entities.include?(entity)
+      entities << entity
+    end
   end
 
-  def related_events
-    related_entities.map {|entity| entity.events.where.not(id:id).includes(entities: [:genres])}.flatten
+  def add_related_events(events, orig_entity, related_entity, genre, existing_list=[])
+    existing_ids = existing_list.map {|re| re[:event].id} + [id]
+    events.each do |related_event|
+      unless existing_ids.include?(related_event.id)
+        existing_list.push({
+          :event => related_event,
+          :entity => orig_entity.name,
+          :related_entity => related_entity.name,
+          :genre => genre
+          })
+      end
+    end
+    existing_list
+  end
+    
+  def entity_related_events
+    entities.map {|e| e.matching_entity_events}.flatten.uniq
+  end
+
+  def genre_related_events
+    entities.map {|e| e.related_entity_events}.flatten.uniq
   end
 
   def all_related_events
     related_events = []
     entities.find_each do |entity|
-      entity.genres.where("taggings_count > ?", 1).find_each do |genre|
-        related_entity_ids = genre.taggings.where("taggable_id != ?", entity.id).pluck("taggable_id")
-        Entity.where(id: related_entity_ids).find_each do |related_entity|
-          related_entity.events.where.not(id: id).find_each do |related_event|
-            unless related_events.map {|re| re[:event].id}.include?(related_event.id)
-              # puts "%s, %s and %s RELATED BECAUSE %s" % [related_event.name, entity.name, related_entity.name, genre.name]
-              related_events.push({
-                :event => related_event,
-                :entity => entity.name,
-                :related_entity => related_entity.name,
-                :genre => genre})
-            end
-          end
-        end
+      # First get all the entities with the same name so we can query across them
+      entities_with_same_name = entity.matching_entities(:verified_only => false)
+      people_and_admins = entity.matching_entities(:verified_only => true)
+
+      entities_with_same_name.includes(:events, :genres).find_each do |related_entity|
+        # Look first for matching entity names, and make sure they are people
+        add_related_events(related_entity.events, entity, related_entity, related_entity.tag_list, related_events) if people_and_admins.include?(related_entity)
+        # Now look for entities related by genre
+        Entity.tagged_with(related_entity.tag_list, :any => true).includes(:events).map {|e| 
+          add_related_events(e.events, related_entity, e, '', related_events)}
       end
     end
-    return related_events
+    related_events
   end
 
   def select_related_events(count=4)
@@ -67,7 +82,8 @@ class Event < ActiveRecord::Base
   def get_and_process_entities(ner_path)
     fetch_entities(ner_path).each do |entity_result|
       entity = EntityCreator.new(entity_result, true, true).entity
-      entity.relate_to_event(self)
+      entity.add_event(self)
+      entity.admin_relations.map {|relation| relation.add_event(self)}
     end
   end
 end

@@ -3,14 +3,13 @@ require 'csv'
 class CsvParser
 
     def read(path)
-        CSV.read(path, encoding: 'ISO8859-1')
+        CSV.read(path)
     end
 
     def write(path, data, headers=nil)
-        CSV.open('path', 'w+') do |csv|
-            data.each do |row|
-                csv << row
-            end
+        CSV.open(path, 'w+') do |csv|
+            csv << headers if headers.present?
+            data.each {|row| csv << row}
         end
     end
 end

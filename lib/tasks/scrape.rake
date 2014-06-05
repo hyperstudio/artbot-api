@@ -1,7 +1,7 @@
 namespace :scrape do
     desc 'run scrapers and entity recognition for museum websites'
     task :all => :environment do
-        ALL_TAG_SOURCES = ['stanford', 'calais']
+        ALL_NER_PATHS = ['stanford', 'opencalais', 'zemanta']
         # Start with all of the URLs in the database
         ScraperUrl.all.find_each do |url|
             # This is where we query the scraper app
@@ -11,7 +11,8 @@ namespace :scrape do
                     # Either the record is new or has changed, so re-categorize it
                     event.save
                     # Query the NER app here
-                    ALL_TAG_SOURCES.each {|tag_source| event.fetch_and_assign_tags(tag_source)}
+                    puts "New event, %s, querying NER" % event.url
+                    ALL_NER_PATHS.each {|path| event.get_and_process_entities(path)}
                 elsif event.changed?
                     event.save
                 end

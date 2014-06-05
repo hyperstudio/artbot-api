@@ -7,7 +7,11 @@
             <h3><%= event[:event].name %></h3>
           <% end %>
         </li>
-        <p><%= event[:genre] %></p>
+        <% if event[:genre].present? %>
+          <p><strong><%= event[:genre] %> - </strong><em><%= event[:entity] %> - <%= event[:related_entity] %></em></p>
+        <% else %>
+          <p><strong><%= event[:entity] %> - </strong><em><%= event[:related_entity] %></em></p>
+        <% end %>
     <% else %>
         <li>
           <%= link_to event do %>

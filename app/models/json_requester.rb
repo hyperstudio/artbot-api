@@ -29,7 +29,11 @@ class JsonRequester
             self.access_json(response['location'], method, params, limit-1)
         end
 
-        return MultiJson.load(response.body)
+        load(response.body)
+    end
+
+    def load(text, symbolize_keys=true)
+        MultiJson.load(text, :symbolize_keys => symbolize_keys)
     end
 
     def get(endpoint, params)
