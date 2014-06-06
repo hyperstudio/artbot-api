@@ -60,7 +60,7 @@ class Entity < ActiveRecord::Base
   end
 
   def source_list
-    tag_sources.pluck('name').join(', ')
+    tag_sources.pluck('name').uniq.join(', ')
   end
 
   def event_list
