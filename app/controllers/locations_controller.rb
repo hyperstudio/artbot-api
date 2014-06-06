@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @locations = Location.all.includes(:events)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
