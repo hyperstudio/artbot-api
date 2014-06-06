@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     @events = Event.includes(:entities, :location)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @events, :include => :location }
+      format.json # index.json.jbuilder
     end
   end
 
@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @event, :include => :location }
+      format.json # show.json.jbuilder
     end
   end
 end
