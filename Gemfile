@@ -36,6 +36,7 @@ gem 'neat'
 gem 'high_voltage'
 
 gem 'roo'
+gem 'chronic'
 
 group :development, :test do
   gem 'rspec-rails'
