@@ -20,7 +20,7 @@ class EventCreator
         return url
     end
 
-    def assign_datetimes(datestring)
+    def assign_datetimes
         dates = DateParser.parse(@event.dates)
         @event.start_date = dates[0]
         @event.end_date = dates[1]
