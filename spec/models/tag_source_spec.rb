@@ -5,6 +5,18 @@ describe TagSource do
 
   context 'tagging' do
     it { should respond_to(:owned_taggings) }
+    it { should respond_to(:owned_tags) }
+  end
+
+  context '#owned_tag_names' do
+    it 'returns the tag names owned by a tag source' do
+      entity = create(:entity)
+      tag_source = create(:tag_source)
+
+      tag_source.tag(entity, with: 'foo, bar', on: :genre)
+
+      expect(tag_source.owned_tag_names).to match_array ['foo','bar']
+    end
   end
 
   it 'has a dbpedia entity finder' do
@@ -17,6 +29,6 @@ describe TagSource do
   end
 
   def sample_input
-    
+
   end
 end

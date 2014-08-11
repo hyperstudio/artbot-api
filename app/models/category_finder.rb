@@ -1,6 +1,5 @@
 class CategoryFinder
-  ADMIN_TAGS=TagSource.admin.owned_tags.pluck('name')
-  PATTERNS={
+  PATTERNS = {
     genre: [
       %r((.+)?archit(.+)?)i,
       %r((.+)?ism(.+)?)i,
@@ -21,9 +20,10 @@ class CategoryFinder
       %r(\Aart(.+)?)i,
       %r((.+)art\s(.+)?)i,
       %r((.+)\sart(.+)?)i
-      ]
+    ]
   }
-  FLAGS={
+
+  FLAGS = {
     genre: [
       %r((.+)?article(.+)?)i,
       %r((.+)?museum(.+)?)i
@@ -36,19 +36,17 @@ class CategoryFinder
   end
 
   def find
-    admin_tags = ADMIN_TAGS
-    lowercase_tags = admin_tags.map {|tag| tag.downcase}
-    context_patterns = PATTERNS[context]
-    flag_patterns = FLAGS[context]
+    admin_tags = TagSource.admin.owned_tag_names
+    lowercase_admin_tags = admin_tags.map {|tag| tag.downcase}
     categories.find_all do |category|
       # See if this is an admin-added tag-- if so, we want to let it through
-      if lowercase_tags.include? category.downcase
-        admin_tags[lowercase_tags.index(category.downcase)]
+      label = category[:label]
+      if lowercase_admin_tags.include? label.downcase
+        true
       else
         context_patterns.any? do |pattern|
-          # Check for flags before applying the match
-          unless flag_patterns.map {|flag_pattern| category.match(flag_pattern)}.any?
-            category.match(pattern)
+          if no_flagged_term_matches_on(label)
+            label.match(pattern)
           end
         end
       end
@@ -58,4 +56,17 @@ class CategoryFinder
   private
 
   attr_reader :categories, :context
+
+  def context_patterns
+    PATTERNS[context]
+  end
+
+  def no_flagged_term_matches_on(label)
+    flagged_term_patterns.map {|flag_pattern| label.match(flag_pattern)}.none?
+  end
+
+  def flagged_term_patterns
+    FLAGS[context]
+  end
+
 end

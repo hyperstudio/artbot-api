@@ -40,7 +40,7 @@ class Event < ActiveRecord::Base
     end
     existing_list
   end
-    
+
   def entity_related_events
     entities.map {|e| e.matching_entity_events}.flatten.uniq
   end

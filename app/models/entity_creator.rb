@@ -1,20 +1,19 @@
 class EntityCreator
-    """
-    Takes a single hash with properties and creates an entity and all associated tags
-    Current options for hash: {
-        :url => (the url),
-        :name => (label to search by),
-        :source => (instance of the TagSource),
-        :entity_type => (type of entity),
-        :type_group => (used for OpenCalais, 'socialTag' or 'entities'),
-        :score => (relevance or confidence score),
-        :refcount => (DBpedia refcount),
-        :description => (longer description),
-        :stanford_name => (in the case of DBpedia, the name of the stanford entity),
-        :tags => (tags for these entities)
-    }
-    """
-    
+
+#   Takes a single hash with properties and creates an entity and all associated tags
+#   Current options for hash: {
+#       :url => (the url),
+#       :name => (label to search by),
+#       :source => (instance of the TagSource),
+#       :entity_type => (type of entity),
+#       :type_group => (used for OpenCalais, 'socialTag' or 'entities'),
+#       :score => (relevance or confidence score),
+#       :refcount => (DBpedia refcount),
+#       :description => (longer description),
+#       :stanford_name => (in the case of DBpedia, the name of the stanford entity),
+#       :tags => (tags for these entities)
+#   }
+
     def initialize(ner_result, save=false, add_relations=false)
         if ner_result[:url].present?
             @entity = Entity.find_or_initialize_by(url: ner_result[:url])
@@ -38,10 +37,10 @@ class EntityCreator
 
         @tags = ner_result[:tags].present? ? ner_result[:tags] : []
 
-        if !!save
+        if save
             @entity.save
         end
-        if !!add_relations
+        if add_relations
             add_relations(ner_result[:source])
         end
     end

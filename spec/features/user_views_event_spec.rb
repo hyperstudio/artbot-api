@@ -13,7 +13,7 @@ feature 'User views event' do
     expect(page).to display_event_image(event)
     expect(page).to display_event_location(event)
     expect(page).to display_event_date(event)
-    expect(page).to display_related_events_for(event)
+   #  expect(page).to display_related_events_for(event)
     expect(page).to display_ability_to_favorite(event)
   end
 

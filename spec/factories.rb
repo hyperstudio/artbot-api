@@ -1,6 +1,14 @@
 FactoryGirl.define do
   sequence(:url) { |n| "http://www.example.com/#{n}" }
 
+  factory :entity do
+    sequence(:name) { |n| "Entity #{n}" }
+  end
+
+  factory :tag_source do
+    sequence(:name) { |n| "Tag Source #{n}" }
+  end
+
   factory :event do
     location
     url

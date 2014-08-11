@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   # Default role is "registered"
   def role?(role)
-    return !!self.roles.find_by_name(role.to_s.camelize)
+    return self.roles.find_by_name(role.to_s.camelize)
   end
 
   def setup_role

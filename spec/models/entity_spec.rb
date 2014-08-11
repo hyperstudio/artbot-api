@@ -6,7 +6,7 @@ describe Entity do
   it 'should be taggable on genre' do
     entity = create(
       :entity,
-      genre_list: 'foo, bar'
+      genre_list: 'foo,bar'
     )
 
     expect(entity.genre_list).to match_array( ['foo', 'bar'])

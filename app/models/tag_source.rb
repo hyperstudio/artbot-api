@@ -34,6 +34,10 @@ class TagSource < ActiveRecord::Base
     find_or_create_by(name: 'Admin')
   end
 
+  def owned_tag_names
+    owned_tags.pluck(:name)
+  end
+
   def clean_dbpedia(ner_result)
       # Clean of any trailing parens (e.g. "William Wegman (photographer)")
       name = ner_result.delete :label

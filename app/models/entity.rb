@@ -19,17 +19,17 @@ class Entity < ActiveRecord::Base
   end
 
   def matching_entities(verified_only: true, case_sensitive: false, omit_self: false)
-    if !!case_sensitive
+    if case_sensitive
       query = Entity.where("entities.name = ?", name)
     else
       query = Entity.where("lower(entities.name) = ?", name.downcase)
     end
 
-    if !!omit_self
+    if omit_self
       query = query.where.not(id: id)
     end
 
-    if !!verified_only and entity_type != "person" and !sourced_by?('Admin')
+    if verified_only and entity_type != "person" and !sourced_by?('Admin')
       query = query.joins(:tag_sources).where('entity_type = ? OR tag_sources.name = ?', "person", "Admin")
     end
     query

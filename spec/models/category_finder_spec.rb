@@ -15,12 +15,6 @@ describe CategoryFinder do
     )
   end
 
-  it 'emits a comma-separated list of tags' do
-    finder = described_class.new(example_categories, :genre)
-
-    expect(finder.find_as_tag_list).to eq 'Cubism, Surrealism, Land art'
-  end
-
   def wanted_categories
     [
       {
