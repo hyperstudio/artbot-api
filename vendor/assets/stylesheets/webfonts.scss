@@ -1,0 +1,92 @@
+// From Google:
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic);
+
+// Icon font from Icomoon.io
+@font-face {
+    font-family: 'artx';
+    src: url('/assets/fonts/artx.eot?qwz1q0');
+    src: url('/assets/fonts/artx.eot?#iefixqwz1q0') format('embedded-opentype'),
+         url('/assets/fonts/artx.woff?qwz1q0') format('woff'),
+         url('/assets/fonts/artx.ttf?qwz1q0') format('truetype'),
+         url('/assets/fonts/artx.svg?qwz1q0#artx') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon {
+    font-family: 'artx';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-check:before {
+    content: "\e116";
+}
+.icon-checkmark:before {
+    content: "\e603";
+}
+.icon-calendar:before {
+    content: "\e600";
+}
+.icon-search:before {
+    content: "\e036";
+}
+.icon-circle-plus:before {
+    content: "\e040";
+}
+.icon-square-plus:before {
+    content: "\e044";
+}
+.icon-rewind:before {
+    content: "\e051";
+}
+.icon-fast-forward:before {
+    content: "\e055";
+}
+.icon-location:before {
+    content: "\e070";
+}
+.icon-location-2:before {
+    content: "\e071";
+}
+.icon-map:before {
+    content: "\e072";
+}
+.icon-globe:before {
+    content: "\e078";
+}
+.icon-reload:before {
+    content: "\e080";
+}
+.icon-tag:before {
+    content: "\e085";
+}
+.icon-arrow-left:before {
+    content: "\e094";
+}
+.icon-arrow-right:before {
+    content: "\e095";
+}
+.icon-plus:before {
+    content: "\e114";
+}
+.icon-cross:before {
+    content: "\e117";
+}
+.icon-menu:before {
+    content: "\e120";
+}
+.icon-star:before {
+    content: "\e601";
+}
+.icon-star2:before {
+    content: "\e602";
+}

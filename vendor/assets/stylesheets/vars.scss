@@ -1,0 +1,57 @@
+// Color Palette
+// -------------------------
+$white: rgb(255,255,255);
+$gray-lighter: rgb(237,237,237);      // #ededed
+$gray-light: rgb(220,220,220);        // #dcdcdc
+$gray-mediumlight: rgb(167,168,172);  // #A7A8AC
+$gray: rgb(128,129,132);              // #808184
+$gray-mediumdark: rgb(110,110,110);   // #6e6e6e
+$gray-dark: rgb(72,72,72);            // #484848
+$gray-darker: rgb(55,55,55);          // #373737
+$gray-darkest: rgb(38,38,38);         // #262626
+$black: rgb(0,0,0);                   // #000000
+
+// Transparent colors:
+$black-10pct: rgba(0,0,0,.1);
+$black-20pct: rgba(0,0,0,.2);
+$black-30pct: rgba(0,0,0,.3);
+$black-40pct: rgba(0,0,0,.4);
+$black-50pct: rgba(0,0,0,.5);
+$black-60pct: rgba(0,0,0,.6);
+$black-70pct: rgba(0,0,0,.7);
+$black-80pct: rgba(0,0,0,.8);
+$black-90pct: rgba(0,0,0,.9);
+
+// Color scheme: Monochromatic theme Aqua
+$main-color: rgb(46,241,255);
+$main-color-light: lighten($main-color, 10);
+$main-color-medium: darken($main-color, 30);
+$main-color-dark: darken($main-color, 40);
+$main-color-darker: darken($main-color, 45);
+$main-color-darkest: darken($main-color, 50);
+$main-color-bg: lighten($main-color, 30);
+
+$accent-color:rgb(76,255,101); // #4cff65
+
+// Color variables:
+$page-bg: $gray-darker;
+$masthead-bg: $gray-dark;
+$footer-bg: $gray-dark;
+$text-color:$white;
+$link-color:$main-color;
+$link-hover-color:$accent-color;
+
+$base-font-size:    16px;
+$base-line-height:  24px;
+$base-spacing-unit: $base-line-height;
+$half-spacing-unit: $base-line-height/2;
+$spacing-unit: 15px;
+$spacing-desktop: 24px;
+
+$open-quote:    \201C;
+$close-quote:   \201D;
+
+// Breakpoints and mobile
+$lap-start:       600px;
+$desk-start:      960px;
+$desk-wide-start: 1200px;

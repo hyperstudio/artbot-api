@@ -1,15 +1,23 @@
 Rails.application.routes.draw do
 
   root to: 'home#index'
+
   get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
-
-  devise_for :users, :path_names => {:sign_in => "login", :sign_out => "logout"}, :path => 'd'
-
+  devise_for :users
   resources :profiles, :only => [:dashboard]
-  resources :events do
-    resource :favorite, only: [:create]
+
+  resources :events
+
+  resources :locations do
+    resources :events
   end
-  resources :locations
+
+  get '/events/:date' => 'events#index'
+
+  resources :favorites
+  resources :attendances
+  resources :interests
+
   resources :entities do
     collection do
       get 'import'

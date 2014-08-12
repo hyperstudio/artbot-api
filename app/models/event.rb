@@ -60,7 +60,7 @@ class Event < ActiveRecord::Base
         # Look first for matching entity names, and make sure they are people
         add_related_events(related_entity.events, entity, related_entity, related_entity.tag_list, related_events) if people_and_admins.include?(related_entity)
         # Now look for entities related by genre
-        Entity.tagged_with(related_entity.tag_list, :any => true).includes(:events).map {|e| 
+        Entity.tagged_with(related_entity.tag_list, :any => true).includes(:events).map {|e|
           add_related_events(e.events, related_entity, e, '', related_events)}
       end
     end

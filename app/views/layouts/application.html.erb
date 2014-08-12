@@ -1,40 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Artx</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-</head>
+<%= render "shared/head" %>
+<!-- TODO: fix up page id and page class -->
+<!-- body id="page-page.active " class="page-page.active" -->
 <body>
-  <% if content_for?(:page_header) %>
-    <header class="page">
-      <h1><%= yield(:page_header).presence %></h1>
-      <nav class="primary">
-        <% if user_signed_in? %>
-          <%= link_to('My Profile', user_root_path) %>
-          <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
-        <%else%>
-          <%= link_to('Login', new_user_session_path) %>  
-          <%= link_to('Register', new_user_registration_path) %>  
-        <%end%> 
-      </nav>
-
-      <%= link_to page_path('navigation'), class: 'a-fa-link' do %>
-        <span>Navigation</span>
-        <i class="fa fa-bars"></i>
-      <% end %>
-    </header>
-  <% end %>
-
-  <section class="primary-content">
-    <%- flash.each do |name, msg| -%>
-      <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
-    <%- end -%>
-
+    <!-- Skip navigation link for screen reader and keyboard users -->
+    <div class="skiplinkholder"><p><a id="skiplink" href="#skiptarget">Skip to main content (Press Enter).</a></p></div>
+    <div class="wrapper">
+    <%= render "shared/masthead_buttons" %>
     <%= yield %>
-  </section>
+    </div><!-- /wrapper -->
+    <%= render "shared/panel_menu" %>
+    <%= render "shared/modal_signup" %>
 </body>
 </html>
