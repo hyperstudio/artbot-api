@@ -14,4 +14,13 @@ class ApplicationController < ActionController::Base
   def current_user
     super || Guest.new
   end
+
+  def authenticate_user_from_token!
+    authentication_token = params[:authentication_token].presence
+    user = authentication_token && User.find_by_authentication_token(authentication_token.to_s)
+
+    if user
+      sign_in user, store: false
+    end
+  end
 end

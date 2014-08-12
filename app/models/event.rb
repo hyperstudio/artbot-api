@@ -2,6 +2,8 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
   validates :url, uniqueness: true
   belongs_to :location
+  has_many :favorites, dependent: :destroy
+  has_many :users, through: :favorites
   has_and_belongs_to_many :entities
 
   delegate :name, to: :location, prefix: true

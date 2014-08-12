@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618040448) do
+ActiveRecord::Schema.define(version: 20140812173114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(version: 20140618040448) do
     t.datetime "start_date"
     t.datetime "end_date"
   end
+
+  create_table "favorites", force: true do |t|
+    t.integer "user_id"
+    t.integer "event_id"
+  end
+
+  add_index "favorites", ["event_id"], name: "index_favorites_on_event_id", using: :btree
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.datetime "created_at"
@@ -120,8 +128,10 @@ ActiveRecord::Schema.define(version: 20140618040448) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

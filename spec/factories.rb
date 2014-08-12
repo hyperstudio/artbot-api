@@ -5,8 +5,18 @@ FactoryGirl.define do
     sequence(:name) { |n| "Entity #{n}" }
   end
 
+  factory :favorite do
+    user
+    event
+  end
+
   factory :tag_source do
     sequence(:name) { |n| "Tag Source #{n}" }
+  end
+
+  factory :user do
+    sequence(:email) { |n| "user_#{n}@example.com" }
+    password '1234qwer'
   end
 
   factory :event do

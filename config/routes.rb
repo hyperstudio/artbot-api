@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
 
-  devise_for :users, :path_names => {:sign_in => "login", :sign_out => "logout"}, :path => 'd'
+  devise_for :users
+
+  resources :favorites, only: [:index]
 
   resources :profiles, :only => [:dashboard]
   resources :events do
@@ -16,6 +18,8 @@ Rails.application.routes.draw do
       post 'import'
     end
   end
+
+  resources :tokens, only: [:create]
 
   namespace :admin do
     get '/' => 'users#index'
