@@ -21,6 +21,6 @@ feature 'User authenticates to the API', js: true do
 
     json_response = parse_response_from(curb)
 
-    expect(json_response.map{|favorite| favorite['id']}).to include(favorite.id)
+    expect(json_response['favorites'].map{|favorite| favorite['id']}).to include(favorite.id)
   end
 end

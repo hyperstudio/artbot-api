@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812173114) do
+ActiveRecord::Schema.define(version: 20140812204126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,8 +56,10 @@ ActiveRecord::Schema.define(version: 20140812173114) do
   end
 
   create_table "favorites", force: true do |t|
-    t.integer "user_id"
-    t.integer "event_id"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "favorites", ["event_id"], name: "index_favorites_on_event_id", using: :btree

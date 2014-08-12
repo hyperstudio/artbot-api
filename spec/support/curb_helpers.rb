@@ -9,6 +9,15 @@ module CurbHelpers
     end
   end
 
+  def delete_via_api(url, parameters)
+    json = parameters.to_json
+    Curl.delete("http://#{host}:#{port}/#{url}", json) do |curl|
+      set_default_headers(curl)
+
+      yield curl if block_given?
+    end
+  end
+
   def get_from_api(url, parameters)
     Curl.get("http://#{host}:#{port}/#{url}", parameters) do |curl|
       set_default_headers(curl)

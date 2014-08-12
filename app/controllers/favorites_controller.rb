@@ -5,6 +5,26 @@ class FavoritesController < ApplicationController
   respond_to :json
 
   def index
-    respond_with current_user.favorites
+    favorites = current_user.favorites.order('created_at desc').
+      page(page_param).per(per_page_param)
+
+    render_json_with_pagination_for(favorites)
+  end
+
+  def history
+    past_favorites = current_user.favorites.for_past_events.page(page_param).per(per_page_param)
+
+    render_json_with_pagination_for(past_favorites)
+  end
+
+  def create
+    event = Event.find(params[:event_id])
+    favorite = Favorite.create!(user: current_user, event: event)
+    respond_with favorite
+  end
+
+  def destroy
+    favorite = current_user.favorites.find(params[:id]).destroy
+    respond_with favorite
   end
 end

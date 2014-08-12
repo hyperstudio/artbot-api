@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :favorites, only: [:index]
+  resources :favorites, only: [:index, :show, :destroy] do
+    collection do
+      get 'history'
+    end
+  end
 
   resources :profiles, :only => [:dashboard]
   resources :events do

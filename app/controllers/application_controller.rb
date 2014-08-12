@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
+  private
+
   def current_user
     super || Guest.new
   end
@@ -22,5 +24,30 @@ class ApplicationController < ActionController::Base
     if user
       sign_in user, store: false
     end
+  end
+
+  def per_page_param
+    params.fetch(:per_page, 5)
+  end
+
+  def page_param
+    params.fetch(:page, 1)
+  end
+
+  def meta_hash_for(items)
+    {
+      current_page: items.current_page,
+      next_page: items.next_page,
+      prev_page: items.prev_page,
+      per_page: per_page_param,
+      total_pages: items.total_pages
+    }
+  end
+
+  def render_json_with_pagination_for(items)
+    render(
+      json: items,
+      meta: meta_hash_for(items)
+    )
   end
 end
