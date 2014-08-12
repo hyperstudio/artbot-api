@@ -54,4 +54,16 @@ class ApplicationController < ActionController::Base
 
     render options
   end
+    
+  def authenticate_admin_user!
+    if current_user.kind_of?(Guest) || current_user.nil?
+      redirect_to user_session_path
+    elsif !current_user.role?(admin)
+      redirect_to root_url
+    end
+  end
+
+  def after_sign_in_path_for(resource_or_scope)
+    current_user.role?(admin) ? admin_root_path : root_url
+  end
 end

@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :registrations, only: [:create]
+  
+  ActiveAdmin.routes(self)
+  root to: 'home#index'
+
+  get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
 
   patch :preferences, to: 'preferences#update'
   put :preferences, to: 'preferences#update'
