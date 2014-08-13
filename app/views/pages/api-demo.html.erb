@@ -9,6 +9,7 @@
           Email: <input type="text" name="email" id="email" value="" class="form-control" /><br>
           Password: <input type="password" name="password" id="password" value="" class="form-control" /><br>
           <button value="Log in" id='login-button' class="btn btn-default" />Log in</button><br>
+          <div class="well" id="token-viewer"></div>
           <pre class="prettyprint lang-js">
             <code class="javascript">
   $.ajax({
@@ -141,6 +142,7 @@
           console.log(data);
           $.cookie('token', data.authentication_token);
           $('div#main').data("token", $.cookie('token'));
+          $('div#token-viewer').html("Authentication Token: " + $.cookie('token'));
           console.log($('div#main').data("token"));
         }
       });
