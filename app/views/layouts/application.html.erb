@@ -6,35 +6,25 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <%= javascript_include_tag "jquery.cookie" %>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 </head>
 <body>
-  <% if content_for?(:page_header) %>
-    <header class="page">
-      <h1><%= yield(:page_header).presence %></h1>
-      <nav class="primary">
-        <% if user_signed_in? %>
-          <%= link_to('My Profile', user_root_path) %>
-          <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
-        <%else%>
-          <%= link_to('Login', new_user_session_path) %>  
-          <%= link_to('Register', new_user_registration_path) %>  
-        <%end%> 
-      </nav>
-
-      <%= link_to page_path('navigation'), class: 'a-fa-link' do %>
-        <span>Navigation</span>
-        <i class="fa fa-bars"></i>
-      <% end %>
-    </header>
-  <% end %>
-
-  <section class="primary-content">
-    <%- flash.each do |name, msg| -%>
-      <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
-    <%- end -%>
-
-    <%= yield %>
-  </section>
+  <div class="container">
+  <%- flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+  <%- end -%>
+  <%= yield %>
+  </div>
 </body>
 </html>
