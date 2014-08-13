@@ -1,8 +1,6 @@
 module CurbHelpers
   def post_to_api(path, parameters)
-    json = parameters.to_json
-
-    Curl.post("http://#{host}:#{port}#{path}", json) do |curl|
+    Curl.post("http://#{host}:#{port}#{path}", parameters) do |curl|
       set_default_headers(curl)
 
       yield curl if block_given?
@@ -10,8 +8,7 @@ module CurbHelpers
   end
 
   def delete_via_api(url, parameters)
-    json = parameters.to_json
-    Curl.delete("http://#{host}:#{port}/#{url}", json) do |curl|
+    Curl.delete("http://#{host}:#{port}/#{url}", parameters) do |curl|
       set_default_headers(curl)
 
       yield curl if block_given?
@@ -27,8 +24,7 @@ module CurbHelpers
   end
 
   def patch_to_api(url, parameters = {})
-    json = parameters.to_json
-    Curl.patch("http://#{host}:#{port}/#{url}", json) do |curl|
+    Curl.patch("http://#{host}:#{port}/#{url}", parameters) do |curl|
       set_default_headers(curl)
 
       yield curl if block_given?
@@ -51,6 +47,5 @@ module CurbHelpers
 
   def set_default_headers(curl)
     curl.headers['Accept'] = 'application/json'
-    curl.headers['Content-Type'] = 'application/json'
   end
 end
