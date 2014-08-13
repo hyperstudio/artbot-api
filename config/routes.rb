@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  root to: 'home#index'
   get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
 
   devise_for :users
@@ -12,10 +11,15 @@ Rails.application.routes.draw do
   end
 
   resources :profiles, :only => [:dashboard]
+
   resources :events do
     resource :favorite, only: [:create]
   end
-  resources :locations
+
+  resources :locations, only: [:index, :show] do
+    resources :events, only: [:index]
+  end
+
   resources :entities do
     collection do
       get 'import'
@@ -24,9 +28,4 @@ Rails.application.routes.draw do
   end
 
   resources :tokens, only: [:create]
-
-  namespace :admin do
-    get '/' => 'users#index'
-    resources :users
-  end
 end

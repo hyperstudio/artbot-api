@@ -55,8 +55,8 @@ feature 'User manages favorites', js: true do
 
   scenario 'finds past favorited events through history' do
     user = create(:user)
-    past_event = create(:event, end_date: Time.now - 2.days)
-    current_event = create(:event, end_date: Time.now + 2.days)
+    past_event = create(:event, :as_past_event)
+    current_event = create(:event, :as_current_event)
 
     create(:favorite, user: user, event: past_event)
     create(:favorite, user: user, event: current_event)

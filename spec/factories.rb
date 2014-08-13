@@ -26,6 +26,13 @@ FactoryGirl.define do
     sequence(:name) { |n| "Event #{n}" }
 
     dates 'May 20, 2014 - June 1, 2014'
+    trait :as_past_event do
+      end_date { Time.now - 2.days }
+    end
+    trait :as_current_event do
+      end_date { Time.now + 2.days }
+    end
+
   end
 
   factory :location do

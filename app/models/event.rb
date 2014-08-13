@@ -8,8 +8,36 @@ class Event < ActiveRecord::Base
 
   delegate :name, to: :location, prefix: true
 
+  def self.for_year(year)
+    if year.present?
+      where('extract(year from end_date) = ?', year)
+    else
+      all
+    end
+  end
+
+  def self.for_month(month)
+    if month.present?
+      where('extract(month from end_date) = ?', month)
+    else
+      all
+    end
+  end
+
+  def self.for_day(day)
+    if day.present?
+      where('extract(day from end_date) = ?', day)
+    else
+      all
+    end
+  end
+
   def self.newest(count)
     order('created_at DESC').limit(count)
+  end
+
+  def self.current
+    where('end_date >= now()')
   end
 
   def genres
@@ -37,7 +65,7 @@ class Event < ActiveRecord::Base
           :entity => orig_entity.name,
           :related_entity => related_entity.name,
           :genre => genre
-          })
+        })
       end
     end
     existing_list

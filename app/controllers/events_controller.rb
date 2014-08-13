@@ -1,21 +1,28 @@
 class EventsController < ApplicationController
-  # GET /events
-  # GET /events.json
+  respond_to :json
+
   def index
-    @events = Event.includes(:entities, :location)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json # index.json.jbuilder
-    end
+    events = scope.
+      for_year(params[:year]).
+      for_month(params[:month]).
+      for_day(params[:day]).
+      page(page_param).per(per_page_param)
+
+    render_json_with_pagination_for(events)
   end
 
-  # GET /events/1
-  # GET /events/1.json
   def show
-    @event = Event.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json # show.json.jbuilder
+    event = Event.find(params[:id])
+    respond_with event
+  end
+
+  private
+
+  def scope
+    if params[:location_id]
+      Location.find(params[:location_id]).events.current
+    else
+      Event.all
     end
   end
 end

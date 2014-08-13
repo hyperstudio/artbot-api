@@ -18,7 +18,7 @@ module CurbHelpers
     end
   end
 
-  def get_from_api(url, parameters)
+  def get_from_api(url, parameters = {})
     Curl.get("http://#{host}:#{port}/#{url}", parameters) do |curl|
       set_default_headers(curl)
 
