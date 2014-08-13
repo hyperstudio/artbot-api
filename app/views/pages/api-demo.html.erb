@@ -1,0 +1,111 @@
+<%= javascript_include_tag "jquery.cookie" %>
+<body data-token="temp">
+
+<p>Some examples of interactions with our Rails JSON API.</p>
+
+<h2>Log in</h2>
+Email: <input type="text" name="email" id="email" value="" />
+Password: <input type="password" name="password" id="password" value="" />
+<button value="Log in" id='login-button' />Log in</button>
+
+<h2>Get favorites</h2>
+<button value="Get Faves" id='faves-button' />Get Faves</button>
+<ul id="favorites"></ul>
+
+<h2>Get Interests</h2>
+<button value="Get Interests" id='interests-button' />Get interests</button>
+<ul id="interests"></ul>
+
+<h2>Get Attendances</h2>
+<button value="Get Attendances" id='attendances-button' />Get attendances</button>
+<ul id="attendances"></ul>
+
+<h2>Get Events by Location</h2>
+<button value="Get Events by Location" id='events-location-button' />Get Events by Location</button>
+<ul id="events-by-location"></ul>
+
+<h2>Get Events by Month</h2>
+<button value="Get Events by Month" id='events-month-button' />Get Events by Month</button>
+<ul id="events-by-month"></ul>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#login-button').click(function(){
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/tokens",
+        data: {
+          email: $("#email").val(),
+          password:  $("#password").val()
+        },
+        success: function( data ){
+          console.log(data);
+          $.cookie('token', data.authentication_token);
+          $('body').data("token", $.cookie('token'));
+          console.log($('body').data("token"));
+        }
+      });
+    });
+    $('#faves-button').click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/favorites",
+        data: {
+          authentication_token: $.cookie('token')
+        },
+        success: function( data ){
+          console.log(data);
+        }
+      });
+    });
+    $('#interests-button').click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/interests",
+        data: {
+        },
+        success: function( data ){
+        }
+      });
+    });
+    $('#attendances-button').click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/attendances",
+        data: {
+        },
+        success: function( data ){
+        }
+      });
+    });
+    $('#events-locations-button').click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/locations/1/events",
+        data: { },
+        success: function( data ){
+        }
+      });
+    });
+    $('#events-month-button').click(function(){
+      $.ajax({
+        type: "GET",
+        url: "/events",
+        data: {
+          year: '2014',
+          month: '08',
+        },
+        success: function( data ){
+          console.log(data);
+        }
+      });
+    });
+  });
+</script>
+</body>
