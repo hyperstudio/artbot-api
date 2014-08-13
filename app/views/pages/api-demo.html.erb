@@ -1,33 +1,38 @@
-<%= javascript_include_tag "jquery.cookie" %>
 <body data-token="temp">
-
 <p>Some examples of interactions with our Rails JSON API.</p>
 
-<h2>Log in</h2>
-Email: <input type="text" name="email" id="email" value="" />
-Password: <input type="password" name="password" id="password" value="" />
-<button value="Log in" id='login-button' />Log in</button>
+<div>
+Email: <input type="text" name="email" id="email" value="" class="form-control" /><br>
+Password: <input type="password" name="password" id="password" value="" class="form-control" /><br>
+<button value="Log in" id='login-button' class="btn btn-default" />Log in</button>
+</div>
 
-<h2>Get favorites</h2>
-<button value="Get Faves" id='faves-button' />Get Faves</button>
-<ul id="favorites"></ul>
+<div>
+<button value="Get Faves" id='faves-button' class="btn btn-default" />Get Faves</button><br>
+<ul id="favorites" class="list-group"></ul>
+</div>
 
-<h2>Get Interests</h2>
-<button value="Get Interests" id='interests-button' />Get interests</button>
-<ul id="interests"></ul>
+<div>
+<button value="Get Interests" id='interests-button' class="btn btn-default" />Get interests</button><br>
+<ul id="interests" class="list-group"></ul>
+</div>
 
-<h2>Get Attendances</h2>
-<button value="Get Attendances" id='attendances-button' />Get attendances</button>
-<ul id="attendances"></ul>
 
-<h2>Get Events by Location</h2>
-<button value="Get Events by Location" id='events-location-button' />Get Events by Location</button>
-<ul id="events-by-location"></ul>
+<div>
+<button value="Get Attendances" id='attendances-button' class="btn btn-default" />Get attendances</button><br>
+<ul id="attendances" class="list-group"></ul>
+</div>
 
-<h2>Get Events by Month</h2>
-<button value="Get Events by Month" id='events-month-button' />Get Events by Month</button>
-<ul id="events-by-month"></ul>
+<div>
+<button value="Get Events by Location" id='events-location-button' class="btn btn-default" />Get Events by Location</button><br>
+<ul id="events-by-location" class="list-group"></ul>
+</div>
 
+
+<div>
+<button value="Get Events by Month" id='events-month-button' class="btn btn-default" />Get Events by Month</button><br>
+<ul id="events-by-month" class="list-group"></ul>
+</div>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -56,8 +61,11 @@ Password: <input type="password" name="password" id="password" value="" />
         data: {
           authentication_token: $.cookie('token')
         },
-        success: function( data ){
-          console.log(data);
+        success: function( data ) {
+          $.each(data.favorites, function (key, value) {
+            $('#favorites').append('<li class="list-group-item">' + value.event.name+ '</li>')
+            console.log(value.event);
+          });
         }
       });
     });
@@ -103,9 +111,31 @@ Password: <input type="password" name="password" id="password" value="" />
         },
         success: function( data ){
           console.log(data);
+          $.each(data.events, function (key, value) {
+            $('#events-by-month').append('<li class="list-group-item">' + value.name+ '</li>')
+            console.log(value.event);
+          });
         }
       });
     });
   });
 </script>
+<%= javascript_include_tag "jquery.cookie" %>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
+<style type="text/css">
+body {
+  margin: 10px;
+  padding: 10px;
+}
+div {
+  padding:10px;
+}
+</style>
