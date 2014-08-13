@@ -1,9 +1,0 @@
-<% content_for(:page_header) { 'Discover' } %>
-<div class="event primary">
-  <%= render 'events/homepage_event', event: @primary_event %>
-</div>
-
-<div class="events-list event favorites anchor-bottom">
-  <h3>My Favorites</h3>
-  <%= render 'events/thumbnail_list', events: @favorited_events %>
-</div>
