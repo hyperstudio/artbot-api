@@ -8,6 +8,6 @@ describe FavoriteSerializer do
 
     event = json[:favorite][:event]
     expect(event.keys).to include(:event_type)
-    expect(event[:location].keys).to include('id', 'name')
+    expect(event[:location].keys).to include(:id, :name)
   end
 end

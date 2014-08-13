@@ -1,21 +1,13 @@
 class LocationsController < ApplicationController
-  # GET /locations
-  # GET /locations.json
+  respond_to :json
+
   def index
-    @locations = Location.all.includes(:events)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @locations }
-    end
+    locations = Location.all.page(page_param).per(per_page_param)
+    render_json_with_pagination_for(locations)
   end
 
-  # GET /locations/1
-  # GET /locations/1.json
   def show
-    @location = Location.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @location }
-    end
+    location = Location.find(params[:id])
+    respond_with location
   end
 end

@@ -10,6 +10,6 @@ describe EventSerializer do
 
     json = serializer.as_json
 
-    expect(json[:event][:location]['name']).to eq location_name
+    expect(json[:event][:location][:name]).to eq location_name
   end
 end
