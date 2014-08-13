@@ -79,7 +79,7 @@ feature 'User requests events', js: true do
   def with_a_time_limited_query_for(query, included_event, excluded_event)
     curb = get_from_api(
       '/events',
-      { year: now.year }
+      query
     )
 
     json_response = parse_response_from(curb)
