@@ -26,6 +26,15 @@ module CurbHelpers
     end
   end
 
+  def patch_to_api(url, parameters = {})
+    json = parameters.to_json
+    Curl.patch("http://#{host}:#{port}/#{url}", json) do |curl|
+      set_default_headers(curl)
+
+      yield curl if block_given?
+    end
+  end
+
   def parse_response_from(curb)
     JSON.parse(curb.body)
   end

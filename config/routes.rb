@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-
-  get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
-
   devise_for :users
+
+  resources :registrations, only: [:create]
+
+  patch :preferences, to: 'preferences#update'
+  put :preferences, to: 'preferences#update'
+  get :preferences, to: 'preferences#show'
 
   resources :favorites, only: [:index, :show, :destroy] do
     collection do
