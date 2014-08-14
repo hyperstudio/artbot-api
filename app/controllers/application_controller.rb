@@ -48,10 +48,10 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def render_json_with_pagination_for(items)
-    render(
-      json: items,
-      meta: meta_hash_for(items)
-    )
+  def render_json_with_pagination_for(items, options = {})
+    options[:json] = items
+    options[:meta] = meta_hash_for(items)
+
+    render options
   end
 end

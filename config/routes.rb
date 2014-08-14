@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :discoveries, only: [:index]
+
   resources :profiles, :only => [:dashboard]
 
   resources :events, only: [:show, :index] do

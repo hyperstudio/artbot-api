@@ -8,6 +8,10 @@ class Event < ActiveRecord::Base
 
   delegate :name, to: :location, prefix: true
 
+  def self.recommended_for(user)
+    current.order(:end_date)
+  end
+
   def self.for_year(year)
     if year.present?
       where('extract(year from end_date) = ?', year)
