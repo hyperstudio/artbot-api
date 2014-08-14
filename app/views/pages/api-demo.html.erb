@@ -1,9 +1,21 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-3">
+    <div class="affix" role="complementary">
+      <ul class="nav">
+        <li><a href="#login-panel">Log in</a></li>
+        <li><a href="#favorites-panel">Favorites</a></li>
+        <li><a href="#interests-panel">Interests</a></li>
+        <li><a href="#events-location-panel">Events by location</a></li>
+        <li><a href="#events-month-panel">Events by month</a></li>
+        <li><a class="back-to-top" href="#top">Back to top</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-9">
     <div id="main" data-token="temp">
       <h4 class="page-heading ">ArtX RESTful Web API Examples</h4>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" id='login-panel'>
         <div class="panel-heading">Log in</div>
         <div class="panel-body">
           Email: <input type="text" name="email" id="email" value="" class="form-control" /><br>
@@ -29,7 +41,7 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" id='favorites-panel'>
         <div class="panel-heading">Get Favorites</div>
         <div class="panel-body">
         <button value="Get Favorites" id='faves-button' class="btn btn-default" />Get Favorites</button><br>
@@ -56,7 +68,34 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" id='interests-panel'>
+        <div class="panel-heading">Get Interests</div>
+        <div class="panel-body">
+          <button value="Get Interests" id='interests-button' class="btn btn-default" />Get Interests</button><br>
+          <ul id="interests" class="list-group"></ul>
+          <pre class="prettyprint lang-js">
+            <code class="javascript">
+  $.ajax({
+    type: "GET",
+    url: "/interests",
+    beforeSend: function (request) {
+        request.setRequestHeader("authentication_token", $.cookie('token'));
+    },
+    success: function( data ){
+      console.log(data);
+      $('#interests').empty();
+      $.each(data.interests, function (key, value) {
+        $('#interests').append('&lt;li class="list-group-item"&gt;' + value.name+ '&lt;/li&gt;')
+        console.log(value.name);
+      });
+    }
+  });
+           </code>
+          </pre>
+        </div>
+      </div>
+
+      <div class="panel panel-default" id='events-location-panel'>
         <div class="panel-heading">Get Events by Location</div>
         <div class="panel-body">
           <button value="Get Events by Location" id='events-location-button' class="btn btn-default" />Get Events by Location</button><br>
@@ -82,7 +121,7 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" id='events-month-panel'>
         <div class="panel-heading">Get Events by Month</div>
         <div class="panel-body">
           <button value="Get Events by Month" id='events-month-button' class="btn btn-default" />Get Events by Month</button><br>
@@ -198,17 +237,23 @@
         }
       });
     });
-    // $('#interests-button').click(function(){
-    //   $.ajax({
-    //     type: "GET",
-    //     dataType: "json",
-    //     url: "/interests",
-    //     data: {
-    //     },
-    //     success: function( data ){
-    //     }
-    //   });
-    // });
+    $('#interests-button').click(function(){
+      $.ajax({
+        type: "GET",
+        url: "/interests",
+        beforeSend: function (request) {
+            request.setRequestHeader("authentication_token", $.cookie('token'));
+        },
+        success: function( data ){
+          console.log(data);
+          $('#interests').empty();
+          $.each(data.interests, function (key, value) {
+            $('#interests').append('<li class="list-group-item">' + value.name+ '</li>')
+            console.log(value.name);
+          });
+        }
+      });
+    });
     // $('#attendances-button').click(function(){
     //   $.ajax({
     //     type: "GET",

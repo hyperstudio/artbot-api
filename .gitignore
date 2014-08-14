@@ -16,3 +16,6 @@
 /tmp
 
 config/secrets.yml
+
+/coverage
+public/coverage
