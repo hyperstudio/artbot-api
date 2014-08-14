@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_many :favorites, dependent: :destroy
   has_many :events, through: :favorites
+  has_many :interests, dependent: :destroy
 
   validates :authentication_token, uniqueness: true, presence: true
 

@@ -6,6 +6,7 @@ describe User do
 
   it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:events).through(:favorites) }
+  it { should have_many(:interests).dependent(:destroy) }
 
   context 'authentication_token' do
     it 'creates a token when a user is created' do

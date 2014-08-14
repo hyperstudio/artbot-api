@@ -10,6 +10,14 @@ FactoryGirl.define do
     event
   end
 
+  factory :tag, class: ActsAsTaggableOn::Tag do
+    sequence(:name) {|n| "Tag #{n}" }
+  end
+
+  factory :interest do
+
+  end
+
   factory :tag_source do
     sequence(:name) { |n| "Tag Source #{n}" }
   end
