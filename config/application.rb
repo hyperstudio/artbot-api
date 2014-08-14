@@ -21,6 +21,8 @@ module Artx
     # config.i18n.default_locale = :de
 
     # Rails.logger = Logger.new(STDOUT)
+    config.middleware.use Rack::Deflater
+
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
