@@ -3,14 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
-  def has_role?(current_user, role)
-    return current_user.roles.find_by_name(role.to_s.camelize)
-  end
-
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
-  end
-
   private
 
   def current_user
@@ -58,12 +50,12 @@ class ApplicationController < ActionController::Base
   def authenticate_admin_user!
     if current_user.kind_of?(Guest) || current_user.nil?
       redirect_to user_session_path
-    elsif !current_user.role?(admin)
+    elsif current_user.admin == false
       redirect_to root_url
     end
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    current_user.role?(admin) ? admin_root_path : root_url
+    current_user.admin == true ? admin_root_path : root_url
   end
 end

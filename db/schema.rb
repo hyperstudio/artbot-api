@@ -101,17 +101,6 @@ ActiveRecord::Schema.define(version: 20140814153917) do
     t.float    "longitude"
   end
 
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "roles_users", id: false, force: true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
-  end
-
   create_table "scraper_urls", force: true do |t|
     t.string  "url"
     t.integer "location_id"
@@ -160,6 +149,7 @@ ActiveRecord::Schema.define(version: 20140814153917) do
     t.boolean  "send_weekly_emails",               default: false
     t.boolean  "send_day_before_event_reminders",  default: false
     t.boolean  "send_week_before_close_reminders", default: false
+    t.boolean  "admin",                            default: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

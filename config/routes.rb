@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :registrations, only: [:create]
   
   ActiveAdmin.routes(self)
-  root to: 'home#index'
+  root to: 'events#index'
 
   get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
 

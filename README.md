@@ -8,7 +8,7 @@ To install:
 * `rake db:setup`
 * `rails s`
 * Navigate to `localhost:3000` and sign up as a user.
-* For admin access, include [1] in your user's role_ids (either via the console or the admin interface, at /admin)
+* For admin access, set "admin" attribute to "true" on the user object.
 
 ### Data
 
@@ -16,4 +16,4 @@ Sample locations are pre-populated. To start getting live data:
 
 * Install and run [artx-scraper](http://github.com/mailbackwards/artx-scraper)
 * Install and run [artx-ner](http://github.com/mailbackwards/artx-ner)
-* run `rake scrape:runscraper` (this queries the other apps and populates the database with categorized events)
+* run `rake scrape:all` (this queries the other apps and populates the database with categorized events)
