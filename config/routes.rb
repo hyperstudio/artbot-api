@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :possible_interests, only: [:index]
   resources :interests, only: [:index, :create, :destroy]
 
-  resources :favorites, only: [:index, :show, :destroy, :update] do
+  resources :favorites, only: [:index, :destroy, :update] do
     collection do
       get 'history'
     end
