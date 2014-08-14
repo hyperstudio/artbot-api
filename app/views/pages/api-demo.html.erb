@@ -40,8 +40,8 @@
     type: "GET",
     dataType: "json",
     url: "/favorites",
-    data: {
-      authentication_token: $.cookie('token')
+    beforeSend: function (request) {
+        request.setRequestHeader("authentication_token", $.cookie('token'));
     },
     success: function( data ) {
       $('#favorites').empty();
@@ -152,8 +152,8 @@
         type: "GET",
         dataType: "json",
         url: "/favorites",
-        data: {
-          authentication_token: $.cookie('token')
+        beforeSend: function (request) {
+            request.setRequestHeader("authentication_token", $.cookie('token'));
         },
         success: function( data ) {
           $('#favorites').empty();
