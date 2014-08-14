@@ -18,19 +18,12 @@ Rails.application.routes.draw do
 
   resources :profiles, :only => [:dashboard]
 
-  resources :events do
+  resources :events, only: [:show, :index] do
     resource :favorite, only: [:create]
   end
 
   resources :locations, only: [:index, :show] do
     resources :events, only: [:index]
-  end
-
-  resources :entities do
-    collection do
-      get 'import'
-      post 'import'
-    end
   end
 
   resources :tokens, only: [:create]
