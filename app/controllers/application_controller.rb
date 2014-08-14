@@ -17,9 +17,13 @@ class ApplicationController < ActionController::Base
     super || Guest.new
   end
 
+  def authentication_token
+    key = 'authentication_token'
+    params[key] || request.env["HTTP_#{key.upcase}"]
+  end
+
   def authenticate_user_from_token!
-    authentication_token = params[:authentication_token].presence
-    user = authentication_token && User.find_by_authentication_token(authentication_token.to_s)
+    user = authentication_token.present? && User.find_by_authentication_token(authentication_token)
 
     if user
       sign_in user, store: false

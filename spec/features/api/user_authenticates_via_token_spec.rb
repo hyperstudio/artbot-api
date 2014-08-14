@@ -12,15 +12,35 @@ feature 'User authenticates to the API', js: true do
     expect(curb.body_str).to include user.authentication_token
   end
 
-  scenario 'and can request an authenticated resource' do
-    user = create(:user)
-    event = create(:event)
-    favorite = create(:favorite, user: user, event: event)
+  context 'via regular parameters' do
+    scenario 'and can request an authenticated resource' do
+      user = create(:user)
+      event = create(:event)
+      favorite = create(:favorite, user: user, event: event)
 
-    curb = get_from_api('/favorites', { authentication_token: user.authentication_token })
+      curb = get_from_api('/favorites', { authentication_token: user.authentication_token })
 
-    json_response = parse_response_from(curb)
+      json_response = parse_response_from(curb)
 
-    expect(json_response['favorites'].map{|favorite| favorite['id']}).to include(favorite.id)
+      expect(json_response['favorites'].map{|favorite| favorite['id']}).to include(favorite.id)
+    end
+  end
+
+  context 'via http headers' do
+    scenario 'and can request an authenticated resource' do
+      user = create(:user)
+      event = create(:event)
+      favorite = create(:favorite, user: user, event: event)
+
+      curb = get_from_api('/favorites') do |curl|
+        curl.headers['AUTHENTICATION_TOKEN'] = user.authentication_token
+      end
+
+      expect(curb.response_code).to eq 200
+      json_response = parse_response_from(curb)
+
+      expect(json_response['favorites'].map{|favorite| favorite['id']}).to include(favorite.id)
+    end
+
   end
 end
