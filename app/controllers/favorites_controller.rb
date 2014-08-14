@@ -19,12 +19,25 @@ class FavoritesController < ApplicationController
 
   def create
     event = Event.find(params[:event_id])
-    favorite = Favorite.create!(user: current_user, event: event)
+    favorite = Favorite.create!(
+      user: current_user, event: event, attended: params[:attended]
+    )
     respond_with favorite
+  end
+
+  def update
+    favorite = current_user.favorites.find(params[:id])
+
+    if favorite.update(attended: params[:attended])
+      render json: favorite
+    else
+      render json: favorite.errors, status: 422
+    end
   end
 
   def destroy
     favorite = current_user.favorites.find(params[:id]).destroy
+
     respond_with favorite
   end
 end

@@ -29,7 +29,8 @@ feature 'User manages favorites', js: true do
     curb = post_to_api(
       "/events/#{event.id}/favorite",
       {
-        authentication_token: user.authentication_token
+        authentication_token: user.authentication_token,
+        attended: true
       }
     )
 
@@ -37,6 +38,7 @@ feature 'User manages favorites', js: true do
 
     expect(curb.response_code).to eq 201
     expect(json_response['favorite']['id']).to be
+    expect(json_response['favorite']['attended']).to be
   end
 
   scenario 'destroys a favorite' do
@@ -76,5 +78,37 @@ feature 'User manages favorites', js: true do
     expect(favorite_ids).to include(past_event.id)
     expect(favorite_ids).not_to include(current_event.id)
     expect(first_favorite_event['location']['name']).to eq past_event.location_name
+  end
+
+  scenario 'sets a favorited event as attended' do
+    favorite = create(:favorite, attended: false)
+    user = favorite.user
+
+    curb = patch_to_api(
+      "/favorites/#{favorite.id}",
+      {
+        authentication_token: user.authentication_token,
+        attended: true
+      }
+    )
+
+    json_response = parse_response_from(curb)
+    expect(json_response['favorite']['attended']).to be_true
+  end
+
+  scenario 'unsets a favorited event as attended' do
+    favorite = create(:favorite, attended: true)
+    user = favorite.user
+
+    curb = patch_to_api(
+      "/favorites/#{favorite.id}",
+      {
+        authentication_token: user.authentication_token,
+        attended: false
+      }
+    )
+
+    json_response = parse_response_from(curb)
+    expect(json_response['favorite']['attended']).to be_false
   end
 end

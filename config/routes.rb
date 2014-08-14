@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   put :preferences, to: 'preferences#update'
   get :preferences, to: 'preferences#show'
 
-  resources :favorites, only: [:index, :show, :destroy] do
+  resources :favorites, only: [:index, :show, :destroy, :update] do
     collection do
       get 'history'
     end
