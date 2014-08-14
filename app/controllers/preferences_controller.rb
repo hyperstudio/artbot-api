@@ -7,7 +7,7 @@ class PreferencesController < ApplicationController
     if current_user.update(preferences_params)
       render json: current_user
     else
-      render json: user.errors, status: 422
+      render json: current_user.errors, status: 422
     end
   end
 
