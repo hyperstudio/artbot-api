@@ -20,8 +20,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'rack-cors', :require => 'rack/cors'
+gem "unicorn"
 
 group :development do
+  gem "foreman"
   gem 'spring'
   gem 'spring-commands-rspec'
 end
