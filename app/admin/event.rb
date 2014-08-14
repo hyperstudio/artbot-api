@@ -10,6 +10,7 @@ ActiveAdmin.register Event do
   filter :end_date
 
   index do
+    selectable_column
     id_column
     column :name
     column :url
