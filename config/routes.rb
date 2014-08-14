@@ -2,9 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :registrations, only: [:create]
-  
   ActiveAdmin.routes(self)
-  root to: 'events#index'
 
   get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
 
