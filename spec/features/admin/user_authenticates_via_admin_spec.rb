@@ -16,6 +16,7 @@ feature 'User requests to the admin page' do
         click_button "Sign in"
 
         expect(page).to have_text('Signed in successfully')
+        expect(page).to have_text('Dashboard')
     end
 
     scenario 'and is not a valid admin user' do
@@ -31,6 +32,7 @@ feature 'User requests to the admin page' do
         fill_in "user_password", :with => user.password
         click_button "Sign in"
 
-        expect(page).to have_text('total_pages')
+        expect(page).to have_text('Signed in successfully')
+        expect(page).to have_text('ArtX RESTful Web API Examples')
     end
 end
