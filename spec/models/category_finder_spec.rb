@@ -16,38 +16,15 @@ describe CategoryFinder do
   end
 
   def wanted_categories
-    [
-      {
-        label: "Cubism",
-        uri: "http://example.com/uri2"
-      },
-      {
-        label: "Surrealism",
-        uri: "http://example.com/uri3"
-      },
-      {
-        label: "Land art",
-        uri: "http://example.com/uri2"
-      }
-    ]
+    ["Cubism", "Surrealism", "Land Art"]
   end
 
   def excluded_categories
-    [
-      {
-        label: "Not me",
-        uri: "http://example.com/uri3"
-      }
-    ]
+    ["Not me"]
   end
 
   def flagged_categories
-    [
-      {
-        label: "Article and Museum are flagged words",
-        uri: "http://example.com/uri4"
-      }
-    ]
+    ["Article and Museum are flagged words"]
   end
 
   def example_categories
