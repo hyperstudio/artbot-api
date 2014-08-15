@@ -40,13 +40,12 @@ class CategoryFinder
     lowercase_admin_tags = admin_tags.map {|tag| tag.downcase}
     categories.find_all do |category|
       # See if this is an admin-added tag-- if so, we want to let it through
-      label = category[:label]
-      if lowercase_admin_tags.include? label.downcase
+      if lowercase_admin_tags.include? category.downcase
         true
       else
         context_patterns.any? do |pattern|
-          if no_flagged_term_matches_on(label)
-            label.match(pattern)
+          if no_flagged_term_matches_on(category)
+            category.match(pattern)
           end
         end
       end
