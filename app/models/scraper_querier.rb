@@ -1,5 +1,6 @@
 class ScraperQuerier
     SCRAPER_BASE_URL = Rails.configuration.scraper_app_url + "/scrape"
+    SCRAPER_API_KEY = ENV['ARTX_SCRAPER_API_KEY']
 
     def initialize(path)
         @path = path
@@ -7,6 +8,7 @@ class ScraperQuerier
 
     def query_scraper
         endpoint = SCRAPER_BASE_URL + "/" + @path
-        JsonRequester.new.get(endpoint, {})[:results]
+        params = {:key => SCRAPER_API_KEY}
+        JsonRequester.new.get(endpoint, params)[:results]
     end
 end

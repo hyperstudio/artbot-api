@@ -1,5 +1,6 @@
 class NerQuerier
     NER_BASE_URL = Rails.configuration.scraper_app_url
+    NER_API_KEY = ENV['ARTX_SCRAPER_API_KEY']
 
     def initialize(path)
         @path = path
@@ -7,7 +8,7 @@ class NerQuerier
 
     def query_ner(payload)
         endpoint = NER_BASE_URL + "/" + @path
-        post_data = {:payload => payload}
+        post_data = {:payload => payload, :key => NER_API_KEY}
         JsonRequester.new.post(endpoint, post_data)[:results]
     end
 
