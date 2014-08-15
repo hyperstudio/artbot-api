@@ -14,14 +14,13 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'neat'
 gem 'pg'
-gem 'rack-cors', :require => 'rack/cors'
 gem 'rails', '4.1.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'rack-cors', :require => 'rack/cors'
-gem "unicorn"
+gem 'unicorn'
 
 group :development do
   gem "foreman"

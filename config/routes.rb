@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   resources :registrations, only: [:create]
   ActiveAdmin.routes(self)
 
-  get '/profiles/dashboard' => 'profiles#dashboard', :as => :user_root
-
   patch :preferences, to: 'preferences#update'
   put :preferences, to: 'preferences#update'
   get :preferences, to: 'preferences#show'
