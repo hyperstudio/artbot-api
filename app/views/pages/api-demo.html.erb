@@ -15,6 +15,36 @@
     <div id="main" data-token="temp">
       <h4 class="page-heading ">ArtX RESTful Web API Examples</h4>
 
+      <div class="panel panel-default" id='register-panel'>
+        <div class="panel-heading">Register</div>
+        <div class="panel-body">
+          Email: <input type="text" name="email" id="email" value="" class="form-control" /><br>
+          Password: <input type="password" name="password" id="password" value="" class="form-control" /><br>
+          Confirmation: <input type="password" name="password_confirmation" id="password_confirmation" value="" class="form-control" /><br>
+          Zip: <input type="text" name="zipcode" id="zipcode" value="" class="form-control" /><br>
+          <button value="Log in" id='registrations-button' class="btn btn-default" />Register</button><br>
+          <div class="well" id="registration-viewer"></div>
+          <pre class="prettyprint lang-js">
+            <code class="javascript">
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "/registrations",
+    data: {
+      email: $("#email").val(),
+      password:  $("#password").val()
+      password_confirmation: $("#password_confirmation").val(),
+      zipcode:  $("#zipcode").val()
+    },
+    success: function( data ){
+      $.cookie('token', data.authentication_token);
+    }
+  });
+            </code>
+          </pre>
+        </div>
+      </div>
+
       <div class="panel panel-default" id='login-panel'>
         <div class="panel-heading">Log in</div>
         <div class="panel-body">
@@ -168,6 +198,27 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function(){
+
+    $('#registrations-button').click(function(){
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/registrations",
+        data: {
+          email: $("#email").val(),
+          password:  $("#password").val(),
+          password_confirmation: $("#password_confirmation").val(),
+          zipcode:  $("#zipcode").val()
+        },
+        success: function( data ){
+          console.log(data);
+          $.cookie('token', data.user.authentication_token);
+          $('div#main').data("token", $.cookie('token'));
+          $('div#registration-viewer').html("Authentication Token: " + $.cookie('token'));
+          console.log($('div#main').data("token"));
+        }
+      });
+    });
     $('#login-button').click(function(){
       $.ajax({
         type: "POST",
