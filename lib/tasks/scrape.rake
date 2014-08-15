@@ -4,7 +4,7 @@ namespace :scrape do
         ALL_NER_PATHS = ['stanford', 'opencalais', 'zemanta']
         # Start with all of the URLs in the database
         ScraperUrl.all.find_each do |url|
-            puts "Querying scraper app with %s" % url
+            puts "Querying scraper app with %s" % url.url
             # This is where we query the scraper app
             url.query_scraper_app.each do |event_result|
                 event = EventCreator.new(event_result, url.location_id).event

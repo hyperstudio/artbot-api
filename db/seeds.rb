@@ -22,8 +22,8 @@ Location.create("id"=>6, "name"=>"deCordova Museum", "url"=>"http://www.decordov
 Location.create("id"=>7, "name"=>"Rose Art Museum", "url"=>"http://www.brandeis.edu/rose/", "description"=>"The Rose Art Museum of Brandeis University is an educational and cultural institution dedicated to collecting, preserving and exhibiting the finest of modern and contemporary art.", "image"=>nil, "latitude"=>42.365662, "longitude"=>-71.26247)
 
 ScraperUrl.create("id"=>1, "url"=>"http://www.pem.org", "location_id"=>2, "name"=>"peabody")
-ScraperUrl.create("id"=>2, "url"=>nil, "location_id"=>3, "name"=>"gardner")
-ScraperUrl.create("id"=>3, "url"=>nil, "location_id"=>4, "name"=>"harvard")
+ScraperUrl.create("id"=>2, "url"=>"http://www.gardnermuseum.org/", "location_id"=>3, "name"=>"gardner")
+ScraperUrl.create("id"=>3, "url"=>"http://www.harvardartmuseums.org/", "location_id"=>4, "name"=>"harvard")
 ScraperUrl.create("id"=>4, "url"=>"http://www.decordova.org", "location_id"=>6, "name"=>"cordova")
 ScraperUrl.create("id"=>5, "url"=>"http://brandeis.edu/rose", "location_id"=>7, "name"=>"rose")
 ScraperUrl.create("id"=>6, "url"=>"http://listart.mit.edu", "location_id"=>5, "name"=>"list")
