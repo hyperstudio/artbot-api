@@ -35,9 +35,9 @@ ActiveAdmin.register Event do
         }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
     end
     column "Admin Tags" do |event|
-      event.entities.select {|entity| entity.sourced_by?('Admin')}.map {
-        |entity| entity.tag_list
-        }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+      event.entities.map {
+        |entity| entity.owner_tags_on(TagSource.admin, :genres).map {|tag| tag.name}
+        }.flatten.uniq.join(', ').html_safe
     end
     actions
   end
@@ -88,9 +88,9 @@ ActiveAdmin.register Event do
           }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
       end
       row :admin_tags do |event|
-        event.entities.select {|entity| entity.sourced_by?('Admin')}.map {
-          |entity| entity.tag_list
-          }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+        event.entities.map {
+          |entity| entity.owner_tags_on(TagSource.admin, :genres).map {|tag| tag.name}
+          }.flatten.uniq.join(', ').html_safe
       end
     end
   end
