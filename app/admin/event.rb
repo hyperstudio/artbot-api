@@ -2,6 +2,8 @@ ActiveAdmin.register Event do
   remove_filter :events_entities
   permit_params :name, :url, :image, :start_date, :end_date, :event_type, entity_ids: []
 
+  config.per_page = 10
+
   filter :location
   filter :name
   filter :entities, :collection => proc {Entity.order('name')}
