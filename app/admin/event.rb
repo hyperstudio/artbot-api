@@ -1,6 +1,6 @@
 ActiveAdmin.register Event do
   remove_filter :events_entities
-  permit_params :name, :url, :image, :start_date, :end_date, :event_type
+  permit_params :name, :url, :image, :start_date, :end_date, :event_type, entity_ids: []
 
   filter :location
   filter :name
@@ -27,6 +27,16 @@ ActiveAdmin.register Event do
         |entity| link_to entity.name, admin_entity_path(entity.id), :target => :blank
       }.join(', ').html_safe
     end
+    column "Tags" do |event|
+      event.entities.map {
+        |entity| entity.tag_list
+        }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+    end
+    column "Admin Tags" do |event|
+      event.entities.select {|entity| entity.sourced_by?('Admin')}.map {
+        |entity| entity.tag_list
+        }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+    end
     actions
   end
 
@@ -43,7 +53,10 @@ ActiveAdmin.register Event do
       f.input :image
     end
     f.inputs 'Tags' do |event|
-      f.input :entities
+      f.input :entities, 
+        :input_html => { :style => 'height:500px;'}, 
+        :collection => Entity.order('name')
+      puts f.methods
     end
     f.actions
   end
@@ -61,6 +74,21 @@ ActiveAdmin.register Event do
       row :description
       row :image do |event|
         link_to event.image, event.image, :target => :blank
+      end
+      row :entities do |event|
+        event.entities.map {
+          |entity| link_to entity.name, admin_entity_path(entity.id), :target => :blank
+          }.join(', ').html_safe
+      end
+      row :tags do |event|
+        event.entities.map {
+          |entity| entity.tag_list
+          }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+      end
+      row :admin_tags do |event|
+        event.entities.select {|entity| entity.sourced_by?('Admin')}.map {
+          |entity| entity.tag_list
+          }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
       end
     end
   end
