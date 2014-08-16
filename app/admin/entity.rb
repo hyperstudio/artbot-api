@@ -1,4 +1,5 @@
 ActiveAdmin.register Entity do
+  permit_params :name, :description, :entity_type, event_ids: []
   remove_filter :entities_events, :entities_tag_sources
 
   filter :name
@@ -10,12 +11,15 @@ ActiveAdmin.register Entity do
     selectable_column
     id_column
     column :name
-    column :url
+    column :url do |entity|
+      link_to entity.url, entity.url, :target => :blank
+    end
     column :entity_type
     column :tag_list
     column "Events" do |entity|
-      #entity.events.map {|event| link_to event.name, event}.join(', ')
-      entity.events.pluck('name').join(', ')
+      entity.events.map {
+        |event| link_to event.name, admin_event_path(event.id), :target => :blank
+        }.join(', ').html_safe
     end
     actions
   end
@@ -28,7 +32,9 @@ ActiveAdmin.register Entity do
       f.input :description
       f.input :entity_type
       f.input :tag_list
-      f.input :events
+    end
+    f.inputs 'Events' do
+      f.input :events, as: :check_boxes
     end
     f.actions
   end
@@ -36,14 +42,20 @@ ActiveAdmin.register Entity do
   show do
     attributes_table do
       row :name
-      row :url
+      row :url do |entity|
+        link_to entity.url, entity.url
+      end
       row :description
       row :tag_list
-      row :events
+      row :events do |entity|
+        entity.events.map {
+          |event| link_to event.name, admin_event_path(event.id), :target => :blank
+          }.join(', ').html_safe
+      end
     end
   end
 
-  batch_action :tag, confirm: "Add tags (comma separated)", form: {
+  batch_action :add_tags_to, confirm: "Add tags (comma separated)", form: {
     name: :text,
     context: [['genres', :genres]],
   } do |ids, inputs|
@@ -53,6 +65,14 @@ ActiveAdmin.register Entity do
       admin_source.tag(entity, :with => genre_list, :on => inputs["context"])
     end
     redirect_to collection_path, notice: '%d entities tagged with "%s" on context "%s"' % [ids.count, inputs["name"], inputs["context"]]
+  end
+
+  batch_action :add_event_to, confirm: "Add event to selected", form: {
+    name: Event.order('name').pluck('name', 'id')
+  } do |ids, inputs|
+    event = Event.find(inputs['name'])
+    Entity.find(ids).map {|entity| entity.add_event(event)}
+    redirect_to collection_path, notice: '%d entities tagged with event "%s"' % [ids.count, event.name]
   end
 end
 

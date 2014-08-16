@@ -13,17 +13,55 @@ ActiveAdmin.register Event do
     selectable_column
     id_column
     column :name
-    column :url
+    column :url do |event|
+      link_to event.url, event.url, :target => :blank
+    end
     column :event_type
-    column :location
+    column :location do |event|
+      link_to event.location.name, admin_event_path(event.location.id), :target => :blank
+    end
     column :start_date
     column :end_date
     column "Entities" do |event|
-      event.entities.pluck('name').join(', ')
+      event.entities.map {
+        |entity| link_to entity.name, admin_entity_path(entity.id), :target => :blank
+      }.join(', ').html_safe
     end
-    # column "Tags" do |event|
-    #   event.entities.map {|entity| entity.genres.pluck('name')}.reject {|genre| genre.empty?}.join(', ')
-    # end
     actions
+  end
+
+  form do |f|
+    f.actions
+    f.inputs 'Events' do |event|
+      f.input :name
+      f.input :url
+      f.input :location
+      f.input :event_type
+      f.input :start_date
+      f.input :end_date
+      f.input :description
+      f.input :image
+    end
+    f.inputs 'Tags' do |event|
+      f.input :entities
+    end
+    f.actions
+  end
+
+  show do
+    attributes_table do
+      row :name
+      row :url do |event|
+        link_to event.url, admin_event_path(event.id), :target => :blank
+      end
+      row :location
+      row :event_type
+      row :start_date
+      row :end_date
+      row :description
+      row :image do |event|
+        link_to event.image, event.image, :target => :blank
+      end
+    end
   end
 end

@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
     
   def authenticate_admin_user!
-    if current_user.kind_of?(Guest) || current_user.nil?
+    if current_user.kind_of?(::Guest) || current_user.nil?
       redirect_to user_session_path
     elsif current_user.admin == false
       redirect_to root_url
