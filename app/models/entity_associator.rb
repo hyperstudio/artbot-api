@@ -27,6 +27,6 @@ class EntityAssociator
       category_finder = CategoryFinder.new(new_tags, @context)
       new_tags = category_finder.find
     end
-    new_tags | @entity.tags_sourced_by(tag_source)
+    new_tags | @entity.tags_sourced_by(tag_source, @context)
   end
 end

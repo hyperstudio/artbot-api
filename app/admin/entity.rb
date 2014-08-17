@@ -57,12 +57,12 @@ ActiveAdmin.register Entity do
 
   batch_action :add_tags_to, confirm: "Add tags (comma separated)", form: {
     name: :text,
-    context: [['genres', :genres]],
+    context: [['genres', :genres], ['time periods', :time_periods]],
   } do |ids, inputs|
     admin_source = TagSource.admin
     Entity.find(ids).each do |entity|
-      genre_list = entity.tag_list.empty? ? inputs["name"] : entity.tag_list + ", " + inputs["name"]
-      admin_source.tag(entity, :with => genre_list, :on => inputs["context"])
+      entity.add_tags(inputs['name'].split(', '), admin_source, inputs['context'])
+      admin_source.tag(entity, :with => tags, :on => inputs["context"])
     end
     redirect_to collection_path, notice: '%d entities tagged with "%s" on context "%s"' % [ids.count, inputs["name"], inputs["context"]]
   end
@@ -72,7 +72,7 @@ ActiveAdmin.register Entity do
   } do |ids, inputs|
     event = Event.find(inputs['name'])
     Entity.find(ids).map {|entity| entity.add_event(event)}
-    redirect_to collection_path, notice: '%d entities tagged with event "%s"' % [ids.count, event.name]
+    redirect_to collection_path, notice: '%d entities associated with event "%s"' % [ids.count, event.name]
   end
 end
 

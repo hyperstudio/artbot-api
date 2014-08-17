@@ -1,15 +1,26 @@
 class Entity < ActiveRecord::Base
   validates :name, presence: true
-  acts_as_taggable_on :genres
+  acts_as_taggable_on *TagContext.pluck('name').map {|n| n.to_sym}
   has_and_belongs_to_many :events
   has_and_belongs_to_many :tag_sources
 
-  def add_tags(tags, source=nil)
-    EntityAssociator.new(self).tag_entity(tags, source)
+  def all_contexts
+    TagContext.pluck('name').map {|n| n.to_sym}
+  end
+
+  def add_tags(tags, source=nil, context=:genre)
+    EntityAssociator.new(self).tag_entity(tags, source, context)
   end
 
   def admin_relations
     matching_entities(:verified_only => false).includes(:tag_sources).map {|e| e.sourced_by?('Admin') ? e : nil}.compact
+  end
+
+  def admin_tags(contexts=nil)
+    if contexts.nil?
+      contexts = all_contexts
+    end
+    contexts.map {|context| owner_tags_on(TagSource.admin, :context)}
   end
 
   def add_event(event=nil)
@@ -67,11 +78,11 @@ class Entity < ActiveRecord::Base
     events.pluck('name').join(', ')
   end
 
-  def tags_sourced_by(tag_source)
+  def tags_sourced_by(tag_source, context=:genre)
     if tag_source.instance_of? String
       tag_source = TagSource.find_by_name(tag_source)
     end
-    tag_source.owned_taggings.where(taggable_id: id, taggable_type: "Entity").includes(:tag).map {|t| t.tag.name}
+    tag_source.owned_taggings.where(taggable_id: id, taggable_type: "Entity", context: context).includes(:tag).map {|t| t.tag.name}
   end
 
   def sourced_by?(source_name)
