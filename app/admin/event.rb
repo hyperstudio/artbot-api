@@ -94,4 +94,35 @@ ActiveAdmin.register Event do
       end
     end
   end
+
+  csv do
+    column :id
+    column :name
+    column :url
+    column('Location') {|event| event.location.name}
+    column :description
+    column :image
+    column :event_type
+    column :start_date
+    column :end_date
+    column('Entities') {
+      |event| event.entities.map {
+        |entity| entity.name
+        }.join(', ')
+      }
+    column('Tags') {
+      |event| event.entities.map {
+        |entity| entity.tag_list
+        }.flatten.reject {
+          |tag| tag.empty?
+        }.join(', ')
+      }
+    column('Admin Tags') {
+      |event| event.entities.map {
+        |entity| entity.owner_tags_on(TagSource.admin, :genres).map {
+          |tag| tag.name
+          }
+        }.flatten.uniq.join(', ')
+      }
+  end
 end
