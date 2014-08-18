@@ -9,7 +9,11 @@ class Event < ActiveRecord::Base
   delegate :name, to: :location, prefix: true
 
   def self.recommended_for(user)
-    current.order(:end_date)
+    user_favorites = user.interests.pluck('tag_id')
+    event_tags = user.favorites.
+      joins(event: [entities: [taggings: [:tag]]]).
+      distinct('tags.id').pluck('tags.id')
+    Event.current.matching_tags(user_favorites + event_tags)
   end
 
   def self.for_year(year)
@@ -44,14 +48,29 @@ class Event < ActiveRecord::Base
     where('end_date >= now()')
   end
 
-  def genres
-    genres = []
-    entities.each do |entity|
-      entity.matching_entities(false).find_each do |related_entity|
-        genres.push(related_entity.owner_tags_on(nil, :genres))
-      end
-    end
-    genres.flatten
+  def self.matching_tags(tag_ids)
+    joins(entities: [taggings: [:tag]]).where('tags.id IN (?)', tag_ids).distinct
+  end
+
+  def tags
+    ActsAsTaggableOn::Tag.joins(:taggings).where(
+      'taggings.taggable_type = ? AND taggings.taggable_id IN (?)',
+      'Entity', related_entities.pluck('id')).distinct
+  end
+
+  def tag_list
+    related_entities.joins(taggings: [:tag]).distinct('tags.name').pluck('tags.name').join(', ')
+  end
+
+  def admin_tags
+    ActsAsTaggableOn::Tag.joins(:taggings).where(
+      'taggings.tagger_id = ? AND taggings.taggable_type = ? AND taggings.taggable_id IN (?)',
+      5, 'Entity', related_entities.pluck('id')).distinct
+  end
+
+  def admin_tag_list
+    related_entities.joins(taggings: [:tag]).where(
+      'taggings.tagger_id = ?', 5).distinct('tags.name').pluck('tags.name').join(', ')
   end
 
   def relate_to_entity(entity)
@@ -60,51 +79,32 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def add_related_events(events, orig_entity, related_entity, genre, existing_list=[])
-    existing_ids = existing_list.map {|re| re[:event].id} + [id]
-    events.each do |related_event|
-      unless existing_ids.include?(related_event.id)
-        existing_list.push({
-          :event => related_event,
-          :entity => orig_entity.name,
-          :related_entity => related_entity.name,
-          :genre => genre
-        })
-      end
-    end
-    existing_list
-  end
-
-  def entity_related_events
-    entities.map {|e| e.matching_entity_events}.flatten.uniq
-  end
-
-  def genre_related_events
-    entities.map {|e| e.related_entity_events}.flatten.uniq
+  def related_entities
+    Entity.where('lower(entities.name) IN (?)', entities.pluck('name').map{|e| e.downcase})
   end
 
   def all_related_events
     related_events = []
-    entities.find_each do |entity|
-      # First get all the entities with the same name so we can query across them
-      entities_with_same_name = entity.matching_entities(:verified_only => false)
-      people_and_admins = entity.matching_entities(:verified_only => true)
-
-      entities_with_same_name.includes(:events, :genres).find_each do |related_entity|
-        # Look first for matching entity names, and make sure they are people
-        add_related_events(related_entity.events, entity, related_entity, related_entity.tag_list, related_events) if people_and_admins.include?(related_entity)
-        # Now look for entities related by genre
-        Entity.tagged_with(related_entity.tag_list, :any => true).includes(:events).map {|e| 
-          add_related_events(e.events, related_entity, e, '', related_events)}
+    all_tags = []
+    related_entities.includes(:tag_sources, :events, taggings: [:tag]).each do |entity|
+      if entity.entity_type == 'person' or !entity.tag_sources.select {|ts| ts.name == 'Admin'}.empty?
+        related_events << entity.events
       end
+      all_tags << entity.taggings.map{|tagging| tagging.tag.id}
     end
-    related_events
+    related_events << Event.matching_tags(all_tags.flatten.compact.uniq)
+    related_events.flatten.uniq.select {|e| e.id != id}
   end
 
   def select_related_events(count=4)
     all_related_events.shuffle.take(count)
   end
 
+  def select_best_tag(not_tags=[])
+    query = tags.where.not(id: not_tags)
+    query.where('taggings.tagger_id = ?', 5).first || query.first
+  end
+  
   def payload
     name + " " + description
   end

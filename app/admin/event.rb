@@ -20,7 +20,7 @@ ActiveAdmin.register Event do
     end
     column :event_type
     column :location do |event|
-      link_to event.location.name, admin_event_path(event.location.id), :target => :blank
+      link_to event.location.name, admin_location_path(event.location.id), :target => :blank
     end
     column :start_date
     column :end_date
@@ -30,14 +30,15 @@ ActiveAdmin.register Event do
       }.join(', ').html_safe
     end
     column "Tags" do |event|
-      event.entities.map {
-        |entity| entity.tag_list
-        }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+      event.tag_list
     end
     column "Admin Tags" do |event|
-      event.entities.map {
-        |entity| entity.owner_tags_on(TagSource.admin, :genres).map {|tag| tag.name}
-        }.flatten.uniq.join(', ').html_safe
+      event.admin_tag_list
+    end
+    column "Related Events" do |event|
+      event.all_related_events.map {
+        |rel_event| link_to rel_event.name, admin_event_path(rel_event.id), :target => :blank
+        }.join(', ').html_safe
     end
     actions
   end
@@ -83,14 +84,10 @@ ActiveAdmin.register Event do
           }.join(', ').html_safe
       end
       row :tags do |event|
-        event.entities.map {
-          |entity| entity.tag_list
-          }.flatten.reject {|tag| tag.empty?}.join(', ').html_safe
+        event.tag_list
       end
       row :admin_tags do |event|
-        event.entities.map {
-          |entity| entity.owner_tags_on(TagSource.admin, :genres).map {|tag| tag.name}
-          }.flatten.uniq.join(', ').html_safe
+        event.admin_tag_list
       end
     end
   end
@@ -110,19 +107,7 @@ ActiveAdmin.register Event do
         |entity| entity.name
         }.join(', ')
       }
-    column('Tags') {
-      |event| event.entities.map {
-        |entity| entity.tag_list
-        }.flatten.reject {
-          |tag| tag.empty?
-        }.join(', ')
-      }
-    column('Admin Tags') {
-      |event| event.entities.map {
-        |entity| entity.owner_tags_on(TagSource.admin, :genres).map {
-          |tag| tag.name
-          }
-        }.flatten.uniq.join(', ')
-      }
+    column('Tags') {|event| event.tag_list}
+    column('Admin Tags') {|event| event.admin_tag_list}
   end
 end
