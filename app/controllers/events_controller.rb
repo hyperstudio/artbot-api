@@ -27,10 +27,10 @@ class EventsController < ApplicationController
     end
   end
 
-  def related(event, tries = 8)
-    tag = event.select_best_tag(not_ids: params[:not_tags])
-    unless Event.matching_tags([tag.id]) and tries > 0
-      params[:not_tags] += tag.id
-      return related(event, tries-1)
-  end
+  # def related(event, tries = 8)
+  #   tag = event.select_best_tag(not_ids: params[:not_tags])
+  #   unless Event.matching_tags([tag.id]) and tries > 0
+  #     params[:not_tags] += tag.id
+  #     return related(event, tries-1)
+  # end
 end

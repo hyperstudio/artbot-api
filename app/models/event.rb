@@ -13,7 +13,8 @@ class Event < ActiveRecord::Base
     event_tags = user.favorites.
       joins(event: [entities: [taggings: [:tag]]]).
       distinct('tags.id').pluck('tags.id')
-    Event.current.matching_tags(user_favorites + event_tags)
+    current.matching_tags(user_favorites + event_tags).
+      not_favorited_by(user).order(:end_date)
   end
 
   def self.for_year(year)
@@ -50,6 +51,10 @@ class Event < ActiveRecord::Base
 
   def self.matching_tags(tag_ids)
     joins(entities: [taggings: [:tag]]).where('tags.id IN (?)', tag_ids).distinct
+  end
+
+  def self.not_favorited_by(user)
+    where.not(id: user.favorites.pluck('event_id'))
   end
 
   def tags

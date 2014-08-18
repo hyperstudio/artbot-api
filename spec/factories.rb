@@ -14,12 +14,22 @@ FactoryGirl.define do
     sequence(:name) {|n| "Tag #{n}" }
   end
 
-  factory :interest do
+  factory :tagging, class: ActsAsTaggableOn::Tagging do
+    context 'genres'
+  end
 
+  factory :interest do
+    user
+    tag
   end
 
   factory :tag_source do
     sequence(:name) { |n| "Tag Source #{n}" }
+  end
+
+  factory :admin_source, class: TagSource do
+    id 5
+    name 'Admin'
   end
 
   factory :user do
