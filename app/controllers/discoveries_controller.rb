@@ -11,9 +11,9 @@ class DiscoveriesController < ApplicationController
   private
 
   def scope
-    if !current_user.methods.include?(:signed_in?)
+    if current_user.kind_of?(::Guest)
       Event.current.order(:end_date)
-    elsif current_user.signed_in?
+    elsif current_user.present?
       Event.recommended_for(current_user)
     end
   end

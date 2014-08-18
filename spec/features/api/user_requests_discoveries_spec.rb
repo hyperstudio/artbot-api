@@ -25,17 +25,15 @@ feature 'User requests discoveries', js: true do
     interesting_next_event = create(:event, end_date: DateTime.now + 2.days)
     interesting_past_event = create(:event, :as_past_event)
 
-    # These work when I run it in a print statement, but not on the test itself. Why?
-
-    #uninteresting_next_event = create(:event, :as_current_event)
-    #favorited_current_event = create(:event, :as_current_event)
-    #favorite = create(:favorite, user: user, event: favorited_current_event)
+    uninteresting_next_event = create(:event, :as_current_event)
+    favorited_current_event = create(:event, :as_current_event)
+    favorite = create(:favorite, user: user, event: favorited_current_event)
     
     entity = create(:entity, events: [
       interesting_current_event,
       interesting_next_event, 
-      interesting_past_event])
-      #favorited_current_event])
+      interesting_past_event,
+      favorited_current_event])
 
     tag = create(:tag)
     tagging = create(:tagging, tagger: admin_source, taggable: entity, tag: tag)
