@@ -72,6 +72,37 @@ feature 'User requests events', js: true do
     end
   end
 
+  scenario 'related to the current event' do
+    event = create(:event, :as_current_event)
+    lesser_related_event = create(:event, :as_current_event)
+    event_same_person = create(:event, :as_current_event)
+    related_event = create(:event, :as_current_event)
+    unrelated_event = create(:event, :as_current_event)
+    past_event = create(:event, :as_past_event)
+
+    admin_entity = create(:entity, events: [event, related_event, past_event])
+    entity = create(:entity, events: [event, lesser_related_event, past_event], entity_type: 'person')
+    matching_entity = create(:entity, name: entity.name, events: [event_same_person], entity_type: 'person')
+
+    admin_tag = create(:tag)
+    tag = create(:tag)
+    admin_tagging = create(:tagging, tagger: create(:admin_source), taggable: admin_entity, tag: admin_tag)
+    normal_tagging = create(:tagging, tagger: create(:tag_source), taggable: entity, tag: tag)
+
+    curb = get_from_api(
+      "/events/#{event.id}",
+      {:related => true}
+    )
+    json_response = parse_response_from(curb)
+
+    related_tag_names = json_response['tags'].map {|tag| tag['tag']['name']}
+    related_event_ids = json_response['tags'].map {|tag| tag['events'].map {|event| event['id']}}.flatten
+    
+    expect(related_tag_names).to eq [admin_tag.name, tag.name, entity.name, matching_entity.name]
+    expect(related_event_ids).to eq [related_event.id, lesser_related_event.id, lesser_related_event.id, event_same_person.id]
+    expect(related_event_ids).not_to include(event.id, unrelated_event.id, past_event.id)
+  end
+
   def get_event_ids_from(json_response)
     event_ids = json_response['events'].map { |event| event['id'] }
   end

@@ -88,26 +88,38 @@ class Event < ActiveRecord::Base
     Entity.where('lower(entities.name) IN (?)', entities.pluck('name').map{|e| e.downcase})
   end
 
-  def all_related_events
-    related_events = []
-    all_tags = []
-    related_entities.includes(:tag_sources, :events, taggings: [:tag]).each do |entity|
-      if entity.entity_type == 'person' or !entity.tag_sources.select {|ts| ts.name == 'Admin'}.empty?
-        related_events << entity.events
-      end
-      all_tags << entity.taggings.map{|tagging| tagging.tag.id}
+  def score_tag(results)
+    tagging = results.delete(:tagging)
+    score = 0
+    if tagging.nil?
+      # It's an entity match, so downgrade it
+      score -= 10
+    elsif tagging.tagger_id == 5
+      score += 100
     end
-    related_events << Event.matching_tags(all_tags.flatten.compact.uniq)
-    related_events.flatten.uniq.select {|e| e.id != id}
+    score -= results[:events].count
+    results[:score] = score
+    results
   end
 
-  def select_related_events(count=4)
-    all_related_events.shuffle.take(count)
-  end
-
-  def select_best_tag(not_tags=[])
-    query = tags.where.not(id: not_tags)
-    query.where('taggings.tagger_id = ?', 5).first || query.first
+  def all_related_events
+    related_tags = {}
+    entity_matches = {}
+    related_entities.includes(:tag_sources, :events, taggings: [:tag]).each do |entity|
+      if entity.events.any? && (entity.entity_type == 'person' || !entity.tag_sources.select {|ts| ts.name == 'Admin'}.empty?)
+        entity_matches[entity.id] = {tag: entity, events: entity.events.current.where.not(id: id), score: 0}
+      end
+      entity.taggings.each do |tagging|
+        related_tags[tagging.tag.id] = {tag: tagging.tag, tagging: tagging, events: [], score: 0}
+      end
+    end
+    self.class.current.matching_tags(related_tags.keys).where.not(id: id).includes(entities: [taggings: [:tag]]).each do |event|
+      event.entities.map {|entity| entity.taggings.map {|tagging| tagging.tag.id}}.flatten.uniq.each do |tag_id|
+        related_tags[tag_id][:events] << event
+      end
+    end
+    all_tags = related_tags.values + entity_matches.values
+    all_tags.uniq.map {|results| score_tag(results)}.sort {|x,y| y[:score] <=> x[:score]}
   end
   
   def payload
