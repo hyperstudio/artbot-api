@@ -17,27 +17,25 @@ feature 'User requests discoveries', js: true do
   end
 
   scenario 'authenticated' do
-    admin_source = create(:admin_source)
-
-    user = create(:user)
-
+    # It should return these
     interesting_current_event = create(:event, :as_current_event)
     interesting_next_event = create(:event, end_date: DateTime.now + 2.days)
+    # It should not return these
+    uninteresting_current_event = create(:event, :as_current_event)
     interesting_past_event = create(:event, :as_past_event)
-
-    uninteresting_next_event = create(:event, :as_current_event)
-    favorited_current_event = create(:event, :as_current_event)
-    favorite = create(:favorite, user: user, event: favorited_current_event)
+    interesting_favorited_current_event = create(:event, :as_current_event)
     
     entity = create(:entity, events: [
       interesting_current_event,
       interesting_next_event, 
       interesting_past_event,
-      favorited_current_event])
-
+      interesting_favorited_current_event])
     tag = create(:tag)
-    tagging = create(:tagging, tagger: admin_source, taggable: entity, tag: tag)
+    tagging = create(:tagging, tagger: create(:admin_source), taggable: entity, tag: tag)
+
+    user = create(:user)
     interest = create(:interest, user: user, tag: tag)
+    favorite = create(:favorite, user: user, event: interesting_favorited_current_event)
 
     curb = get_from_api(
       '/discoveries',
@@ -49,5 +47,8 @@ feature 'User requests discoveries', js: true do
 
     expect(curb.response_code).to eq 200
     expect(event_ids).to  eq [interesting_current_event.id, interesting_next_event.id]
+    expect(event_ids).not_to include(uninteresting_current_event.id, 
+                                     interesting_past_event.id, 
+                                     interesting_favorited_current_event.id)
   end
 end
