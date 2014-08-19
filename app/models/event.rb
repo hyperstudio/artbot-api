@@ -88,38 +88,8 @@ class Event < ActiveRecord::Base
     Entity.where('lower(entities.name) IN (?)', entities.pluck('name').map{|e| e.downcase})
   end
 
-  def score_tag(results)
-    tagging = results.delete(:tagging)
-    score = 0
-    if tagging.nil?
-      # It's an entity match, so downgrade it
-      score -= 10
-    elsif tagging.tagger_id == 5
-      score += 100
-    end
-    score -= results[:events].count
-    results[:score] = score
-    results
-  end
-
-  def all_related_events
-    related_tags = {}
-    entity_matches = {}
-    related_entities.includes(:tag_sources, :events, taggings: [:tag]).each do |entity|
-      if entity.events.any? && (entity.entity_type == 'person' || !entity.tag_sources.select {|ts| ts.name == 'Admin'}.empty?)
-        entity_matches[entity.id] = {tag: entity, events: entity.events.current.where.not(id: id), score: 0}
-      end
-      entity.taggings.each do |tagging|
-        related_tags[tagging.tag.id] = {tag: tagging.tag, tagging: tagging, events: [], score: 0}
-      end
-    end
-    self.class.current.matching_tags(related_tags.keys).where.not(id: id).includes(entities: [taggings: [:tag]]).each do |event|
-      event.entities.map {|entity| entity.taggings.map {|tagging| tagging.tag.id}}.flatten.uniq.each do |tag_id|
-        related_tags[tag_id][:events] << event
-      end
-    end
-    all_tags = related_tags.values + entity_matches.values
-    all_tags.uniq.map {|results| score_tag(results)}.sort {|x,y| y[:score] <=> x[:score]}
+  def related_events
+    EventLinker.new(self).get_scored_results
   end
   
   def payload

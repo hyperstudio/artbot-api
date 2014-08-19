@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   def show
     event = Event.find(params[:id])
     if params[:related]
-      render json: {tags: related(event)}
+      render json: {results: related(event)}
     else
       respond_with event
     end
@@ -31,6 +31,6 @@ class EventsController < ApplicationController
   end
 
   def related(event)
-    event.all_related_events
+    event.related_events
   end
 end

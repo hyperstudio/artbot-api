@@ -47,42 +47,36 @@ ActiveAdmin.register_page "Event Links" do
         paginated_collection events do
             table do
                 events.each do |event|
-                    admin_tags = event.admin_tags
-                    other_tags = event.tags.where.not(id: admin_tags.pluck('id')).order('name')
                     params_hash = {
-                        :admin_tags => admin_tags,
-                        :tags => other_tags
+                        :admin_tags => [],
+                        :tags => [],
+                        :entities => []
                     }
-                    admin_empty = params_hash[:admin_tags].empty?
-                    other_empty = params_hash[:tags].empty?
-
-                    if params[:tag_type] == 'admin'
-                        if admin_empty
-                            break
-                        end
-                        params_hash[:tags] = []
-                    elsif params[:tag_type] == 'other'
-                        if other_empty
-                            break
-                        end
-                        params_hash[:admin_tags] = []
-                    else
-                        if admin_empty && other_empty
-                            break
+                    results = event.related_events
+                    results.each do |result|
+                        if result[:score] < -50
+                            params_hash[:entities] << result
+                        elsif (-50..50).include?(result[:score])
+                            params_hash[:tags] << result
+                        elsif result[:score] >= 50
+                            params_hash[:admin_tags] << result
                         end
                     end
 
                     name_empty = true
 
-                    params_hash.each do |tag_type, tags|
+                    params_hash.each do |tag_type, results|
                         tag_type_empty = true
                         
 
-                        tags.each do |tag|
+                        results.each do |result|
+                            tag = result[:tag]
+                            matching_events = result[:events]
+
                             tag_empty = true
 
                             if name_empty
-                                tr td h3 strong link_to event.name, admin_event_path(event.id)
+                                tr td h3 strong link_to event.name, admin_event_path(event.id), :target => :blank
                                 name_empty = false
                             end
                             if tag_type_empty
@@ -91,16 +85,16 @@ ActiveAdmin.register_page "Event Links" do
                             end
                             tr do
                                 if tag_empty
-                                    td strong link_to tag.name, admin_tag_path(tag.id)
+                                    td strong link_to tag.name, admin_tag_path(tag.id), :target => :blank
                                     tag_empty = false
                                 else
                                     td ''
                                 end
-                                matching_events = Event.matching_tags([tag.id]).where.not(id: event.id)
+
                                 if matching_events.empty?
                                     td ''
                                 end
-                                matching_events.to_a.each_with_index do |matching_event, index|
+                                matching_events.each_with_index do |matching_event, index|
                                     if index == 0
                                         td link_to matching_event.name, admin_event_path(matching_event.id)
                                     else
