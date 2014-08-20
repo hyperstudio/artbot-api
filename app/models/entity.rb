@@ -15,22 +15,24 @@ class Entity < ActiveRecord::Base
     end
     scope.distinct
   end
+  
+  def tag_list(context: nil, source: nil)
+    tags(context: context, source: source).pluck('name')
+  end
 
   def admin_tags(context=nil)
     tags(context: context, source: TagSource.admin)
   end
 
-  def tag_list(context: nil, source: nil)
-    tags(context, source).pluck('name')
-  end
-
   def add_tags(tags, tag_source, context=nil)
     if context.nil?
       contexts = TagContext.all_names
+    elsif context.respond_to?(:to_ary)
+      contexts = context
     else
       contexts = [context]
     end
-    contexts.map {|subcontext| EntityAssociator.new(self, subcontext).tag_entity(tags, tag_source)}
+    contexts.map {|subcontext| EntityAssociator.new(self, tag_source, subcontext).tag_entity(tags)}
   end
 
   def add_event(event=nil)

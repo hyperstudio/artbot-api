@@ -15,6 +15,7 @@ FactoryGirl.define do
   end
 
   factory :tagging, class: ActsAsTaggableOn::Tagging do
+    taggable_type = 'Entity'
     context 'movements'
   end
 
@@ -25,6 +26,9 @@ FactoryGirl.define do
 
   factory :tag_source do
     sequence(:name) { |n| "Tag Source #{n}" }
+  end
+
+  factory :tag_context do
   end
 
   factory :admin_source, class: TagSource do

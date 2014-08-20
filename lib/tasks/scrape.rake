@@ -15,6 +15,7 @@ namespace :scrape do
                     puts "...New event, %s, querying NER" % event.url
                     ALL_NER_PATHS.each {|path| event.get_and_process_entities(path)}
                 elsif event.changed?
+                    puts "...Event %s updated" % event.url
                     event.save
                 end
             end

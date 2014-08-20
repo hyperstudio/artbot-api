@@ -21,12 +21,21 @@ class CategoryFinder
       %r((.+)art\s(.+)?)i,
       %r((.+)\sart(.+)?)i
     ],
+    eras: [
+      %r((.+)?century(.+)?)i,
+    ],
+    regions: [
+    ]
   }
 
   FLAGS = {
     movements: [
       %r((.+)?article(.+)?)i,
       %r((.+)?museum(.+)?)i
+    ],
+    eras: [
+    ],
+    regions: [
     ]
   }
 

@@ -14,7 +14,7 @@ class EntityCreator
 #       :tags => (tags for these entities)
 #   }
 
-    def initialize(ner_result, save=false, add_relations=false)
+    def initialize(ner_result)
         if ner_result[:url].present?
             @entity = Entity.find_or_initialize_by(url: ner_result[:url])
         elsif ner_result[:name].present?
@@ -36,18 +36,7 @@ class EntityCreator
         end
 
         @tags = ner_result[:tags].present? ? ner_result[:tags] : []
-
-        if save
-            @entity.save
-        end
-        if add_relations
-            add_relations(ner_result[:source])
-        end
-    end
-
-    def add_relations(source=nil)
-        @entity.add_tags(@tags, source)
-        @entity.add_source(source)
+        @source = ner_result[:source]
     end
 
     def add_attributes_to_entity(ner_result)
@@ -59,6 +48,17 @@ class EntityCreator
         if ner_result[:entity_type].present?
             @entity.entity_type = ner_result[:entity_type]
         end
+    end
+
+    def add_relations
+        @entity.add_tags(@tags, @source)
+        @entity.add_source(@source)
+    end
+
+    def create
+        @entity.save
+        add_relations
+        @entity
     end
 
     attr_reader :entity, :tags

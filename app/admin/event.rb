@@ -35,11 +35,6 @@ ActiveAdmin.register Event do
     column "Admin Tags" do |event|
       event.admin_tag_list
     end
-    column "Related Events" do |event|
-      event.all_related_events.map {
-        |rel_event| link_to rel_event.name, admin_event_path(rel_event.id), :target => :blank
-        }.join(', ').html_safe
-    end
     actions
   end
 

@@ -82,8 +82,10 @@ ActiveAdmin.register Entity do
     name: :text,
     context: TagContext.all_names.map {|name| [name.pluralize, name.pluralize.to_sym]}
   } do |ids, inputs|
+    admin_source = TagSource.admin
     Entity.find(ids).each do |entity|
-      entity.add_tags(inputs['name'].split(', '), TagSource.admin, inputs['context'])
+      entity.add_tags(inputs['name'].split(',').map{|n|n.strip}, admin_source, inputs['context'])
+      entity.add_source(admin_source)
     end
     redirect_to collection_path, notice: '%d entities tagged with "%s" on context "%s"' % [ids.count, inputs["name"], inputs["context"]]
   end

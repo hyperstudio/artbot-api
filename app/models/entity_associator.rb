@@ -1,28 +1,31 @@
 class EntityAssociator
-  # Serves two functions: 1) adds tags to entities via a specified tags source,
-  # 2) associate entities with events
 
-  def initialize(entity, context)
+  def initialize(entity, source, context)
     @entity = entity
     @context = context.to_s.pluralize.to_sym
+    @source = source
   end
 
-  def tag_entity(tags, tag_source)
-    all_tags = old_and_new_tags(tags, tag_source).join(', ')
+  def tag_entity(tags)
+    all_tags = filter_by_context(tags) + existing_tags
     if all_tags.present?
-      tag_source.tag(
+      @source.tag(
         @entity, on: @context,
-        with: all_tags
+        with: all_tags.join(', ')
       )
     end
   end
 
-  def old_and_new_tags(new_tags, tag_source)
-    unless tag_source == TagSource.admin
-      # Make sure these are legit names
-      category_finder = CategoryFinder.new(new_tags, @context)
-      new_tags = category_finder.find
+  def filter_by_context(tags)
+    if @source == TagSource.admin
+      # Don't pattern-match it
+      tags
+    else
+      CategoryFinder.new(tags, @context).find
     end
-    new_tags | @entity.tags(context: @context, source: tag_source)
+  end
+
+  def existing_tags
+    @entity.tags(context: @context, source: @source)
   end
 end
