@@ -8,7 +8,7 @@ class EventLinker
     end
 
     def populate
-        @event.related_entities.includes(:tag_sources, :events, taggings: [:tag]).each do |entity|
+        @event.related_entities.includes(:events, taggings: [:tag]).each do |entity|
             # Check for any events directly related by people
             related_events_by_entity = entity.events.select {|e| valid_event?(e)}
             if related_events_by_entity.any? && entity.entity_type == 'person'

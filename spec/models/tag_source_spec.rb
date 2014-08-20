@@ -13,7 +13,7 @@ describe TagSource do
       entity = create(:entity)
       tag_source = create(:tag_source)
 
-      tag_source.tag(entity, with: 'foo, bar', on: :genre)
+      tag_source.tag(entity, with: 'foo, bar', on: :movements)
 
       expect(tag_source.owned_tag_names).to match_array ['foo','bar']
     end

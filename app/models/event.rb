@@ -70,12 +70,12 @@ class Event < ActiveRecord::Base
   def admin_tags
     ActsAsTaggableOn::Tag.joins(:taggings).where(
       'taggings.tagger_id = ? AND taggings.taggable_type = ? AND taggings.taggable_id IN (?)',
-      5, 'Entity', related_entities.pluck('id')).distinct
+      TagSource.admin.id, 'Entity', related_entities.pluck('id')).distinct
   end
 
   def admin_tag_list
     related_entities.joins(taggings: [:tag]).where(
-      'taggings.tagger_id = ?', 5).distinct('tags.name').pluck('tags.name').join(', ')
+      'taggings.tagger_id = ?', TagSource.admin.id).distinct('tags.name').pluck('tags.name').join(', ')
   end
 
   def relate_to_entity(entity)
@@ -100,11 +100,15 @@ class Event < ActiveRecord::Base
     NerQuerier.new(path).parsed_query(payload)
   end
 
+  def admin_entities
+    related_entities.joins(:taggings).where('taggings.tagger_id = ?', TagSource.admin.id)
+  end
+
   def get_and_process_entities(ner_path)
     fetch_entities(ner_path).each do |entity_result|
       entity = EntityCreator.new(entity_result, true, true).entity
       entity.add_event(self)
-      entity.admin_relations.map {|relation| relation.add_event(self)}
+      admin_entities.uniq.map {|relation| relation.add_event(self)}
     end
   end
 end

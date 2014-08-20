@@ -15,7 +15,7 @@ FactoryGirl.define do
   end
 
   factory :tagging, class: ActsAsTaggableOn::Tagging do
-    context 'genres'
+    context 'movements'
   end
 
   factory :interest do

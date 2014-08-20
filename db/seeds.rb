@@ -29,3 +29,7 @@ TagSource.create(name: 'DBpedia')
 TagSource.create(name: 'OpenCalais')
 TagSource.create(name: 'Zemanta')
 TagSource.create(name: 'Admin')
+
+TagContext.create(name: 'movements')
+TagContext.create(name: 'eras')
+TagContext.create(name: 'regions')

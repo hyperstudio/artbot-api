@@ -1,4 +1,6 @@
 class AdminMapper
+  ## This needs some love after many refactors
+
   ADMIN_SOURCE = TagSource.admin
   @result = nil
 
@@ -91,14 +93,14 @@ class AdminMapper
   def save_and_relate_entity(name, url, tags, entity_type, source)
     # Cut out any trailing parens from dbpedia
     name = name.include?("(") ? name.split("(")[0].strip : name
-                                           new_tag = {
-                                             :name => name,
-                                             :url => url,
-                                             :tags => tags,
-                                             :entity_type => entity_type,
-                                             :source => source
-                                           }
-                                           entity = EntityCreator.new(new_tag, true, true).entity
-                                           entity.matching_entity_events.map {|event| entity.add_event(event)}
+    new_tag = {
+      :name => name,
+      :url => url,
+      :tags => tags,
+      :entity_type => entity_type,
+      :source => source
+    }
+    entity = EntityCreator.new(new_tag, true, true).entity
+    entity.matching_entity_events.map {|event| entity.add_event(event)}
   end
 end

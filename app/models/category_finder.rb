@@ -1,6 +1,6 @@
 class CategoryFinder
   PATTERNS = {
-    genre: [
+    movements: [
       %r((.+)?archit(.+)?)i,
       %r((.+)?ism(.+)?)i,
       %r((.+)?mural(.+)?)i,
@@ -20,11 +20,11 @@ class CategoryFinder
       %r(\Aart(.+)?)i,
       %r((.+)art\s(.+)?)i,
       %r((.+)\sart(.+)?)i
-    ]
+    ],
   }
 
   FLAGS = {
-    genre: [
+    movements: [
       %r((.+)?article(.+)?)i,
       %r((.+)?museum(.+)?)i
     ]

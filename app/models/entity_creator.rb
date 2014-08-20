@@ -23,7 +23,7 @@ class EntityCreator
             @entity = nil
         end
 
-        if ner_result[:url].present? and ner_result[:url].include?("dbpedia.org") and @entity.sourced_by?("DBpedia")
+        if ner_result[:url].present? and ner_result[:url].include?("dbpedia.org") and @entity.taggings.pluck('tagger_id').include?(TagSource.dbpedia.id)
             # Make sure we aren't overriding the original dbpedia version.
             if ner_result[:source].name == "Admin"
                 # Only add the new entity type, keep all else as-is

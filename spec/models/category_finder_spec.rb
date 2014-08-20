@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CategoryFinder do
   it 'finds whitelisted categories based on a context' do
-    finder = described_class.new(example_categories, :genre)
+    finder = described_class.new(example_categories, :movements)
 
     expect(finder.find).to match_array(
       wanted_categories

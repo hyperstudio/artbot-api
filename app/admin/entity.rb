@@ -4,7 +4,7 @@ ActiveAdmin.register Entity do
 
   filter :name
   filter :tag_sources, as: :check_boxes
-  filter :genres, :label => 'Admin Tags', :collection => proc {TagSource.admin.owned_tags}
+  filter :movements, :label => 'Admin Tags', :collection => proc {TagSource.admin.owned_tags}
   filter :events, :collection => proc {Event.order('name')}
 
   index do
@@ -15,7 +15,16 @@ ActiveAdmin.register Entity do
       link_to entity.url, entity.url, :target => :blank
     end
     column :entity_type
-    column :tag_list
+    column 'Tags' do |entity|
+      entity.tags.map {
+        |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
+        }.join(', ').html_safe
+    end
+    column 'Admin Tags' do |entity|
+      entity.tags(source: TagSource.admin).map {
+        |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
+      }.join(', ').html_safe
+    end
     column "Events" do |entity|
       entity.events.map {
         |event| link_to event.name, admin_event_path(event.id), :target => :blank
@@ -31,7 +40,11 @@ ActiveAdmin.register Entity do
       f.input :url
       f.input :description
       f.input :entity_type
-      f.input :tag_list
+      f.input 'Tags' do |entity|
+        entity.admin_tags.map {
+          |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
+        }.join(', ').html_safe
+      end
     end
     f.inputs 'Events' do
       f.input :events, as: :check_boxes
@@ -46,23 +59,31 @@ ActiveAdmin.register Entity do
         link_to entity.url, entity.url
       end
       row :description
-      row :tag_list
+      # row :tag_list
       row :events do |entity|
         entity.events.map {
           |event| link_to event.name, admin_event_path(event.id), :target => :blank
           }.join(', ').html_safe
+      end
+      row 'Tags' do |entity|
+        entity.tags.map {
+          |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
+          }.join(', ').html_safe
+      end
+      row 'Admin Tags' do |entity|
+        entity.admin_tags.map {
+          |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
+        }.join(', ').html_safe
       end
     end
   end
 
   batch_action :add_tags_to, confirm: "Add tags (comma separated)", form: {
     name: :text,
-    context: [['genres', :genres], ['time periods', :time_periods]],
+    context: TagContext.all_names.map {|name| [name.pluralize, name.pluralize.to_sym]}
   } do |ids, inputs|
-    admin_source = TagSource.admin
     Entity.find(ids).each do |entity|
-      entity.add_tags(inputs['name'].split(', '), admin_source, inputs['context'])
-      admin_source.tag(entity, :with => tags, :on => inputs["context"])
+      entity.add_tags(inputs['name'].split(', '), TagSource.admin, inputs['context'])
     end
     redirect_to collection_path, notice: '%d entities tagged with "%s" on context "%s"' % [ids.count, inputs["name"], inputs["context"]]
   end
