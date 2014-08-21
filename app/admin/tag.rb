@@ -1,4 +1,6 @@
 ActiveAdmin.register ActsAsTaggableOn::Tag, as: "Tag" do
+  permit_params :name
+  
   filter :name
   
   index do
