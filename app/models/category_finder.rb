@@ -25,6 +25,10 @@ class CategoryFinder
       %r((.+)?century(.+)?)i,
     ],
     regions: [
+    ],
+    mediums: [
+    ],
+    miscellaneous: [
     ]
   }
 
@@ -36,6 +40,10 @@ class CategoryFinder
     eras: [
     ],
     regions: [
+    ],
+    mediums: [
+    ],
+    miscellaneous: [
     ]
   }
 

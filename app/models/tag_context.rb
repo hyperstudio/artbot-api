@@ -20,6 +20,14 @@ class TagContext < ActiveRecord::Base
         find_or_create_by(name: 'regions')
     end
 
+    def self.medium
+        find_or_create_by(name: 'mediums')
+    end
+
+    def self.miscellaneous
+        find_or_create_by(name: 'miscellaneous')
+    end
+
     def self.all_names
         pluck('name')
     end
