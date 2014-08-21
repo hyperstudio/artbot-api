@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :registrations, only: [:create]
-  ActiveAdmin.routes(self)
+  #ActiveAdmin.routes(self)
 
   patch :preferences, to: 'preferences#update'
   put :preferences, to: 'preferences#update'
