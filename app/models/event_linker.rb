@@ -1,5 +1,4 @@
 class EventLinker
-
     def initialize(event)
         @event = event
         @tag_matches = {}
