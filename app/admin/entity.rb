@@ -5,6 +5,7 @@ ActiveAdmin.register Entity do
   filter :name
   filter :tag_sources, as: :check_boxes
   filter :movements, :label => 'Admin Tags', :collection => proc {TagSource.admin.owned_tags}
+  filter :by_tag_name_in, as: :string, label: 'Tag Name'
   filter :events, :collection => proc {Event.order('name')}
 
   index do

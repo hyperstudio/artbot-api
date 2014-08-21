@@ -4,6 +4,15 @@ class Entity < ActiveRecord::Base
   has_and_belongs_to_many :events
   has_and_belongs_to_many :tag_sources
 
+  ransacker :by_tag_name, :formatter => proc {|v|
+    puts 'hear hear'
+    puts v
+    joins(taggings: [:tag]).where('tags.name ILIKE ?', '%'+v.to_s.downcase+'%').distinct('tags.id').pluck('entities.id')
+  } do |parent|
+    puts parent.table[:id]
+    parent.table[:id]
+  end
+
   def tags(context: nil, source: nil)
     scope = ActsAsTaggableOn::Tag.joins(:taggings).where(
       'taggings.taggable_id = ? AND taggings.taggable_type = ?', self.id, self.class.name)
@@ -14,6 +23,20 @@ class Entity < ActiveRecord::Base
       scope = scope.where('taggings.tagger_id = ?', source.id)
     end
     scope.distinct
+  end
+
+  def add_tags(tags, source=nil)
+    EntityAssociator.new(self).tag_entity(tags, source)
+  end
+
+  def admin_relations
+    matching_entities(:verified_only => false).includes(:tag_sources).map {|e| e.sourced_by?('Admin') ? e : nil}.compact
+  end
+
+  def add_event(event=nil)
+    if event.present? and !events.include?(event)
+      events << event
+    end
   end
   
   def tag_list(context: nil, source: nil)
