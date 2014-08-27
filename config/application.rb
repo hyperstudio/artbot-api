@@ -23,7 +23,8 @@ module Artx
     # Rails.logger = Logger.new(STDOUT)
     config.middleware.use Rack::Deflater
 
-    config.middleware.use Rack::Cors do
+    config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
+    # config.middleware.use Rack::Cors do
       allow do
         origins Rails.application.config.cors_origins
         resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :delete, :options, :head]
