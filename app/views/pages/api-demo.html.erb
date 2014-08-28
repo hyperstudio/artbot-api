@@ -29,7 +29,7 @@
   $.ajax({
     type: "POST",
     dataType: "json",
-    url: "/registrations",
+    url: "http://artx-staging.herokuapp.com/registrations",
     data: {
       email: $("#register-email").val(),
       password:  $("#register-password").val(),
@@ -57,7 +57,7 @@
   $.ajax({
     type: "POST",
     dataType: "json",
-    url: "/tokens",
+    url: "http://artx-staging.herokuapp.com/tokens",
     data: {
       email: $("#login-email").val(),
       password:  $("#login-password").val()
@@ -81,7 +81,7 @@
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/favorites",
+    url: "http://artx-staging.herokuapp.com/favorites",
     beforeSend: function (request) {
         request.setRequestHeader("authentication_token", $.cookie('token'));
     },
@@ -107,7 +107,7 @@
             <code class="javascript">
   $.ajax({
     type: "GET",
-    url: "/interests",
+    url: "http://artx-staging.herokuapp.com/interests",
     beforeSend: function (request) {
         request.setRequestHeader("authentication_token", $.cookie('token'));
     },
@@ -135,7 +135,7 @@
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/locations/1/events",
+    url: "http://artx-staging.herokuapp.com/locations/1/events",
     data: { },
     success: function( data ){
       console.log(data);
@@ -160,7 +160,7 @@
             <code class="javascript">
   $.ajax({
     type: "GET",
-    url: "/events",
+    url: "http://artx-staging.herokuapp.com/events",
     data: {
       year: '2014',
       month: '08',
@@ -203,7 +203,7 @@
       $.ajax({
         type: "POST",
         dataType: "json",
-        url: "/registrations",
+        url: "http://artx-staging.herokuapp.com/registrations",
         data: {
           email: $("#register-email").val(),
           password:  $("#register-password").val(),
@@ -223,7 +223,7 @@
       $.ajax({
         type: "POST",
         dataType: "json",
-        url: "/tokens",
+        url: "http://artx-staging.herokuapp.com/tokens",
         data: {
           email: $("#login-email").val(),
           password:  $("#login-password").val(),
@@ -241,7 +241,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/favorites",
+        url: "http://artx-staging.herokuapp.com/favorites",
         beforeSend: function (request) {
             request.setRequestHeader("authentication_token", $.cookie('token'));
         },
@@ -258,7 +258,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/locations/1/events",
+        url: "http://artx-staging.herokuapp.com/locations/1/events",
         data: { },
         success: function( data ){
           console.log(data);
@@ -273,7 +273,7 @@
     $('#events-month-button').click(function(){
       $.ajax({
         type: "GET",
-        url: "/events",
+        url: "http://artx-staging.herokuapp.com/events",
         data: {
           year: '2014',
           month: '08',
@@ -291,7 +291,7 @@
     $('#interests-button').click(function(){
       $.ajax({
         type: "GET",
-        url: "/interests",
+        url: "http://artx-staging.herokuapp.com/interests",
         beforeSend: function (request) {
             request.setRequestHeader("authentication_token", $.cookie('token'));
         },
@@ -309,7 +309,7 @@
     //   $.ajax({
     //     type: "GET",
     //     dataType: "json",
-    //     url: "/attendances",
+    //     url: "http://artx-staging.herokuapp.com/attendances",
     //     data: {
     //     },
     //     success: function( data ){
