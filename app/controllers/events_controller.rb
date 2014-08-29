@@ -13,11 +13,7 @@ class EventsController < ApplicationController
 
   def show
     event = Event.find(params[:id])
-    if params[:related]
-      render json: {results: related(event)}
-    else
-      respond_with event
-    end
+    respond_with event
   end
 
   private
@@ -28,9 +24,5 @@ class EventsController < ApplicationController
     else
       Event.all
     end
-  end
-
-  def related(event)
-    event.related_events
   end
 end

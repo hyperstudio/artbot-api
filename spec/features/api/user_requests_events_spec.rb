@@ -95,7 +95,7 @@ feature 'User requests events', js: true do
       {:related => true}
     )
     json_response = parse_response_from(curb)
-    results = json_response['results']
+    results = json_response['event']['related']
 
     ordered_tag_names = results.map {|result| result['tag']['name']}
     ordered_event_ids = results.map {|result| result['events'].map {|event| event['id']}}.flatten
@@ -104,6 +104,21 @@ feature 'User requests events', js: true do
     expect(ordered_event_ids).to eq [top_related_event.id, lesser_related_event.id, 
                                      entity_related_event.id]
     expect(ordered_event_ids).not_to include(event.id, unrelated_event.id, past_event.id)
+  end
+
+  scenario 'and does not want related events' do
+    event = create(:event)
+    related_event = create(:event)
+    entity = create(:entity, events: [event, related_event], entity_type: 'person')
+
+    curb = get_from_api(
+      "/events/#{event.id}",
+      {:related => false}
+    )
+    json_response = parse_response_from(curb)
+    results = json_response['event']
+
+    expect(results).not_to have_key('related')
   end
 
   def get_event_ids_from(json_response)

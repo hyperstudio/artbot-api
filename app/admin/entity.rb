@@ -13,7 +13,7 @@ ActiveAdmin.register Entity do
     id_column
     column :name
     column :url do |entity|
-      link_to entity.url, entity.url, :target => :blank
+      link_to entity.url, entity.url || '', :target => :blank
     end
     column :entity_type
     column 'Tags' do |entity|
