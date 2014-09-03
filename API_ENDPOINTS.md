@@ -1,4 +1,22 @@
-## POST   /registrations
+## HEAD /registrations
+
+Check if a user is registered.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `email`                 | Yes      |
+
+### Successful Response
+
+Response Code: 200.
+
+### Unsuccessful Response
+
+Response Code: 404.
+
+## POST /registrations
 
 Register a user. Does not require an `authentication_token`
 
