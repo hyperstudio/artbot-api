@@ -33,6 +33,43 @@ Payload: Serialized attribute errors
 {"password":["can't be blank"],"password_confirmation":["doesn't match Password"]}
 ```
 
+## POST /tokens
+
+Retrieves a user's authentication token.
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `email`                 | Yes      | Email for authenticating user.
+| `password`              | Yes      | Password for authenticating user.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: An authentication token.
+
+```
+{"authentication_token":"6f7xykDYiBrgBWxbmuqs"}
+```
+
+### Unsuccessful Response
+
+Response Code: 404
+
+Payload: An error response stating that the user could not be found.
+
+```
+{"error": "User does not exist"}
+```
+
+Response Code: 403
+
+Payload: An error response stating that user authentication failed.
+
+```
+{"error": "Authentication failed"}
+```
+
 ## PATCH or PUT to /preferences
 
 Updates a users preferences. Requires an `authentication_token`. If a parameter
@@ -233,13 +270,13 @@ Gets an event.
 
 | Field                   | Required | Notes
 | ---                     | ---      | ---
-| `related`               | No       | Boolean
+| `related`               | No       | Boolean. Defaults to false.
 
 ### Successful Response
 
 Response Code: 200
 
-Payload: A serialized event with location. If `related` is `true`, also includes a serialized list of tags with respective related events.
+Payload: A serialized event with location. If `related` is `true`, also includes a serialized list of tags (under the `related` key) with respective related events.
 
 ```
 {"event":{"id":1,"name":"Event 3","url":"http://www.example.com/6","description":null,"image":null,"dates":"May 20, 2014 - June 1, 2014","event_type":"exhibition","start_date":null,"end_date":"2014-08-31T20:44:15.739Z","related":[{"tag":{"id":1,"name":"Tag 1","taggings_count":1},"events":[{"id":2,"created_at":"2014-08-29T20:44:15.755Z","updated_at":"2014-08-29T20:44:15.755Z","location_id":2,"name":"Event 4","url":"http://www.example.com/8","description":null,"image":null,"dates":"May 20, 2014 - June 1, 2014","event_type":"exhibition","start_date":null,"end_date":"2014-08-31T20:44:15.753Z"}]},{"tag":{"id":2,"name":"Tag 2","taggings_count":1},"events":[{"id":3,"created_at":"2014-08-29T20:44:15.764Z","updated_at":"2014-08-29T20:44:15.764Z","location_id":3,"name":"Event 5","url":"http://www.example.com/10","description":null,"image":null,"dates":"May 20, 2014 - June 1, 2014","event_type":"exhibition","start_date":null,"end_date":"2014-08-31T20:44:15.762Z"}],"score":-1},{"tag":{"id":3,"name":"Entity 2","url":null,"description":null,"refcount":null,"stanford_name":null,"entity_type":"person","score":null,"type_group":null},"events":[{"id":4,"created_at":"2014-08-29T20:44:15.796Z","updated_at":"2014-08-29T20:44:15.796Z","location_id":4,"name":"Event 6","url":"http://www.example.com/12","description":null,"image":null,"dates":"May 20, 2014 - June 1, 2014","event_type":"exhibition","start_date":null,"end_date":"2014-08-31T20:44:15.794Z"}],"score":-101}],"location":{"id":1,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/5","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962}}}
@@ -260,5 +297,4 @@ GET    /events(.:format)                        events#index
 GET    /locations/:location_id/events(.:format) events#index
 GET    /locations(.:format)                     locations#index
 GET    /locations/:id(.:format)                 locations#show
-POST   /tokens(.:format)                        tokens#create
 ```

@@ -3,11 +3,12 @@ class TokensController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if user.valid_password?(params[:password])
-      # binding.pry
-      render json: { authentication_token: user.authentication_token }
-    else
+    if !user.present?
+      render json: { error: 'User does not exist' }, status: :not_found
+    elsif !user.valid_password?(params[:password])
       render json: { error: 'Authentication failed' }, status: :forbidden
+    else
+      render json: { authentication_token: user.authentication_token }
     end
   end
 end
