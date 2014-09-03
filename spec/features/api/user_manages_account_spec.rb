@@ -31,6 +31,29 @@ feature 'A user manages their account', js: true do
     end
   end
 
+  context 'existence' do
+    scenario 'by asking whether they exist correctly' do
+      user = create(:user)
+      curb = head_from_api(
+        '/registrations',
+        { 'email' => user.email }
+      )
+
+      expect(curb.body).to eq ""
+      expect(curb.response_code).to eq 200
+    end
+
+    scenario 'by asking whether they exist incorrectly' do
+      curb = head_from_api(
+        '/registrations',
+        { 'email' => 'nonexistent_email@example.com' }
+      )
+
+      expect(curb.body).to eq ""
+      expect(curb.response_code).to eq 404
+    end
+  end
+
   context 'preferences' do
     scenario 'by requesting preferences' do
       user = create(:user)

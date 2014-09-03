@@ -23,6 +23,14 @@ module CurbHelpers
     end
   end
 
+  def head_from_api(url, parameters = {})
+    Curl.head("http://#{host}:#{port}/#{url}", parameters) do |curl|
+      set_default_headers(curl)
+
+      yield curl if block_given?
+    end
+  end
+
   def patch_to_api(url, parameters = {})
     Curl.patch("http://#{host}:#{port}/#{url}", parameters) do |curl|
       set_default_headers(curl)

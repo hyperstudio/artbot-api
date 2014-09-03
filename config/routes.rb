@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :registrations, only: [:create]
+  post :registrations, to: 'registrations#create'
+  get :registrations, to: 'registrations#show'
 
   patch :preferences, to: 'preferences#update'
   put :preferences, to: 'preferences#update'
