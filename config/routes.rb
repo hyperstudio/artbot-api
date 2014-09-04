@@ -21,11 +21,11 @@ Rails.application.routes.draw do
 
   resources :profiles, :only => [:dashboard]
 
-  resources :events, only: [:show, :index] do
+  resources :events, only: [:show, :index], defaults: { format: 'json' } do
     resource :favorite, only: [:create]
   end
 
-  resources :locations, only: [:index, :show] do
+  resources :locations, only: [:index, :show], defaults: { format: 'json' } do
     resources :events, only: [:index]
   end
 
