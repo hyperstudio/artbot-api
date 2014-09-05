@@ -25,6 +25,6 @@ class PreferencesController < ApplicationController
       :password,
       :password_confirmation,
       :zipcode
-    )
+    ).delete_if { |k, v| v.empty? }
   end
 end

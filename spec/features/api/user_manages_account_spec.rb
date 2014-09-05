@@ -91,7 +91,7 @@ feature 'A user manages their account', js: true do
           authentication_token: user.authentication_token,
           send_weekly_emails: true,
           send_day_before_event_reminders: true,
-          send_week_before_close_reminders: true
+          send_week_before_close_reminders: true,
         }
       )
 
@@ -100,6 +100,24 @@ feature 'A user manages their account', js: true do
       expect(curb.response_code).to eq 200
       expect(json_user['send_weekly_emails']).to eq true
       expect(json_user['send_week_before_close_reminders']).to eq true
+    end
+    scenario 'by changing the password' do
+      user = create(:user)
+      new_password = 'newpassword'
+
+      curb = patch_to_api(
+        '/preferences',
+        {
+          authentication_token: user.authentication_token,
+          password: new_password,
+          password_confirmation: new_password
+        }
+      )
+
+      json_user = parse_response_from(curb)['user']
+
+      expect(curb.response_code).to eq 200
+      expect(json_user.keys).not_to include('password')
     end
   end
 end
