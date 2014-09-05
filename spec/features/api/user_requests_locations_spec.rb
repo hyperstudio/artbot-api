@@ -28,6 +28,6 @@ feature 'User requests locations', js: true do
     first_location = json_response['locations'].first
 
     expect(json_response['locations']).to have(1).item
-    expect(first_location.keys).to include('name','description','latitude','longitude')
+    expect(first_location.keys).to include('name','description','latitude','longitude','address','hours')
   end
 end

@@ -6,5 +6,7 @@ class LocationSerializer < ActiveModel::Serializer
     :description,
     :image,
     :latitude,
-    :longitude
+    :longitude,
+    :address,
+    :hours
 end
