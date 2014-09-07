@@ -2,9 +2,7 @@ class EventsController < ApplicationController
   respond_to :json
 
   def index
-    events = scope.
-      for_date(params[:year], params[:month], params[:day]).
-      page(page_param).per(per_page_param)
+    events = scope.page(page_param).per(per_page_param)
 
     render_json_with_pagination_for(events)
   end
@@ -20,7 +18,7 @@ class EventsController < ApplicationController
     if params[:location_id]
       Location.find(params[:location_id]).events.current
     else
-      Event.all
+      Event.for_date(params[:year], params[:month], params[:day]) 
     end
   end
 end

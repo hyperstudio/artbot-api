@@ -35,17 +35,21 @@ class Event < ActiveRecord::Base
 
   def self.for_date(year, month, day)
     result = all
-    if year.present?
-      result = result.where('extract(year from end_date) >= ? AND 
-                             extract(year from start_date) <= ?', year, year)
-    end
-    if month.present?
-      result = result.where('extract(month from end_date) >= ? AND 
-                             extract(month from start_date) <= ?', month, month)
-    end
     if day.present?
-      result = result.where('extract(day from end_date) >= ? AND 
-                             extract(day from start_date) <= ?', day, day)
+      start_of_range = Date.new(year.to_i, month.to_i, day.to_i)
+      end_of_range = start_of_range + 1.day
+    elsif month.present?
+      start_of_range = Date.new(year.to_i, month.to_i, 1)
+      end_of_range = start_of_range + 1.month
+    elsif year.present?
+      start_of_range = Date.new(year.to_i, 1, 1)
+      end_of_range = start_of_range + 1.year
+    else
+      start_of_range = nil
+      end_of_range = nil
+    end
+    if start_of_range.present? && end_of_range.present?
+      result = result.where('start_date < ? AND end_date >= ?', end_of_range, start_of_range)
     end
     result.order(:end_date)
   end
