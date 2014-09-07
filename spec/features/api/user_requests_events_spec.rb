@@ -41,34 +41,42 @@ feature 'User requests events', js: true do
   end
 
   scenario 'by date' do
-    event = create(:event, end_date: now)
-    old_event = create(:event, end_date: now - 2.years)
+    event_ending_today = create(:event, start_date: now - 2.days, end_date: now)
+    old_event = create(:event, start_date: now - 4.years, end_date: now - 2.years)
+    event_ending_next_month = create(:event, start_date: now - 1.month, end_date: now + 1.month)
+    event_ended_yesterday = create(:event, start_date: now - 2.days, end_date: now - 1.day)
 
     with_a_time_limited_query_for(
-      { year: now.year },
-      event,
-      old_event
+      { year: now.year }
     ) do |event_ids|
-      expect(event_ids).to include(event.id)
-      expect(event_ids).not_to include(old_event.id)
+      unless now.month == 1 && now.day == 1
+        expect(event_ids).to eq [event_ended_yesterday.id, event_ending_today.id, event_ending_next_month.id]
+        expect(event_ids).not_to include(old_event.id)
+      else
+        expect(event_ids).to eq [event_ending_today.id, event_ending_next_month.id]
+        expect(event_ids).not_to include(old_event.id, event_ended_yesterday.id)
+      end
     end
 
     with_a_time_limited_query_for(
-      { year: now.year, month: now.month },
-      event,
-      old_event
+      { year: now.year, month: now.month }
     ) do |event_ids|
-      expect(event_ids).to include(event.id)
-      expect(event_ids).not_to include(old_event.id)
+      unless now.day == 1
+        expect(event_ids).to eq [event_ended_yesterday.id, event_ending_today.id, event_ending_next_month.id]
+        expect(event_ids).not_to include(old_event.id)
+      else
+        expect(event_ids).to eq [event_ending_today.id, event_ending_next_month.id]
+        expect(event_ids).not_to include(old_event.id, event_ended_yesterday.id)
+      end
     end
+    
+    event_that_hasnt_started_yet = create(:event, start_date: now + 1.day, end_date: now + 1.month)
 
     with_a_time_limited_query_for(
-      { year: now.year, month: now.month, day: now.day },
-      event,
-      old_event
+      { year: now.year, month: now.month, day: now.day }
     ) do |event_ids|
-      expect(event_ids).to include(event.id)
-      expect(event_ids).not_to include(old_event.id)
+      expect(event_ids).to eq [event_ending_today.id, event_ending_next_month.id]
+      expect(event_ids).not_to include(old_event.id, event_ended_yesterday.id, event_that_hasnt_started_yet.id)
     end
   end
 
@@ -125,7 +133,7 @@ feature 'User requests events', js: true do
     event_ids = json_response['events'].map { |event| event['id'] }
   end
 
-  def with_a_time_limited_query_for(query, included_event, excluded_event)
+  def with_a_time_limited_query_for(query)
     curb = get_from_api(
       '/events',
       query

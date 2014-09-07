@@ -4,10 +4,9 @@ describe Event, '#related_events' do
 
   it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:users).through(:favorites) }
-  # it 'returns the newest events excluding itself' do
-  #   events = create_list :event, 3
-  #   event = events.first
 
-  #   expect(event.related_events).to match_array events.last(2)
-  # end
+  it 'seeds events with default time values' do
+    event = create(:event)
+    expect(event.start_date.day).to eq Time.now.day
+  end
 end

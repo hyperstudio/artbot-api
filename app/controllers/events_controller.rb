@@ -3,9 +3,7 @@ class EventsController < ApplicationController
 
   def index
     events = scope.
-      for_year(params[:year]).
-      for_month(params[:month]).
-      for_day(params[:day]).
+      for_date(params[:year], params[:month], params[:day]).
       page(page_param).per(per_page_param)
 
     render_json_with_pagination_for(events)

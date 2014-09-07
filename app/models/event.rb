@@ -7,6 +7,21 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :entities
 
   delegate :name, to: :location, prefix: true
+  before_validation :verify_dates
+
+  def verify_dates
+    if self.start_date.nil?
+      self.start_date = Time.now
+      self.dates = 'No start date! Defaulted.'
+    end
+    if self.end_date.nil?
+      self.end_date = Time.now + 1.year
+      self.dates = 'No end date! Defaulted.'
+    end
+    if start_date >= end_date
+      self.dates = 'Start date is before end date! Impossible!'
+    end
+  end
 
   def self.recommended_for(user)
     recommended_events = current.
@@ -18,28 +33,21 @@ class Event < ActiveRecord::Base
     recommended_events.order(:end_date)
   end
 
-  def self.for_year(year)
+  def self.for_date(year, month, day)
+    result = all
     if year.present?
-      where('extract(year from end_date) = ?', year)
-    else
-      all
+      result = result.where('extract(year from end_date) >= ? AND 
+                             extract(year from start_date) <= ?', year, year)
     end
-  end
-
-  def self.for_month(month)
     if month.present?
-      where('extract(month from end_date) = ?', month)
-    else
-      all
+      result = result.where('extract(month from end_date) >= ? AND 
+                             extract(month from start_date) <= ?', month, month)
     end
-  end
-
-  def self.for_day(day)
     if day.present?
-      where('extract(day from end_date) = ?', day)
-    else
-      all
+      result = result.where('extract(day from end_date) >= ? AND 
+                             extract(day from start_date) <= ?', day, day)
     end
+    result.order(:end_date)
   end
 
   def self.newest(count)
@@ -47,7 +55,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.current
-    where('end_date >= now()')
+    where('end_date >= now() AND start_date <= now()')
   end
 
   def self.matching_tags(tag_ids)

@@ -50,10 +50,16 @@ FactoryGirl.define do
 
     dates 'May 20, 2014 - June 1, 2014'
     trait :as_past_event do
+      start_date { Time.now - 4.days }
       end_date { Time.now - 2.days }
     end
     trait :as_current_event do
+      start_date { Time.now - 2.days }
       end_date { Time.now + 2.days }
+    end
+    trait :as_future_event do
+      start_date { Time.now + 2.days }
+      end_date { Time.now + 4.days }
     end
 
   end
