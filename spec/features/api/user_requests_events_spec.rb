@@ -79,8 +79,8 @@ feature 'User requests events', js: true do
       expect(event_ids).not_to include(old_event.id, event_ended_yesterday.id, event_that_hasnt_started_yet.id)
     end
   end
-
-  scenario 'related to the current event' do
+  
+  scenario 'related to a single event' do
     event = create(:event, :as_current_event)
 
     top_related_event = create(:event, :as_current_event)

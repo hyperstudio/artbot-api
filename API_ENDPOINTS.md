@@ -1,4 +1,4 @@
-## HEAD /registrations
+## HEAD or GET /registrations
 
 Check if a user is registered.
 
@@ -11,6 +11,8 @@ Check if a user is registered.
 ### Successful Response
 
 Response Code: 200.
+
+Payload: None.
 
 ### Unsuccessful Response
 
@@ -55,6 +57,8 @@ Payload: Serialized attribute errors
 
 Retrieves a user's authentication token.
 
+### Request Parameters
+
 | Field                   | Required | Notes
 | ---                     | ---      | ---
 | `email`                 | Yes      | Email for authenticating user.
@@ -66,6 +70,7 @@ Response Code: 200
 
 Payload: An authentication token.
 
+
 ```
 {"authentication_token":"6f7xykDYiBrgBWxbmuqs"}
 ```
@@ -75,6 +80,7 @@ Payload: An authentication token.
 Response Code: 404
 
 Payload: An error response stating that the user could not be found.
+
 
 ```
 {"error": "User does not exist"}
@@ -87,6 +93,25 @@ Payload: An error response stating that user authentication failed.
 ```
 {"error": "Authentication failed"}
 ```
+
+## GET /preferences
+
+Gets a users preferences. Requires an `authentication_token`.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A serialized user.
+
+
+```
+{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
+```
+
+### Unsuccessful Response
+
+Response Code: 500?
 
 ## PATCH or PUT to /preferences
 
@@ -125,25 +150,6 @@ Payload: Serialized attribute errors
 ```
 {"password":["is too short (minimum is 8 characters)"]}
 ```
-
-## GET /preferences
-
-Gets a users preferences. Requires an `authentication_token`.
-
-### Successful Response
-
-Response Code: 200
-
-Payload: A serialized user.
-
-
-```
-{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
-```
-
-### Unsuccessful Response
-
-Response Code: 500?
 
 ## GET /possible_interests
 
@@ -192,7 +198,7 @@ Indicate that a tag is of interest. Requires an `authentication_token`.
 
 | Field                   | Required | Notes
 | ---                     | ---      | ---
-| `tag_id`                | Yes      | A tag_id in the list from /possible_interests
+| `tag_id`                | Yes      | A tag_id in the list from `/possible_interests`
 
 ### Successful Response
 
@@ -217,7 +223,33 @@ Delete an interest by its `id`. Requires an `authentication_token`.
 
 Response Code: 204
 
-Payload: none.
+Payload: None.
+
+### Unsuccessful Response
+
+Response Code: 500?
+
+## GET /favorites
+
+A paginated list of all the user's favorites, newest first. Requires an `authentication_token`.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `page`                  | No       | Request this page. Defaults to 1.
+| `per_page`              | No       | This many per page. Defaults to 5.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A serialized list of favorited events that include location and
+pagination metadata.
+
+```
+{"favorites":[{"id":1,"created_at":"2014-08-14T20:28:39.313Z","attended":false,"event":{"id":1,"name":"Event 1","url":"http://www.example.com/2","description":null,"image":null,"dates":"May 20, 2014 - June 1, 2014","event_type":"exhibition","start_date":null,"end_date":"2014-08-12T20:28:39.284Z","location":{"id":1,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/1","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962}}}],"meta":{"current_page":1,"next_page":null,"prev_page":null,"per_page":5,"total_pages":1}}
+```
 
 ### Unsuccessful Response
 
@@ -225,8 +257,9 @@ Response Code: 500?
 
 ## GET /favorites/history
 
-A paginated list of favorited events with past `end_date`s.  Requires an
-`authentication_token`.
+A paginated list of favorited events with past `end_date`s.
+Similar to `GET /favorites`, only with past events instead of current ones.
+Requires an `authentication_token`.
 
 ### Request Parameters
 
@@ -251,16 +284,36 @@ pagination metadata.
 
 Response Code: 500?
 
-## GET /favorites
+## POST /favorites/:id
 
-A paginated list of all the user's favorites, newest first. Essentially the
-same as the '/favorites/history' endpoint, except that it's all of a user's
-favorites.  Requires an `authentication_token`.
+Favorites an event for a user. Requires an `authentication_token`.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `attended`              | No       | Boolean. Defaults to false.
+
+### Successful Response
+
+Response Code: 201
+
+Payload: A serialized favorite with the event and location.
+
+```
+{"favorite":{"id":1,"created_at":"2014-09-07T19:52:21.914Z","attended":null,"event":{"id":1,"name":"Event 7","url":"http://www.example.com/14","description":null,"image":null,"dates":"No end date! Defaulted.","event_type":"exhibition","start_date":"2014-09-07T19:52:21.898Z","end_date":"2015-09-07T19:52:21.898Z","location":{"id":1,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/13","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962,"address":null,"hours":null}}}}
+```
+
+### Unsuccessful Response
+
+Response Code: 500?
 
 ## PATCH or PUT /favorites/:id
 
 Update a user's favorite for an event most likely to toggle the state of the
 `attended` boolean attribute. Requires an `authentication_token`.
+
+### Request Parameters.
 
 | Field                   | Required | Notes
 | ---                     | ---      | ---
@@ -270,11 +323,7 @@ Update a user's favorite for an event most likely to toggle the state of the
 
 Response Code: 201
 
-Payload: A serialized favorite with the event and location.
-
-```
-{favorite":{"id":1,"created_at":"2014-08-14T20:39:48.599Z","attended":true,"event":{"id":1,"name":"Event 1","url":"http://www.example.com/2","description":null,"image":null,"dates":"May 20, 2014 - June 1, 2014","event_type":"exhibition","start_date":null,"end_date":null,"location":{"id":1,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/1","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962}}}}
-```
+Payload: A serialized favorite with the event and location, same as `POST /favorites/:id`
 
 ### Unsuccessful Response
 
@@ -282,9 +331,25 @@ Response Code: 422
 
 Payload: A serialized list of errors.
 
+## DELETE /favorites/:id
+
+Un-favorite an event for a user. Requires an `authentication_token`.
+
+### Successful Response
+
+Response Code: 204
+
+Payload: None.
+
+### Unsuccessful Response
+
+Response Code: 500?
+
 ## GET /events/:id
 
 Gets an event.
+
+### Request Parameters
 
 | Field                   | Required | Notes
 | ---                     | ---      | ---
@@ -304,15 +369,117 @@ Payload: A serialized event with location. If `related` is `true`, also includes
 
 Response Code: 500?
 
+## GET /events
 
-## TO FINISH DOCUMENTING
+Gets a paginated list of events.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `related`               | No       | Boolean. Defaults to false.
+| `year`                  | No       | Integer. Limit to events going on this year.
+| `month`                 | No       | Integer. Limit to events going on this month.<br>Requires `year`
+| `day`                   | No       | Integer. Limit to events going on this day.<br>Requires `year` and `month`
+| `page`                  | No       | Request this page. Defaults to 1.
+| `per_page`              | No       | This many per page. Defaults to 5.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A list of events serialized similarly to `GET /events/:id`. Includes a `meta` hash with pagination information.
 
 ```
-DELETE /favorites/:id(.:format)                 favorites#destroy
-GET    /discoveries(.:format)                   discoveries#index
-POST   /events/:event_id/favorite(.:format)     favorites#create
-GET    /events(.:format)                        events#index
-GET    /locations/:location_id/events(.:format) events#index
-GET    /locations(.:format)                     locations#index
-GET    /locations/:id(.:format)                 locations#show
+{"events":[{"id":1,"name":"Event 17","url":"http://www.example.com/32","description":null,"image":null,"dates":"","event_type":"exhibition","start_date":"2014-09-07T19:07:53.125Z","end_date":"2015-09-07T19:07:53.126Z","location":{"id":1,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/31","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962,"address":null,"hours":null}},{"id":2,"name":"Event 18","url":"http://www.example.com/34","description":null,"image":null,"dates":"","event_type":"exhibition","start_date":"2014-09-07T19:07:53.137Z","end_date":"2015-09-07T19:07:53.137Z","location":{"id":2,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/33","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962,"address":null,"hours":null}}],"meta":{"current_page":1,"next_page":null,"prev_page":null,"per_page":5,"total_pages":1}}
 ```
+
+### Unsuccessful Response
+
+Response Code: 500?
+
+## GET /locations/:location_id/events
+
+Gets a paginated list of current events at a given location.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `related`               | No       | Boolean. Defaults to false.
+| `page`                  | No       | Request this page. Defaults to 1.
+| `per_page`              | No       | This many per page. Defaults to 5.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A list of events serialized like in `GET /events`. Includes a `meta` hash with pagination information.
+
+### Unsuccessful Response
+
+Response Code: 500?
+
+##  GET /discoveries
+
+Gets event discoveries tailored to a user. If no `authentication_token` is provided, defaults to getting events by date.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `page`                  | No       | Request this page. Defaults to 1.
+| `per_page`              | No       | This many per page. Defaults to 5.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A list of events serialized like in `GET /events`. Includes a `meta` hash with pagination information.
+
+### Unsuccessful Response
+
+Response Code: 500?
+
+##  GET /locations
+
+Gets a paginated list of locations.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `page`                  | No       | Request this page. Defaults to 1.
+| `per_page`              | No       | This many per page. Defaults to 5.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A serialized list of locations, with pagination information.
+
+```
+{"locations":[{"id":1,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/2","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962,"address":null,"hours":null},{"id":2,"name":"Museum of Fine Arts, Boston","url":"http://www.example.com/3","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962,"address":null,"hours":null}],"meta":{"current_page":1,"next_page":null,"prev_page":null,"per_page":5,"total_pages":1}}
+```
+
+### Unsuccessful Response
+
+Response Code: 500?
+
+##  GET /locations/:id
+
+Gets a single location.
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A serialized location.
+
+```
+{"location":{"id":1,"name":"A location","url":"http://www.example.com/1","description":"The Museum of Fine Arts in Boston, Massachusetts, is one of the largest museums in the United States. It contains more than 450,000 works of art, making it one of the most comprehensive collections in the Americas. With more than one million visitors a year, it is (as of 2013) the 62nd most-visited art museum in the world.\n\nFounded in 1870, the museum moved to its current location in 1909. The museum is affiliated with an art academy, the School of the Museum of Fine Arts, and a sister museum, the Nagoya/Boston Museum of Fine Arts, in Nagoya, Japan. The director of the museum is Malcolm Rogers.","image":"http://www.mfa.org/sites/default/files/imagecache/showcase_2/images/Fenway%20at%20dusk_0.jpg","latitude":42.3394675,"longitude":-71.0948962,"address":null,"hours":null}}
+```
+
+### Unsuccessful Response
+
+Response Code: 500?
