@@ -9,12 +9,13 @@ class Event < ActiveRecord::Base
   delegate :name, to: :location, prefix: true
 
   def self.recommended_for(user)
-    user_favorites = user.interests.pluck('tag_id')
-    event_tags = user.favorites.
-      joins(event: [entities: [taggings: [:tag]]]).
-      distinct('tags.id').pluck('tags.id')
-    current.matching_tags(user_favorites + event_tags).
-      not_favorited_by(user).order(:end_date)
+    recommended_events = current.
+      matching_tags(user.favorite_tags + user.favorite_event_tags).
+      not_favorited_by(user)
+    if recommended_events.empty?
+      recommended_events = current
+    end
+    recommended_events.order(:end_date)
   end
 
   def self.for_year(year)

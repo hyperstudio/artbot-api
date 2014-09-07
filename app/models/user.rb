@@ -12,6 +12,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
+  def favorite_event_tags
+    favorites.joins(event: [entities: [taggings: [:tag]]]).distinct('tags.id').pluck('tags.id')
+  end
+
+  def favorite_tags
+    interests.pluck('tag_id')
+  end
+  
   private
 
   def create_authentication_token

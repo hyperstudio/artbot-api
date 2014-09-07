@@ -51,4 +51,19 @@ feature 'User requests discoveries', js: true do
                                      interesting_past_event.id, 
                                      interesting_favorited_current_event.id)
   end
+
+  scenario 'authenticated without interests or favorites' do
+    user = create(:user)
+    event = create(:event, :as_current_event)
+
+    curb = get_from_api(
+      '/discoveries',
+      {authentication_token: user.authentication_token}
+    )
+
+    json_response = parse_response_from(curb)
+    
+    expect(curb.response_code).to eq 200
+    expect(json_response['events'][0]['id']).to eq event.id
+  end
 end
