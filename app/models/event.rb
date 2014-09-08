@@ -70,6 +70,15 @@ class Event < ActiveRecord::Base
     where.not(id: user.favorites.pluck('event_id'))
   end
 
+  def self.by_distance(latitude, longitude, radius=10)
+    if latitude.present? and longitude.present?
+      locations = Location.near([latitude, longitude], radius, :order => nil).pluck('id')
+      where(location_id: locations)
+    else
+      all
+    end
+  end
+
   def tags(context: nil, source: nil)
     scope = ActsAsTaggableOn::Tag.joins(:taggings).where(
       'taggings.taggable_type = ? AND taggings.taggable_id IN (?)',

@@ -375,12 +375,18 @@ Gets a paginated list of events.
 
 ### Request Parameters
 
+*NOTE: Currently the API limits by either time or location, not both.
+You can use `year`/`month`/`day` or `latitude`/`longitude`/`radius`, but don't use both.*
+
 | Field                   | Required | Notes
 | ---                     | ---      | ---
 | `related`               | No       | Boolean. Defaults to false.
 | `year`                  | No       | Integer. Limit to events going on this year.
 | `month`                 | No       | Integer. Limit to events going on this month.<br>Requires `year`
 | `day`                   | No       | Integer. Limit to events going on this day.<br>Requires `year` and `month`
+| `latitude`              | No       | Float. Limit to events near this latitude.<br>Requires `longitude`
+| `longitude`             | No       | Float. Limit to events near this longitude.<br>Requires `latitude`
+| `radius`                | No       | Integer. Distance from `latitude` and `longitude` to limit.<br>Requires `latitude` and `longitude`. In miles. Defaults to 10.
 | `page`                  | No       | Request this page. Defaults to 1.
 | `per_page`              | No       | This many per page. Defaults to 5.
 

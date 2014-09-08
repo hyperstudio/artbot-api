@@ -40,6 +40,28 @@ feature 'User requests events', js: true do
     expect(event_ids).not_to include(past_event.id)
   end
 
+  scenario 'near specific coordinates' do
+    nearby_location = create(:location, latitude: 42.3394675, longitude: -71.0948962)
+    distant_location = create(:location, latitude: -34.6037232, longitude: -58.3815931)
+
+    nearby_event = create(:event, :as_current_event, location: nearby_location)
+    past_event = create(:event, :as_past_event, location: nearby_location)
+    distant_event = create(:event, :as_current_event, location: distant_location)
+
+    curb = get_from_api(
+      "/events",
+      {
+        latitude: 42.360844,
+        longitude: -71.087723
+      }
+    )
+
+    json_response = parse_response_from(curb)
+    event_ids = json_response['events'].map {|e| e['id']}
+    expect(event_ids).to eq [nearby_event.id]
+    expect(event_ids).not_to include(distant_event.id, past_event.id)
+  end
+
   scenario 'by date' do
     event_ending_today = create(:event, start_date: now - 2.days, end_date: now)
     old_event = create(:event, start_date: now - 4.years, end_date: now - 2.years)
