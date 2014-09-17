@@ -1,6 +1,7 @@
 ActiveAdmin.register Event do
   remove_filter :events_entities
-  permit_params :name, :url, :image, :start_date, :end_date, :event_type, entity_ids: []
+  permit_params :name, :url, :image, :description, :start_date, :end_date, 
+                :location_id, :event_type, entity_ids: []
 
   config.per_page = 10
 
@@ -104,5 +105,13 @@ ActiveAdmin.register Event do
       }
     column('Tags') {|event| event.tag_list}
     column('Admin Tags') {|event| event.admin_tag_list}
+  end
+
+  batch_action :run_ner_on do |ids|
+    ALL_NER_PATHS = ['stanford', 'opencalais', 'zemanta']
+    Event.find(ids).each do |event|
+      ALL_NER_PATHS.map {|path| event.get_and_process_entities(path)}
+    end
+    redirect_to collection_path, notice: '%d events processed with NER' % ids.count
   end
 end
