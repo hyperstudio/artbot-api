@@ -65,7 +65,12 @@ class EventLinker
         end
         # More events is a proxy for a less targeted recommendation
         # use it as a tiebreaker
-        score -= result[:events].count
+        num_events = result[:events].count
+        score -= num_events
+        if num_events < 2
+            # It only has 1 related event so deprioritize it.
+            score -= 5
+        end
         result[:score] = score
         result
     end
@@ -77,7 +82,7 @@ class EventLinker
         (@tag_matches.values + @people_matches.values).select {|result| result[:events].any?}.uniq
     end
 
-    def get_scored_results(limit=3)
+    def get_scored_results(limit=5)
         get_results.map {|result| score_result(result)}
                    .map {|result| limit_events(result, 6)}
                    .sort {|x,y| y[:score] <=> x[:score]}
