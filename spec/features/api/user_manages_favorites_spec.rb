@@ -55,6 +55,28 @@ feature 'User manages favorites', js: true do
     expect(curb.response_code).to eq 204
   end
 
+  scenario 'finds current favorited events' do
+    user = create(:user)
+    past_event = create(:event, :as_past_event)
+    current_event = create(:event, :as_current_event)
+
+    past_favorite = create(:favorite, user: user, event: past_event)
+    current_favorite = create(:favorite, user: user, event: current_event)
+
+    curb = get_from_api(
+      "/favorites",
+      {
+        authentication_token: user.authentication_token
+      }
+    )
+
+    json_response = parse_response_from(curb)
+    favorite_ids = json_response['favorites'].map{ |favorite| favorite['id'] }
+
+    expect(favorite_ids).to include(current_favorite.id)
+    expect(favorite_ids).not_to include(past_favorite.id)
+  end
+
   scenario 'finds past favorited events through history' do
     user = create(:user)
     past_event = create(:event, :as_past_event)

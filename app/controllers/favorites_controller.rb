@@ -5,7 +5,7 @@ class FavoritesController < ApplicationController
   respond_to :json
 
   def index
-    favorites = current_user.favorites.order('created_at desc').
+    favorites = current_user.favorites.for_current_events.order('created_at desc').
       page(page_param).per(per_page_param)
 
     render_json_with_pagination_for(favorites)
