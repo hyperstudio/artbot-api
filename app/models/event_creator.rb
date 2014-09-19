@@ -2,7 +2,7 @@ class EventCreator
     def initialize(scraper_result, location_id)
         @event = Event.find_or_initialize_by(url: self.strip_query_params_from_url(scraper_result[:url]))
         @event.name = scraper_result[:name].strip
-        @event.description = scraper_result[:description].strip
+        @event.description = scraper_result[:description].strip.gsub(/\n/, '<br/>')
         @event.dates = scraper_result[:dates].strip
         self.assign_datetimes
         @event.image = scraper_result[:image]
