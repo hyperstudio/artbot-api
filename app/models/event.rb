@@ -7,19 +7,37 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :entities
 
   delegate :name, to: :location, prefix: true
-  before_validation :verify_dates
+  before_create :process_dates
 
-  def verify_dates
+  def process_dates
+    dates = DateParser.parse(self.dates)
+
+    if dates[0].nil? && dates[1].nil?
+      start_date = Time.now.midnight
+      end_date = start_date + 1.year
+    elsif dates[0].nil?
+      # Probably shouldn't happen
+      start_date = Time.now.midnight
+      end_date = dates[1].midnight
+    elsif dates[1].nil?
+      start_date = dates[0]
+      end_date = start_date + 1.day
+    else
+      start_date = dates[0]
+      end_date = dates[1]
+    end
+
     if self.start_date.nil?
-      self.start_date = Time.now
-      self.dates = 'No start date! Defaulted.'
+      self.start_date = start_date
     end
     if self.end_date.nil?
-      self.end_date = Time.now + 1.year
-      self.dates = 'No end date! Defaulted.'
+      self.end_date = end_date
     end
-    if start_date >= end_date
-      self.dates = 'Start date is before end date! Impossible!'
+
+    if self.end_date - self.start_date <= 3.days
+      self.event_type = 'event'
+    else
+      self.event_type = 'exhibition'
     end
   end
 

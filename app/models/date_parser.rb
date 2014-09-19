@@ -5,6 +5,9 @@ class DateParser
     FLAGS = ['on view', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
     def self.parse(daterange)
+        if daterange.nil?
+            return [nil, nil]
+        end
         start_date, end_date = [nil] * 2
         SPLITTERS.each do |splitter|
             date_split = daterange.split(splitter)
@@ -14,7 +17,7 @@ class DateParser
                         date = date[flag.length..-1]
                     end
                 end
-                parsed_date = Chronic.parse(date)
+                parsed_date = Chronic.parse(date, guess: :begin)
                 unless parsed_date.nil?
                     if start_date.nil? and index == 0
                         start_date = parsed_date
