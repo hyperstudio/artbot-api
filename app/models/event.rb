@@ -13,6 +13,7 @@ class Event < ActiveRecord::Base
     dates = DateParser.parse(self.dates)
 
     if dates[0].nil? && dates[1].nil?
+      # Assume it's an exhibition and give it default dates
       start_date = Time.now.midnight
       end_date = start_date + 1.year
     elsif dates[0].nil?
@@ -20,8 +21,9 @@ class Event < ActiveRecord::Base
       start_date = Time.now.midnight
       end_date = dates[1].midnight
     elsif dates[1].nil?
+      # Assume it's an event and default to ending in 1 day
       start_date = dates[0]
-      end_date = start_date + 1.day
+      end_date = start_date + 1.day - 1.second
     else
       start_date = dates[0]
       end_date = dates[1]

@@ -46,7 +46,7 @@ ActiveAdmin.register Event do
       f.input :url
       f.input :location
       f.input :event_type
-      f.input :dates
+      f.input :dates, label: 'Date as string'
       f.input :start_date
       f.input :end_date
       f.input :description
@@ -69,7 +69,7 @@ ActiveAdmin.register Event do
       end
       row :location
       row :event_type
-      row :dates
+      row :dates, label: 'Date as string'
       row :start_date
       row :end_date
       row :description

@@ -5,15 +5,13 @@ class Entity < ActiveRecord::Base
   has_and_belongs_to_many :tag_sources
 
   ransacker :by_tag_name, :formatter => proc {|v|
-    puts 'hear hear'
-    puts v
     joins(taggings: [:tag]).where('tags.name ILIKE ?', '%'+v.to_s.downcase+'%').distinct('tags.id').pluck('entities.id')
   } do |parent|
     puts parent.table[:id]
     parent.table[:id]
   end
 
-  def tags(context: nil, source: nil)
+  def all_tags(context: nil, source: nil)
     scope = ActsAsTaggableOn::Tag.joins(:taggings).where(
       'taggings.taggable_id = ? AND taggings.taggable_type = ?', self.id, self.class.name)
     unless context.nil?
@@ -40,11 +38,11 @@ class Entity < ActiveRecord::Base
   end
   
   def tag_list(context: nil, source: nil)
-    tags(context: context, source: source).pluck('name')
+    all_tags(context: context, source: source).pluck('name')
   end
 
   def admin_tags(context=nil)
-    tags(context: context, source: TagSource.admin)
+    all_tags(context: context, source: TagSource.admin)
   end
 
   def add_tags(tags, tag_source, context=nil)
@@ -70,4 +68,6 @@ class Entity < ActiveRecord::Base
     end
     tag_sources << source if source.present?
   end
+
+  attr_reader :tags
 end

@@ -17,12 +17,12 @@ ActiveAdmin.register Entity do
     end
     column :entity_type
     column 'Tags' do |entity|
-      entity.tags.map {
+      entity.all_tags.map {
         |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
         }.join(', ').html_safe
     end
     column 'Admin Tags' do |entity|
-      entity.tags(source: TagSource.admin).map {
+      entity.admin_tags.map {
         |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
       }.join(', ').html_safe
     end
@@ -41,11 +41,11 @@ ActiveAdmin.register Entity do
       f.input :url
       f.input :description
       f.input :entity_type
-      f.input 'Tags' do |entity|
-        entity.admin_tags.map {
-          |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
-        }.join(', ').html_safe
-      end
+      # f.input 'Admin Tags' do |entity|
+      #   entity.admin_tags.map {
+      #     |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
+      #   }.join(', ').html_safe
+      # end
     end
     f.inputs 'Events' do
       f.input :events, as: :check_boxes
@@ -67,7 +67,7 @@ ActiveAdmin.register Entity do
           }.join(', ').html_safe
       end
       row 'Tags' do |entity|
-        entity.tags.map {
+        entity.all_tags.map {
           |tag| link_to tag, admin_tag_path(tag.id), :target => :blank
           }.join(', ').html_safe
       end

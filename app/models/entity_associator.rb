@@ -26,6 +26,6 @@ class EntityAssociator
   end
 
   def existing_tags
-    @entity.tags(context: @context, source: @source)
+    @entity.all_tags(context: @context, source: @source)
   end
 end
