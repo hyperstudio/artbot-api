@@ -79,7 +79,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.current
-    where('end_date >= now() AND start_date <= now()')
+    where('end_date >= ? AND start_date <= ?', Time.now, Time.now + 1.month)
   end
 
   def self.matching_tags(tag_ids)
