@@ -1,6 +1,6 @@
 ActiveAdmin.register Event do
   remove_filter :events_entities
-  permit_params :name, :url, :image, :description, :start_date, :end_date, 
+  permit_params :name, :url, :image, :description, :dates, :start_date, :end_date, 
                 :location_id, :event_type, entity_ids: []
 
   config.per_page = 10
@@ -46,6 +46,7 @@ ActiveAdmin.register Event do
       f.input :url
       f.input :location
       f.input :event_type
+      f.input :dates
       f.input :start_date
       f.input :end_date
       f.input :description
@@ -68,6 +69,7 @@ ActiveAdmin.register Event do
       end
       row :location
       row :event_type
+      row :dates
       row :start_date
       row :end_date
       row :description
@@ -96,6 +98,7 @@ ActiveAdmin.register Event do
     column :description
     column :image
     column :event_type
+    column :dates
     column :start_date
     column :end_date
     column('Entities') {
