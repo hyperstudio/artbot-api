@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Scraper</h1>
+    <p>
+      Scraper has scraped.<br>
+      Here's the results
+    </p>
+
+    <h4>NEW EVENTS</h4>
+    <table>
+      <tr>
+        <td><strong>NAME</strong></td>
+        <td><strong>URL</strong></td>
+        <td><strong>ID</strong></td>
+      </tr>
+      <% @new_events.each do |new_event| %>
+        <tr>
+          <td><%= new_event.name %></td>
+          <td><%= new_event.url %></td>
+          <td><%= new_event.id %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <h4>CHANGED EVENTS</h4>
+    <table>
+      <tr>
+        <td><strong>NAME</strong></td>
+        <td><strong>URL</strong></td>
+        <td><strong>ID</strong></td>
+      </tr>
+      <% @changed_events.each do |changed_event| %>
+        <tr>
+          <td><%= changed_event.name %></td>
+          <td><%= changed_event.url %></td>
+          <td><%= changed_event.id %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <h4>ERRORS</h4>
+    <table>
+      <% @errors.each do |error| %>
+        <tr>
+          <td><%= error %></td>
+        </tr>
+      <% end %>
+    </table>
+
+  </body>
+</html>

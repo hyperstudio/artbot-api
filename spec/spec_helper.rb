@@ -15,6 +15,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
+  config.include(MailerMacros)
+  config.before(:each) { reset_email }
 end
 
 Capybara.javascript_driver = :webkit
