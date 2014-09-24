@@ -11,5 +11,12 @@ class AdminMailer < ActionMailer::Base
             :subject => 'Scraper update'
         )
     end
-
+    
+    def update_images(errors)
+        @errors = errors
+        mail(
+            :template_name => 'update_images',
+            :subject => 'Image checker'
+        )
+    end
 end

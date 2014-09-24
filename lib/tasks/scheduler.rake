@@ -40,3 +40,23 @@ namespace :scrape do
         end
     end
 end
+
+namespace :update do
+    desc 'check images on all events and update any that no longer work'
+    task :images => :environment do
+        errors = []
+        Event.all.find_each do |event|
+            begin
+                response = HttpRequester.get(event.image)
+                if response_code.to_i >= 400
+                    errors << [event, response.code]
+                    event.update(image: event.location.image)
+                end
+            rescue
+                errors << [event, @error_message]
+                event.update(image: event.location.image)
+            end
+        end
+        AdminMailer.update_images(errors).deliver if errors.any?
+    end
+end
