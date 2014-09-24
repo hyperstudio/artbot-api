@@ -9,7 +9,7 @@ class NerQuerier
     def query_ner(payload)
         endpoint = NER_BASE_URL + "/" + @path
         post_data = {:payload => payload, :key => NER_API_KEY}
-        JsonRequester.new.post(endpoint, post_data)[:results]
+        JsonRequester.post(endpoint, post_data)[:results]
     end
 
     def default_tag_source

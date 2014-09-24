@@ -7,13 +7,13 @@ class AdminMapper
   def json_from_path(filepath, symbolize_keys: false)
     json_file = nil
     File.open(filepath, 'r') do |f|
-      json_file = JsonRequester.new.load(f, symbolize_keys)
+      json_file = JsonRequester.load(f, symbolize_keys)
     end
     @result = json_file
   end
 
   def json_from_file_obj(file)
-    @result = JsonRequester.new.load(file, false)
+    @result = JsonRequester.load(file, false)
   end
 
   def csv_to_json(rows_or_filepath, outfile)
@@ -34,7 +34,7 @@ class AdminMapper
         final_mappings[genre_name][url] = get_entities_from_json(url, :by_file => true)
       end
     end
-    JsonRequester.new.dump(final_mappings, outfile)
+    JsonRequester.dump(final_mappings, outfile)
   end
 
   def get_entities_from_json(url, by_file: false)
@@ -49,7 +49,7 @@ class AdminMapper
     if by_file
       json_file = json_from_path('%s/%s.json' % [folder_path, genre_slug], :symbolize_keys => true)
     else
-      json_file = JsonRequester.new.get(url)
+      json_file = JsonRequester.get(url)
     end
     json_file[:results][:collection1].map {|entity| process_entity(entity, folder_path)}
   end
