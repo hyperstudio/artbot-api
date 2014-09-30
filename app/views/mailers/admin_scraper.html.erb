@@ -19,7 +19,7 @@
       </tr>
       <% @new_events.each do |new_event| %>
         <tr>
-          <td><%= new_event.name %></td>
+          <td><%= link_to new_event.name, edit_admin_event_url(new_event) %></td>
           <td><%= new_event.url %></td>
           <td><%= new_event.id %></td>
         </tr>
@@ -35,7 +35,7 @@
       </tr>
       <% @changed_events.each do |changed_event| %>
         <tr>
-          <td><%= changed_event.name %></td>
+          <td><%= link_to changed_event.name, edit_admin_event_url(changed_event) %></td>
           <td><%= changed_event.url %></td>
           <td><%= changed_event.id %></td>
         </tr>

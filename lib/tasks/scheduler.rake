@@ -41,22 +41,26 @@ namespace :scrape do
     end
 end
 
-namespace :update do
+namespace :check do
     desc 'check images on all events and update any that no longer work'
-    task :images => :environment do
+    task :event_health => :environment do
         errors = []
         Event.all.find_each do |event|
             begin
+                response = HttpRequester.get(event.url)
+                if response.code.to_i >= 400
+                    errors << [event, 'event', response.code]
+                end
                 response = HttpRequester.get(event.image)
-                if response_code.to_i >= 400
-                    errors << [event, response.code]
+                if response.code.to_i >= 400
+                    errors << [event, 'image', response.code]
                     event.update(image: event.location.image)
                 end
             rescue
-                errors << [event, @error_message]
+                errors << [event, 'unknown', @error_message]
                 event.update(image: event.location.image)
             end
         end
-        AdminMailer.update_images(errors).deliver if errors.any?
+        AdminMailer.event_checkup(errors).deliver if errors.any?
     end
 end

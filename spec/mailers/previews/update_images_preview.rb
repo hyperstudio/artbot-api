@@ -1,6 +1,6 @@
-class UpdateImagesPreview < ActionMailer::Preview
-  def update_images
+class EventCheckupPreview < ActionMailer::Preview
+  def event_checkup
     new_event = Event.first
-    AdminMailer.update_images([[new_event, "404"]])
+    AdminMailer.event_checkup([[new_event, "image", "404"]])
   end
 end

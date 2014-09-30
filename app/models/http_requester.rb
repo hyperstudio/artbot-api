@@ -32,11 +32,11 @@ class HttpRequester
         response
     end
 
-    def self.get(endpoint, params)
+    def self.get(endpoint, params={})
         access(endpoint, "GET", params)
     end
 
-    def self.post(endpoint, data)
+    def self.post(endpoint, data={})
         access(endpoint, "POST", data)
     end
 end

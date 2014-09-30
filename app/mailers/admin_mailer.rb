@@ -12,11 +12,11 @@ class AdminMailer < ActionMailer::Base
         )
     end
     
-    def update_images(errors)
+    def event_checkup(errors)
         @errors = errors
         mail(
-            :template_name => 'update_images',
-            :subject => 'Image checker'
+            :template_name => 'event_checkup',
+            :subject => 'Event health checkup'
         )
     end
 end
