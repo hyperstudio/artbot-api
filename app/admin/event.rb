@@ -56,7 +56,6 @@ ActiveAdmin.register Event do
       f.input :entities, 
         :input_html => { :style => 'height:500px;'}, 
         :collection => Entity.order('name')
-      puts f.methods
     end
     f.actions
   end

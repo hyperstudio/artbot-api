@@ -7,7 +7,6 @@ class Entity < ActiveRecord::Base
   ransacker :by_tag_name, :formatter => proc {|v|
     joins(taggings: [:tag]).where('tags.name ILIKE ?', '%'+v.to_s.downcase+'%').distinct('tags.id').pluck('entities.id')
   } do |parent|
-    puts parent.table[:id]
     parent.table[:id]
   end
 
