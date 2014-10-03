@@ -22,4 +22,14 @@ class RegistrationsController < ApplicationController
       render json: user.errors, status: 422
     end
   end
+
+  def update
+    user = User.find_by(email: params[:email])
+    if user.present?
+      user.send_reset_password_instructions if user.present?
+      head :ok
+    else
+      head :not_found
+    end
+  end
 end
