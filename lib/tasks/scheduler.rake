@@ -36,7 +36,7 @@ namespace :scrape do
             end
         end
         if new_events.present? || changed_events.present? || errors.present?
-            AdminMailer.rake_scrape(new_events, changed_events, errors).deliver
+            AdminMailer.delay.rake_scrape(new_events, changed_events, errors)
         end
     end
 end
@@ -47,6 +47,7 @@ namespace :check do
         errors = []
         Event.all.find_each do |event|
             begin
+                puts 'Trying event %s' % event.url
                 response = HttpRequester.get(event.url)
                 if response.code.to_i >= 400
                     errors << [event, 'event', response.code]
@@ -61,6 +62,6 @@ namespace :check do
                 event.update(image: event.location.image)
             end
         end
-        AdminMailer.event_checkup(errors).deliver if errors.any?
+        AdminMailer.delay.event_checkup(errors) if errors.any?
     end
 end

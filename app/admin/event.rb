@@ -112,7 +112,7 @@ ActiveAdmin.register Event do
   batch_action :run_ner_on do |ids|
     ALL_NER_PATHS = ['stanford', 'opencalais', 'zemanta']
     Event.find(ids).each do |event|
-      ALL_NER_PATHS.map {|path| event.get_and_process_entities(path)}
+      ALL_NER_PATHS.map {|path| event.delay.get_and_process_entities(path)}
     end
     redirect_to collection_path, notice: '%d events processed with NER' % ids.count
   end
