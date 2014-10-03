@@ -22,6 +22,7 @@ gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'unicorn'
+gem 'delayed_job_active_record'
 
 group :development do
   gem "foreman"
