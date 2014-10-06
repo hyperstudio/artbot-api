@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   post :registrations, to: 'registrations#create'
   get :registrations, to: 'registrations#show'
+  put :registrations, to: 'registrations#update'
+  patch :registrations, to: 'registrations#send_reset_email'
 
   patch :preferences, to: 'preferences#update'
   put :preferences, to: 'preferences#update'
