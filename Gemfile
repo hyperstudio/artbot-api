@@ -24,6 +24,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'unicorn'
 gem 'delayed_job_active_record'
 gem 'hirefire-resource'
+gem 'paper_trail', '~> 3.0.5'
 
 group :development do
   gem "foreman"

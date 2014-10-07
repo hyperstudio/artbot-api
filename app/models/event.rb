@@ -9,6 +9,8 @@ class Event < ActiveRecord::Base
   delegate :name, to: :location, prefix: true
   before_create :process_dates
 
+  has_paper_trail
+
   def process_dates
     dates = DateParser.parse(self.dates)
 
