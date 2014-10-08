@@ -44,6 +44,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'curb'
   gem 'capybara-webkit'
+  gem 'test_after_commit'
 end
 
 gem 'rails_12factor', group: :production

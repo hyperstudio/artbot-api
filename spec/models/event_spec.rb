@@ -4,6 +4,57 @@ describe Event, '#related_events' do
 
   it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:users).through(:favorites) }
+  it { should be_versioned }
+
+  it 'versions a new event', :versioning => true do
+    event = create(:event)
+    expect(event.versions.count).to eq 1
+  end
+
+  it 'versions with a default whodunnit', :versioning => true do
+    event = create(:event)
+    expect(event.originator).to eq PaperTrail.whodunnit
+  end
+
+  it 'does not resave a version that was already saved', :versioning => true do
+    event = create(:event, description: 'An old description')
+    event.update(description: 'An old description')
+
+    expect(event.versions.count).to eq 1
+  end
+
+  it 'does not resave a version that was already saved by a bot', :versioning => true do
+    event = create(:event, description: 'An old description')
+    event.whodunnit('human_person_1') do
+      event.update(description: 'A new description')
+    end
+    event.update(description: 'An old description')
+
+    expect(event.versions.count).to eq 2
+    # Just make sure the latest version didn't save
+    expect(event.versions.last.id).to eq nil
+  end
+
+  it 'reverts any bot version to the latest admin version', :versioning => true do
+    event = create(:event, description: 'An old description')
+    event.whodunnit('human_person_1') do
+      event.update(description: 'A new description')
+    end
+    event.update(description: 'An even newer description that should be saved but overridden')
+
+    expect(event.versions.count).to eq 4
+    expect(event.versions.last.previous.whodunnit).to eq PaperTrail.whodunnit
+    expect(event.originator).to eq 'human_person_1'
+  end
+
+  it 'does not version when a related model is created', :versioning => true do
+    event = create(:event)
+    entity = create(:entity, events: [event])
+    user = create(:user)
+    favorite = create(:favorite, user: user, event: event)
+
+    expect(event.versions.count).to eq 1
+  end
 
   it 'processes exhibitions with no dates' do
     event = create(:event, dates: '')

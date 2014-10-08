@@ -5,6 +5,8 @@ namespace :scrape do
         new_events = []
         changed_events = []
         errors = []
+        # Confirm that we are in bot mode for versioning
+        PaperTrail.whodunnit = Rails.application.config.paper_trail_default_whodunnit
         # Start with all of the URLs in the database
         ScraperUrl.all.find_each do |url|
             puts "Querying scraper app with %s" % url.url

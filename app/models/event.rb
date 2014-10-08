@@ -9,7 +9,9 @@ class Event < ActiveRecord::Base
   delegate :name, to: :location, prefix: true
   before_create :process_dates
 
-  has_paper_trail
+  has_paper_trail :skip => [:favorites, :users, :entities]
+  before_update :check_paper_trail, :if => :current_user_is_bot?
+  after_commit :revert_to_last_admin_change, :if => :bot_overrode_admin?, on: :update
 
   def process_dates
     dates = DateParser.parse(self.dates)
