@@ -1,7 +1,7 @@
 ActiveAdmin.register Event do
   remove_filter :events_entities
   permit_params :name, :url, :image, :description, :dates, :start_date, :end_date, 
-                :location_id, :event_type, entity_ids: []
+                :location_id, :event_type, entity_ids: [], version_ids: []
 
   config.per_page = 10
 
@@ -79,6 +79,11 @@ ActiveAdmin.register Event do
         event.entities.map {
           |entity| link_to entity.name, admin_entity_path(entity.id), :target => :blank
           }.join(', ').html_safe
+      end
+      row :versions do |event|
+        event.versions.map {
+          |version| link_to version.id, admin_version_path(version.id), :target => :blank
+        }.join(', ').html_safe
       end
       row :tags do |event|
         event.tag_list
