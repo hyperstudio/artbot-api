@@ -8,10 +8,21 @@ class Event < ActiveRecord::Base
 
   delegate :name, to: :location, prefix: true
   before_create :process_dates
+  before_validation :encode_uris
 
   has_paper_trail :skip => [:favorites, :users, :entities]
   before_update :check_paper_trail, :if => :current_user_is_bot?
   after_commit :revert_to_last_admin_change, :if => :bot_overrode_admin?, on: :update
+
+  def encode_uris
+    encoder = CharacterConverter
+    if self.url_changed?
+      self.url = encoder.encode_uri(self.url || "")
+    end
+    if self.image_changed?
+      self.image = encoder.encode_uri(self.image || "")
+    end
+  end
 
   def process_dates
     dates = DateParser.parse(self.dates)
