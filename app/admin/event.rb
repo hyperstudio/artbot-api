@@ -91,6 +91,8 @@ ActiveAdmin.register Event do
       row :admin_tags do |event|
         event.admin_tag_list
       end
+      row :created_at
+      row :updated_at
     end
   end
 
