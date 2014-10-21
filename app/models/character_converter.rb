@@ -10,6 +10,12 @@ class CharacterConverter
   end
 
   def self.encode_uri(uri)
-    URI::encode(uri)
+    if uri.nil?
+      ""
+    elsif URI::decode(uri) != uri
+      uri
+    else
+      URI::encode(uri)
+    end
   end
 end
