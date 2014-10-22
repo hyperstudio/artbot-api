@@ -17,7 +17,7 @@
       </tr>
     <% @errors.each do |event, error_type, error| %>
       <tr>
-        <td><%= link_to event.name, edit_admin_event_url(event) %></td>
+        <td><%= link_to event.name, admin_event_url(event) %></td>
         <td><%= error_type %></td>
         <td><%= error %></td>
       </tr>
