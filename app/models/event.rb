@@ -171,6 +171,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.dummy
-    where(name: "_DUMMY").first
+    new(id: -1, name: "_DUMMY", url: "#",
+        image: "http://i640.photobucket.com/albums/uu127/ezrazlin/BlankWhite.jpg")
   end
 end

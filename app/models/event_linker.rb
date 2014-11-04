@@ -91,7 +91,7 @@ class EventLinker
 
     def limit_events(result, count)
         result[:events] = result[:events].take(count)
-        result[:events] << Event.dummy while result[:events].count < 2
+        result[:events] << Event.dummy while result[:events].count < 3
         result[:events]
     end
 
