@@ -169,4 +169,8 @@ class Event < ActiveRecord::Base
       case_insensitive_admin_entities.distinct.map {|admin_entity| admin_entity.add_event(self)}
     end
   end
+
+  def self.dummy
+    where(name: "_DUMMY").first
+  end
 end

@@ -84,14 +84,15 @@ class EventLinker
 
     def get_scored_results(limit=5)
         get_results.map {|result| score_result(result)}
-                   .map {|result| limit_events(result, 6)}
                    .sort {|x,y| y[:score] <=> x[:score]}
                    .take(limit)
+                   .map {|result| limit_events(result, 6)}
     end
 
     def limit_events(result, count)
         result[:events] = result[:events].take(count)
-        result
+        result[:events] << Event.dummy while result[:events].count < 2
+        result[:events]
     end
 
 end

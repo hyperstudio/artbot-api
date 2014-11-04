@@ -5,9 +5,13 @@ class FavoritesController < ApplicationController
   respond_to :json
 
   def index
-    favorites = current_user.favorites.for_current_events.order('created_at desc').
-      page(page_param).per(per_page_param)
-
+    favorites = current_user.favorites.for_current_events.order('created_at desc')
+    if 0 < favorites.count < 2
+      favorites << Event.dummy
+      favorites = Kaminari.paginate_array(favorites)
+    end
+    
+    favorites = favorites.page(page_param).per(per_page_param)
     render_json_with_pagination_for(favorites)
   end
 

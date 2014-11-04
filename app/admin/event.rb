@@ -21,7 +21,11 @@ ActiveAdmin.register Event do
     end
     column :event_type
     column :location do |event|
-      link_to event.location.name, admin_location_path(event.location.id), :target => :blank
+      if event.location.present?
+        link_to event.location.name, admin_location_path(event.location.id), :target => :blank
+      else
+        ''
+      end
     end
     column :start_date
     column :end_date
