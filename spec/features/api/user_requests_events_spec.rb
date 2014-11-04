@@ -131,8 +131,12 @@ feature 'User requests events', js: true do
     ordered_event_ids = results.map {|result| result['events'].map {|event| event['id']}}.flatten
     
     expect(ordered_tag_names).to eq [admin_tag.name, tag.name, entity.name]
-    expect(ordered_event_ids).to eq [top_related_event.id, lesser_related_event.id, 
-                                     entity_related_event.id]
+    expect(ordered_event_ids).to include(top_related_event.id, lesser_related_event.id,
+                                         entity_related_event.id)
+    # Events with dummy ids are -1
+    expect(ordered_event_ids).to eq [top_related_event.id, -1, -1,
+                                     lesser_related_event.id, -1, -1,
+                                     entity_related_event.id, -1, -1]
     expect(ordered_event_ids).not_to include(event.id, unrelated_event.id, past_event.id)
   end
 
