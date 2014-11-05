@@ -36,7 +36,9 @@ feature 'User requests events', js: true do
 
     expect(first_event_from_json['location']['name']).to eq location_name
     expect(first_event_from_json['id']).to eq first_event.id
-    expect(event_ids).to match_array([first_event.id, last_event.id])
+    expect(event_ids).to include(first_event.id, last_event.id)
+    # Includes dummy events
+    expect(event_ids).to eq [first_event.id, last_event.id, -1]
     expect(event_ids).not_to include(past_event.id)
   end
 
@@ -58,7 +60,9 @@ feature 'User requests events', js: true do
 
     json_response = parse_response_from(curb)
     event_ids = json_response['events'].map {|e| e['id']}
-    expect(event_ids).to eq [nearby_event.id]
+    expect(event_ids).to include(nearby_event.id)
+    # Includes dummy events
+    expect(event_ids).to eq [nearby_event.id, -1, -1]
     expect(event_ids).not_to include(distant_event.id, past_event.id)
   end
 

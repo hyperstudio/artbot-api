@@ -16,12 +16,14 @@ class EventsController < ApplicationController
 
   def scope
     if params[:location_id]
-      Location.find(params[:location_id]).events.current
+      events = Location.find(params[:location_id]).events.current
+      fill_with_dummies(events)
     elsif params[:latitude] && params[:longitude]
       if params[:radius].nil?
         params[:radius] = 10
       end
-      Event.by_distance(params[:latitude], params[:longitude], params[:radius]).current
+      events = Event.by_distance(params[:latitude], params[:longitude], params[:radius]).current
+      fill_with_dummies(events)
     else
       Event.for_date(params[:year], params[:month], params[:day])
     end

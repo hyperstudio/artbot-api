@@ -6,15 +6,8 @@ class FavoritesController < ApplicationController
 
   def index
     favorites = current_user.favorites.for_current_events.order('created_at desc')
-    unless favorites.count == 0 || favorites.count >= 3
-      if favorites.count == 1
-        favorites << Event.dummy
-      end
-      favorites << Event.dummy
-      favorites = Kaminari.paginate_array(favorites)
-    end
+    favorites = fill_with_dummies(favorites).page(page_param).per(per_page_param)
     
-    favorites = favorites.page(page_param).per(per_page_param)
     render_json_with_pagination_for(favorites)
   end
 
