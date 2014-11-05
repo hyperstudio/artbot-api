@@ -172,6 +172,6 @@ class Event < ActiveRecord::Base
 
   def self.dummy
     new(id: -1, name: "_DUMMY", url: "#",
-        image: "http://i640.photobucket.com/albums/uu127/ezrazlin/BlankWhite.jpg")
+        image: "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png")
   end
 end
