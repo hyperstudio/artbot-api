@@ -6,7 +6,15 @@ class Location < ActiveRecord::Base
 
     reverse_geocoded_by :latitude, :longitude
 
-  def newest_events
-    events.newest(5)
-  end
+    has_attached_file :image,
+        :default_url => "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png",
+        :styles => {
+          :small => "150x150>",
+          :large => "500x500>"
+        }
+    validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+
+    def newest_events
+        events.newest(5)
+    end
 end

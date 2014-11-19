@@ -8,21 +8,18 @@ class Event < ActiveRecord::Base
 
   delegate :name, to: :location, prefix: true
   before_create :process_dates
-  before_validation :encode_uris
 
   has_paper_trail :skip => [:favorites, :users, :entities]
   before_update :check_paper_trail, :if => :current_user_is_bot?
   after_commit :revert_to_last_admin_change, :if => :bot_overrode_admin?, on: :update
 
-  def encode_uris
-    encoder = CharacterConverter
-    if self.url_changed?
-      self.url = encoder.encode_uri(self.url || "")
-    end
-    if self.image_changed?
-      self.image = encoder.encode_uri(self.image || "")
-    end
-  end
+  has_attached_file :image,
+    :default_url => :location_image,
+    :styles => {
+      :small => "150x150>",
+      :large => "500x500>"
+    }
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   def process_dates
     dates = DateParser.parse(self.dates)
@@ -173,5 +170,11 @@ class Event < ActiveRecord::Base
   def self.dummy
     new(id: -1, name: "_DUMMY", url: "#",
         image: "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png")
+  end
+
+  private 
+
+  def location_image
+    location.present? ? location.image.url : "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png"
   end
 end

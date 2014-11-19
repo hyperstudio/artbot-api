@@ -17,6 +17,9 @@ RSpec.configure do |config|
   config.order = "random"
   config.include(MailerMacros)
   config.before(:each) { reset_email }
+  config.after(:suite) do
+    FileUtils.rm_rf(Dir["#{Rails.root}/spec/test_files/"])
+  end
 end
 
 Capybara.javascript_driver = :webkit

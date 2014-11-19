@@ -54,7 +54,7 @@ ActiveAdmin.register Event do
       f.input :start_date
       f.input :end_date
       f.input :description
-      f.input :image
+      f.input :image, :required => false, :hint => f.template.image_tag(f.object.image.url(:small))
     end
     f.inputs 'Tags' do |event|
       f.input :entities, 
@@ -64,7 +64,7 @@ ActiveAdmin.register Event do
     f.actions
   end
 
-  show do
+  show do |ad|
     attributes_table do
       row :name
       row :url do |event|
@@ -76,8 +76,11 @@ ActiveAdmin.register Event do
       row :start_date
       row :end_date
       row :description
-      row :image do |event|
-        link_to event.image, event.image, :target => :blank
+      row :image do
+        image_tag(ad.image.url(:small))
+      end
+      row :imageurl do
+        link_to ad.image.url, ad.image.url, :target => :blank
       end
       row :entities do |event|
         event.entities.map {
@@ -126,5 +129,12 @@ ActiveAdmin.register Event do
       ALL_NER_PATHS.map {|path| event.delay.get_and_process_entities(path)}
     end
     redirect_to collection_path, notice: '%d events processed with NER' % ids.count
+  end
+  batch_action :set_images_on, confirm: "Set images on selected", form: {url: :text} do |ids, inputs|
+    Event.find(ids).each do |event|
+      event.image = inputs['url']
+      event.save
+    end
+    redirect_to collection_path, notice: '%d events with changed image' % ids.count
   end
 end

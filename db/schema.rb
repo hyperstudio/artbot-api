@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007184829) do
+ActiveRecord::Schema.define(version: 20141119002240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,11 +78,14 @@ ActiveRecord::Schema.define(version: 20141007184829) do
     t.string   "name"
     t.string   "url"
     t.text     "description"
-    t.string   "image"
     t.string   "dates"
-    t.string   "event_type",  default: "exhibition"
+    t.string   "event_type",         default: "exhibition"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "favorites", force: true do |t|
@@ -112,11 +115,14 @@ ActiveRecord::Schema.define(version: 20141007184829) do
     t.string   "name"
     t.string   "url"
     t.text     "description"
-    t.string   "image"
     t.float    "latitude"
     t.float    "longitude"
     t.string   "address"
     t.string   "hours"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "scraper_urls", force: true do |t|

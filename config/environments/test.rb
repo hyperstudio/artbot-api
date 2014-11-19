@@ -40,4 +40,6 @@ Rails.application.configure do
 
   # Localhost version of the scraper app to query
   config.scraper_app_url = "http://localhost:5000"
+
+  Paperclip::Attachment.default_options[:path] = "#{Rails.root}/spec/test_files/:class/:id_partition/:style.:extension"
 end

@@ -54,14 +54,14 @@ namespace :check do
                 if response.code.to_i >= 400
                     errors << [event, 'event', response.code]
                 end
-                response = HttpRequester.get(event.image)
+                response = HttpRequester.get(event.image.url)
                 if response.code.to_i >= 400
                     errors << [event, 'image', response.code]
-                    event.update(image: event.location.image)
+                    event.update(image: event.location.image.url)
                 end
             rescue
                 errors << [event, 'unknown', @error_message]
-                event.update(image: event.location.image)
+                event.update(image: event.location.image.url)
             end
         end
         AdminMailer.delay.event_checkup(errors) if errors.any?
