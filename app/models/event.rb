@@ -16,8 +16,8 @@ class Event < ActiveRecord::Base
   has_attached_file :image,
     :default_url => :location_image,
     :styles => {
-      :small => "150x150>",
-      :large => "500x500>"
+      :small => "200x200>",
+      :large => "600x600>"
     }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
