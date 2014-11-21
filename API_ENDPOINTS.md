@@ -53,6 +53,67 @@ Payload: Serialized attribute errors
 {"password":["can't be blank"],"password_confirmation":["doesn't match Password"]}
 ```
 
+## PATCH /registrations
+
+Sends a password reset email to a user.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `email`                 | Yes      |
+
+### Successful Response
+
+Response Code: 200
+
+Payload: None.
+
+### Unsuccessful Response
+
+Response Code: 404
+
+## PUT /registrations
+
+Updates a user password using a reset token.
+
+### Request Parameters
+
+| Field                   | Required | Notes
+| ---                     | ---      | ---
+| `password`              | Yes      |
+| `password_confirmation` | Yes      |
+| `reset_password_token`  | Yes      |
+
+### Successful Response
+
+Response Code: 200
+
+Payload: A serialized user.
+
+
+```
+{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
+```
+
+### Unsuccessful Response
+
+Response Code: 422
+
+Payload: Serialized attribute errors
+
+```
+{"password":["can't be blank"],"password_confirmation":["doesn't match Password"]}
+```
+
+Response Code: 404
+
+Payload: Error message
+
+```
+{"error":"User does not exist"}
+```
+
 ## POST /tokens
 
 Retrieves a user's authentication token.
