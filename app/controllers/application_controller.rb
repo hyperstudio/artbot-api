@@ -59,16 +59,4 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     current_user.admin == true ? admin_root_path : root_url
   end
-
-  def fill_with_dummies(events)
-    event_count = events.count
-    if event_count != 0 && event_count < 3
-      if event_count == 1
-        events << Event.dummy
-      end
-      events << Event.dummy
-      events = Kaminari.paginate_array(events)
-    end
-    events
-  end
 end

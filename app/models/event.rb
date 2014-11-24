@@ -167,11 +167,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def self.dummy
-    new(id: -1, name: "_DUMMY", url: "#",
-        image: "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png")
-  end
-
   private 
 
   def location_image
