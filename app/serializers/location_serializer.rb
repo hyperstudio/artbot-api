@@ -9,4 +9,10 @@ class LocationSerializer < ActiveModel::Serializer
     :longitude,
     :address,
     :hours
+
+  def attributes
+    data = super
+    data[:image] = object.image.nil? ? nil : object.image.url
+    data
+  end
 end
