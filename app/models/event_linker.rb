@@ -87,6 +87,7 @@ class EventLinker
                    .sort {|x,y| y[:score] <=> x[:score]}
                    .take(limit)
                    .map {|result| limit_events(result, 6)}
+                   .map {|result| serialize_events(result)}
     end
 
     def limit_events(result, count)
@@ -94,4 +95,7 @@ class EventLinker
         result
     end
 
+    def serialize_events(result)
+        result[:events] = result[:events].map {|event| EventSerializer.new(event).as_json}
+    end
 end
