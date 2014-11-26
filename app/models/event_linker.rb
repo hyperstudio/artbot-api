@@ -96,7 +96,7 @@ class EventLinker
     end
 
     def serialize_events(result)
-        result[:events] = result[:events].map {|event| EventSerializer.new(event).as_json}
+        result[:events] = result[:events].map {|event| EventSerializer.new(event).as_json[:event]}
         result
     end
 end
