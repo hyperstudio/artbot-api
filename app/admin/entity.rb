@@ -8,6 +8,42 @@ ActiveAdmin.register Entity do
   filter :by_tag_name_in, as: :string, label: 'Tag Name'
   filter :events, :collection => proc {Event.order('name')}
 
+  controller do
+    before_filter :load_batch_actions, :only => :index
+
+    def load_batch_actions
+      resource = active_admin_config
+
+      resource.add_batch_action(
+        :tag, 'Tag', {
+          confirm: "Add tags (comma separated)",
+          form: {
+            name: :text, 
+            context: TagContext.all_names.map {|name| [name.pluralize, name.pluralize.to_sym]}
+          }
+        }) do |ids, inputs|
+          admin_source = TagSource.admin
+          Entity.find(ids).each { |entity|
+            entity.add_tags(inputs['name'].split(',').map{|n|n.strip}, admin_source, inputs['context'])
+            entity.add_source(admin_source)
+          }
+          redirect_to collection_path, notice: '%d entities tagged with "%s" on context "%s"' % [ids.count, inputs["name"], inputs["context"]]
+        end
+
+      resource.add_batch_action(
+        :add_event_to, 'Add event to', {
+          confirm: "Add event",
+          form: {
+            name: Event.order('name').pluck('name', 'id')
+          }
+        }) do |ids, inputs|
+          event = Event.find(inputs['name'])
+          Entity.find(ids).map {|entity| entity.add_event(event)}
+          redirect_to collection_path, notice: '%d entities associated with event "%s"' % [ids.count, event.name]
+        end
+    end
+  end
+
   index do
     selectable_column
     id_column
@@ -78,25 +114,4 @@ ActiveAdmin.register Entity do
       end
     end
   end
-
-  batch_action :add_tags_to, confirm: "Add tags (comma separated)", form: {
-    name: :text,
-    context: TagContext.all_names.map {|name| [name.pluralize, name.pluralize.to_sym]}
-  } do |ids, inputs|
-    admin_source = TagSource.admin
-    Entity.find(ids).each do |entity|
-      entity.add_tags(inputs['name'].split(',').map{|n|n.strip}, admin_source, inputs['context'])
-      entity.add_source(admin_source)
-    end
-    redirect_to collection_path, notice: '%d entities tagged with "%s" on context "%s"' % [ids.count, inputs["name"], inputs["context"]]
-  end
-
-  batch_action :add_event_to, confirm: "Add event to selected", form: {
-    name: Event.order('name').pluck('name', 'id')
-  } do |ids, inputs|
-    event = Event.find(inputs['name'])
-    Entity.find(ids).map {|entity| entity.add_event(event)}
-    redirect_to collection_path, notice: '%d entities associated with event "%s"' % [ids.count, event.name]
-  end
 end
-

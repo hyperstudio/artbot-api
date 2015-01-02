@@ -1,6 +1,6 @@
 class Entity < ActiveRecord::Base
   validates :name, presence: true
-  acts_as_taggable_on TagContext.all_names.map {|name| name.to_sym}
+  acts_as_taggable_on :tag_contexts
   has_and_belongs_to_many :events
   has_and_belongs_to_many :tag_sources
 
@@ -8,6 +8,10 @@ class Entity < ActiveRecord::Base
     joins(taggings: [:tag]).where('tags.name ILIKE ?', '%'+v.to_s.downcase+'%').distinct('tags.id').pluck('entities.id')
   } do |parent|
     parent.table[:id]
+  end
+
+  def self.tag_contexts
+    TagContext.all_names.map {|n| n.to_sym}
   end
 
   def all_tags(context: nil, source: nil)
