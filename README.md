@@ -1,6 +1,6 @@
 # ArtX
 
-Rails 4.1.0, Ruby 2.1.1.
+Rails 4.1.0, Ruby 2.1.2.
 
 To install:
 
@@ -8,7 +8,7 @@ To install:
 * `rake db:setup`
 * `rails s`
 * Navigate to `localhost:3000/user/sign_up` and sign up as a user.
-* For admin access, set "admin" attribute to "true" on the user.
+* For admin access, set `admin` attribute to `true` on the user.
 
 ### Data
 
