@@ -24,7 +24,8 @@ class RegistrationsController < ApplicationController
   end
 
   def update
-    user = User.find_by(reset_password_token: params[:reset_password_token])
+    reset_password_token = params[:reset_password_token] || request.headers['reset_password_token']
+    user = User.find_by(reset_password_token: reset_password_token)
     if user.present?
       user.update(
         password: params[:password], 

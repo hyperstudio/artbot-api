@@ -24,10 +24,10 @@ describe RegistrationsController do
     it 'updates a user password' do
       user = create(:user, password: 'old_password', reset_password_token: 'foobar')
 
+      request.env['reset_password_token'] = user.reset_password_token
       put :update, { 
         password: 'new_password', 
-        password_confirmation: 'new_password',
-        reset_password_token: user.reset_password_token 
+        password_confirmation: 'new_password'
       }
 
       # No good way here to check if the password actually changed...
