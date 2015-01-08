@@ -4,6 +4,10 @@ class RegistrationsController < ApplicationController
 
   respond_to :json
 
+  def self.digest(raw)
+    Devise.token_generator.digest(User, :reset_password_token, raw)
+  end
+
   def show
     if User.find_by(email: params[:email]).present?
       head :ok
@@ -27,9 +31,6 @@ class RegistrationsController < ApplicationController
     end
   end
 
-  def digest(raw)
-    Devise.token_generator.digest(User, :reset_password_token, raw)
-  end
 
   def update
     key = 'reset_password_token'
@@ -37,7 +38,7 @@ class RegistrationsController < ApplicationController
     if ! reset_password_token.present?
       render json: { error: 'reset_password_token not set' }, status: 422
     else
-      user = User.find_by(reset_password_token: digest(reset_password_token))
+      user = User.find_by(reset_password_token: self.class.digest(reset_password_token))
       if user.present?
         if user.reset_password!(params[:password], params[:password_confirmation])
           render json: user

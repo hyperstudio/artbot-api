@@ -42,9 +42,13 @@ describe RegistrationsController do
 
   context '#update' do
     it 'updates a user password' do
-      user = create(:user, password: 'old_password', reset_password_token: 'foobar')
+      reset_password_token = 'foobar'
+      user = create(:user, 
+        password: 'old_password', 
+        reset_password_token: described_class.digest(reset_password_token)
+      )
 
-      request.env['reset_password_token'] = user.reset_password_token
+      request.env['HTTP_RESET_PASSWORD_TOKEN'] = reset_password_token
       put :update, { 
         password: 'new_password', 
         password_confirmation: 'new_password'
@@ -54,18 +58,26 @@ describe RegistrationsController do
       expect(response.code.to_i).to eq 200
     end
     it 'returns an error if the password confirmation does not match' do
-      user = create(:user, password: 'old_password', reset_password_token: 'foobar')
+      reset_password_token = 'foobar'
+      user = create(:user,
+        password: 'old_password',
+        reset_password_token: described_class.digest(reset_password_token)
+      )
 
       put :update, {
         password: 'new_password',
         password_confirmation: 'non_matching_password',
-        reset_password_token: user.reset_password_token
+        reset_password_token: reset_password_token
       }
 
       expect(response.code.to_i).to eq 422
     end
     it 'returns a 404 if the user does not exist' do
-      user = create(:user, password: 'old_password', reset_password_token: 'foobar')
+      reset_password_token = 'foobar'
+      user = create(:user,
+        password: 'old_password',
+        reset_password_token: described_class.digest(reset_password_token)
+      )
 
       put :update, {
         password: 'new_password',
