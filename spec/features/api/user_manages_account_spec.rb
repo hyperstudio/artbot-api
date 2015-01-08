@@ -70,7 +70,8 @@ feature 'A user manages their account', js: true do
         'send_weekly_emails',
         'send_week_before_close_reminders',
         'zipcode',
-        'email'
+        'email',
+        'remember_created_at'
       )
       expect(json_user.keys).not_to include(
         'password'
@@ -92,15 +93,28 @@ feature 'A user manages their account', js: true do
           send_weekly_emails: true,
           send_day_before_event_reminders: true,
           send_week_before_close_reminders: true,
+          remember_me: true
         }
       )
-
       json_user = parse_response_from(curb)['user']
 
       expect(curb.response_code).to eq 200
       expect(json_user['send_weekly_emails']).to eq true
+      expect(json_user['send_day_before_event_reminders']).to eq true
       expect(json_user['send_week_before_close_reminders']).to eq true
+      expect(json_user['remember_created_at']).not_to eq nil
+
+      curb = patch_to_api(
+        '/preferences',
+        {
+          authentication_token: user.authentication_token,
+          remember_me: false
+        }
+      )
+      json_user = parse_response_from(curb)['user']
+      expect(json_user['remember_created_at']).to eq nil
     end
+    
     scenario 'by changing the password' do
       user = create(:user)
       new_password = 'newpassword'

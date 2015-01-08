@@ -19,6 +19,12 @@ class User < ActiveRecord::Base
   def favorite_tags
     interests.pluck('tag_id')
   end
+
+  # Override a Devise method
+  # Default rememberable to true so we don't need a `remember_me` checkbox
+  def remember_me
+    true
+  end
   
   private
 

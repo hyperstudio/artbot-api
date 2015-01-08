@@ -59,4 +59,16 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     current_user.admin == true ? admin_root_path : root_url
   end
+  
+  def booleanize(val)
+    ActiveRecord::ConnectionAdapters::Column.value_to_boolean val
+  end
+  
+  def set_remember(user)
+    if params[:remember_me] == nil || booleanize(params[:remember_me]) == true
+      remember_me user
+    else
+      forget_me user
+    end
+  end
 end

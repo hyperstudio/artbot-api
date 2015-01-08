@@ -6,5 +6,6 @@ class UserSerializer < ActiveModel::Serializer
     :zipcode,
     :send_weekly_emails,
     :send_day_before_event_reminders,
-    :send_week_before_close_reminders
+    :send_week_before_close_reminders,
+    :remember_created_at
 end

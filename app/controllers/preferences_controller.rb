@@ -1,10 +1,14 @@
 class PreferencesController < ApplicationController
+  include Devise::Controllers::Rememberable
+  helper_method Devise::Controllers::Rememberable.instance_methods
+
   before_filter :authenticate_user_from_token!
 
   respond_to :json
 
   def update
-    if current_user.update(preferences_params)
+    if current_user.update(preferences_params)    
+      set_remember current_user
       render json: current_user
     else
       render json: current_user.errors, status: 422

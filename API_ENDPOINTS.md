@@ -39,7 +39,7 @@ Payload: A serialized user.
 
 
 ```
-{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
+{"user"=>{"id"=>2, "email"=>"user@example.com", "authentication_token"=>"1F4WJvwV2P4cQiAmY53o", "zipcode"=>"11211", "send_weekly_emails"=>false, "send_day_before_event_reminders"=>false, "send_week_before_close_reminders"=>false, "remember_created_at"=>"2015-01-08T16:12:35.088Z"}}
 ```
 
 ### Unsuccessful Response
@@ -93,7 +93,7 @@ Payload: A serialized user.
 
 
 ```
-{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
+{"user"=>{"id"=>2, "email"=>"user@example.com", "authentication_token"=>"1F4WJvwV2P4cQiAmY53o", "zipcode"=>"11211", "send_weekly_emails"=>false, "send_day_before_event_reminders"=>false, "send_week_before_close_reminders"=>false, "remember_created_at"=>"2015-01-08T16:12:35.088Z"}}
 ```
 
 ### Unsuccessful Response
@@ -167,7 +167,7 @@ Payload: A serialized user.
 
 
 ```
-{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
+{"user"=>{"id"=>2, "email"=>"user@example.com", "authentication_token"=>"1F4WJvwV2P4cQiAmY53o", "zipcode"=>"11211", "send_weekly_emails"=>false, "send_day_before_event_reminders"=>false, "send_week_before_close_reminders"=>false, "remember_created_at"=>"2015-01-08T16:12:35.088Z"}}
 ```
 
 ### Unsuccessful Response
@@ -186,6 +186,7 @@ is not in the request, it will not be modified.
 | `send_weekly_emails`                  | No       | Boolean
 | `send_day_before_event_reminders`     | No       | Boolean
 | `send_week_before_close_reminders`    | No       | Boolean
+| `remember_me`							| No 	   | Boolean
 | `password`                            | No       |
 | `password_confirmation`               | No       |
 | `zipcode`                             | No       |
@@ -198,7 +199,7 @@ Payload: A serialized user.
 
 
 ```
-{"user":{"id":1,"email":"foo@example.com","authentication_token":"asdfasdfasdf","zipcode":"01902","send_weekly_emails":false,"send_day_before_event_reminders":false,"send_week_before_close_reminders":false}}
+{"user"=>{"id"=>2, "email"=>"user@example.com", "authentication_token"=>"1F4WJvwV2P4cQiAmY53o", "zipcode"=>"11211", "send_weekly_emails"=>false, "send_day_before_event_reminders"=>false, "send_week_before_close_reminders"=>false, "remember_created_at"=>"2015-01-08T16:12:35.088Z"}}
 ```
 
 ### Unsuccessful response

@@ -19,6 +19,26 @@ describe RegistrationsController do
     end
   end
 
+  context '#create' do
+    it 'creates a user' do
+      params = {
+        email: 'user@example.com',
+        password: 'password',
+        password_confirmation: 'password',
+        zipcode: '11211'
+      }
+
+      post :create, params
+
+      expect(response.code.to_i).to eq 200
+
+      json_response = ActiveSupport::JSON.decode(response.body)['user']
+      expect(json_response['email']).to eq params[:email]
+      expect(json_response['zipcode']).to eq params[:zipcode]
+      # User should default to being remembered indefinitely
+      expect(json_response['remember_created_at']).not_to eq nil
+    end
+  end
 
   context '#update' do
     it 'updates a user password' do
@@ -54,6 +74,16 @@ describe RegistrationsController do
       }
 
       expect(response.code.to_i).to eq 404
+    end
+    it 'returns an error if no token is provided' do
+      user = create(:user, password: 'old_password')
+
+      put :update, {
+        password: 'new_password',
+        password_confirmation: 'new_password'
+      }
+
+      expect(response.code.to_i).to eq 422
     end
   end
 
