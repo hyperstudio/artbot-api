@@ -67,3 +67,12 @@ namespace :check do
         AdminMailer.delay.event_checkup(errors) if errors.any?
     end
 end
+
+namespace :email do
+    desc 'compile and send weekly email to users'
+    task :weekly => :environment do
+        User.where(send_weekly_emails: true).find_each do |user|
+            user.delay.send_weekly_digest_email
+        end
+    end
+end

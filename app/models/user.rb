@@ -25,6 +25,28 @@ class User < ActiveRecord::Base
   def remember_me
     true
   end
+
+  def prepare_weekly_email
+    recommended = Event.recommended_for(self).take(2)
+    used_ids = recommended.map {|r| r.id}
+
+    ending_soon = Event.current.where.not(id: used_ids).order('end_date').take(2)
+    used_ids += ending_soon.map {|r| r.id}
+
+    favorites = events.current.where.not(id: used_ids)
+    favorite_exhibitions = favorites.where(event_type: 'exhibition').order('end_date').take(2)
+    favorite_events = favorites.where(event_type: 'event').order('end_date').take(2)
+
+    [recommended, ending_soon, favorite_exhibitions, favorite_events]
+  end
+
+  def send_weekly_digest_email
+    if send_weekly_emails
+      suggested_events = prepare_weekly_email
+      mailer = UserMailer.weekly_digest(self, *suggested_events)
+      mailer.deliver
+    end
+  end
   
   private
 

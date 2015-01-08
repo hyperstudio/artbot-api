@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Weekly Digest</h1>
+    <table>
+      <tr>
+        <td>Event ID</td>
+        <td>Name</td>
+        <td>URL</td>
+      </tr>
+      <% @recommended.each do |r| %>
+        <tr>
+          <td><%= r.id %></td>
+          <td><%= r.name %></td>
+          <td><%= r.url %></td>
+          <td>Recommended</td>
+        </tr>
+      <% end %>
+      <% @ending_soon.each do |r| %>
+        <tr>
+          <td><%= r.id %></td>
+          <td><%= r.name %></td>
+          <td><%= r.url %></td>
+          <td>Ending soon</td>
+        </tr>
+      <% end %>
+      <% @favorite_exhibitions.each do |r| %>
+        <tr>
+          <td><%= r.id %></td>
+          <td><%= r.name %></td>
+          <td><%= r.url %></td>
+          <td>Favorite exhibitions</td>
+        </tr>
+      <% end %>
+      <% @favorite_events.each do |r| %>
+        <tr>
+          <td><%= r.id %></td>
+          <td><%= r.name %></td>
+          <td><%= r.url %></td>
+          <td>Favorite events</td>
+        </tr>
+      <% end %>
+    </table>
+  </body>
+</html>
