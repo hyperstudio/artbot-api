@@ -33,6 +33,6 @@ feature 'User requests to the admin page' do
         click_button "Sign in"
 
         expect(page).to have_text('Signed in successfully')
-        expect(page).to have_text('ArtX RESTful Web API Examples')
+        expect(page).to have_text('Artbot RESTful Web API Examples')
     end
 end

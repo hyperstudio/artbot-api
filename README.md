@@ -1,4 +1,4 @@
-# ArtX
+# Artbot
 
 Rails 4.1.0, Ruby 2.1.2.
 
@@ -14,5 +14,5 @@ To install:
 
 Sample locations are pre-populated. To start getting live data:
 
-* Install and run [artx-ner](http://github.com/mailbackwards/artx-ner)
-* run `rake scrape:all` (this queries the other apps and populates the database with categorized events)
+* Install and run [parserbot](http://github.com/mailbackwards/parserbot)
+* run `rake scrape:all` (this queries parserbot and populates the database with categorized events)

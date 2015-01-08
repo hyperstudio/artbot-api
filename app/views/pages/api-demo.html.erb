@@ -13,7 +13,7 @@
   </div>
   <div class="col-md-9">
     <div id="main" data-token="temp">
-      <h4 class="page-heading ">ArtX RESTful Web API Examples</h4>
+      <h4 class="page-heading ">Artbot RESTful Web API Examples</h4>
 
       <div class="panel panel-default" id='register-panel'>
         <div class="panel-heading">Register</div>
@@ -29,7 +29,7 @@
   $.ajax({
     type: "POST",
     dataType: "json",
-    url: "http://artx-staging.herokuapp.com/registrations",
+    url: "http://artbot-api.herokuapp.com/registrations",
     data: {
       email: $("#register-email").val(),
       password:  $("#register-password").val(),
@@ -57,7 +57,7 @@
   $.ajax({
     type: "POST",
     dataType: "json",
-    url: "http://artx-staging.herokuapp.com/tokens",
+    url: "http://artbot-api.herokuapp.com/tokens",
     data: {
       email: $("#login-email").val(),
       password:  $("#login-password").val()
@@ -81,7 +81,7 @@
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "http://artx-staging.herokuapp.com/favorites",
+    url: "http://artbot-api.herokuapp.com/favorites",
     beforeSend: function (request) {
         request.setRequestHeader("authentication_token", $.cookie('token'));
     },
@@ -107,7 +107,7 @@
             <code class="javascript">
   $.ajax({
     type: "GET",
-    url: "http://artx-staging.herokuapp.com/interests",
+    url: "http://artbot-api.herokuapp.com/interests",
     beforeSend: function (request) {
         request.setRequestHeader("authentication_token", $.cookie('token'));
     },
@@ -135,7 +135,7 @@
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "http://artx-staging.herokuapp.com/locations/1/events",
+    url: "http://artbot-api.herokuapp.com/locations/1/events",
     data: { },
     success: function( data ){
       console.log(data);
@@ -160,7 +160,7 @@
             <code class="javascript">
   $.ajax({
     type: "GET",
-    url: "http://artx-staging.herokuapp.com/events",
+    url: "http://artbot-api.herokuapp.com/events",
     data: {
       year: '2014',
       month: '08',
@@ -203,7 +203,7 @@
       $.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://artx-staging.herokuapp.com/registrations",
+        url: "http://artbot-api.herokuapp.com/registrations",
         data: {
           email: $("#register-email").val(),
           password:  $("#register-password").val(),
@@ -223,7 +223,7 @@
       $.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://artx-staging.herokuapp.com/tokens",
+        url: "http://artbot-api.herokuapp.com/tokens",
         data: {
           email: $("#login-email").val(),
           password:  $("#login-password").val(),
@@ -241,7 +241,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://artx-staging.herokuapp.com/favorites",
+        url: "http://artbot-api.herokuapp.com/favorites",
         beforeSend: function (request) {
             request.setRequestHeader("authentication_token", $.cookie('token'));
         },
@@ -258,7 +258,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://artx-staging.herokuapp.com/locations/1/events",
+        url: "http://artbot-api.herokuapp.com/locations/1/events",
         data: { },
         success: function( data ){
           console.log(data);
@@ -273,7 +273,7 @@
     $('#events-month-button').click(function(){
       $.ajax({
         type: "GET",
-        url: "http://artx-staging.herokuapp.com/events",
+        url: "http://artbot-api.herokuapp.com/events",
         data: {
           year: '2014',
           month: '08',
@@ -291,7 +291,7 @@
     $('#interests-button').click(function(){
       $.ajax({
         type: "GET",
-        url: "http://artx-staging.herokuapp.com/interests",
+        url: "http://artbot-api.herokuapp.com/interests",
         beforeSend: function (request) {
             request.setRequestHeader("authentication_token", $.cookie('token'));
         },
@@ -309,7 +309,7 @@
     //   $.ajax({
     //     type: "GET",
     //     dataType: "json",
-    //     url: "http://artx-staging.herokuapp.com/attendances",
+    //     url: "http://artbot-api.herokuapp.com/attendances",
     //     data: {
     //     },
     //     success: function( data ){

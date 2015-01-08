@@ -1,6 +1,6 @@
 class NerQuerier
-    NER_BASE_URL = Rails.configuration.scraper_app_url
-    NER_API_KEY = ENV['ARTX_SCRAPER_API_KEY']
+    NER_BASE_URL = Rails.configuration.parserbot_url
+    NER_API_KEY = ENV['PARSERBOT_API_KEY']
 
     def initialize(path)
         @path = path
