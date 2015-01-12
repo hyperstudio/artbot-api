@@ -17,7 +17,11 @@ class Event < ActiveRecord::Base
     :default_url => :location_image,
     :styles => {
       :small => "200x200>",
-      :large => "600x600>"
+      :large => "600x600>",
+      :email => "564x376"
+    },
+    :convert_options => {
+      :email => "-quality 60"
     }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
