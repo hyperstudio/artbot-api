@@ -46,7 +46,7 @@ class RegistrationsController < ApplicationController
           render json: user.errors, status: 422
         end
       else
-        render json: { error: 'User does not exist' }, status: :not_found
+        render json: { error: 'reset_password_token expired. Check for a more recent token.' }, status: :not_found
       end
     end
   end
