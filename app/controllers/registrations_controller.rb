@@ -4,10 +4,6 @@ class RegistrationsController < ApplicationController
 
   respond_to :json
 
-  def self.digest(raw)
-    Devise.token_generator.digest(User, :reset_password_token, raw)
-  end
-
   def show
     if User.find_by(email: params[:email]).present?
       head :ok
@@ -43,7 +39,7 @@ class RegistrationsController < ApplicationController
     if user.errors.empty?
       render json: user
     else
-      render json: { error: user.errors }, status: 422
+      render json: user.errors, status: 422
     end
   end
 
