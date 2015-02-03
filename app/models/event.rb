@@ -115,6 +115,13 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def self.ending_soon
+    event_cutoff = Time.now.utc.midnight + 3.days
+    exhibition_cutoff = Time.now.utc.midnight + 7.days
+    where('(end_date >= ? AND end_date <= ? AND event_type = ?) OR (end_date >= ? AND end_date <= ? AND event_type = ?)',
+      event_cutoff, event_cutoff+1.day, 'event', exhibition_cutoff, exhibition_cutoff+1.day, 'exhibition')
+  end
+
   def tags(context: nil, source: nil)
     scope = ActsAsTaggableOn::Tag.joins(:taggings).where(
       'taggings.taggable_type = ? AND taggings.taggable_id IN (?)',
@@ -168,6 +175,14 @@ class Event < ActiveRecord::Base
       entity.add_event(self)
       # This might be redundant but it gets case-insensitive admin matches
       case_insensitive_admin_entities.distinct.map {|admin_entity| admin_entity.add_event(self)}
+    end
+  end
+
+  def truncated_description(max_word_length=25)
+    if description.present?
+      description.split(' ')[0..max_word_length].join(' ') + '...'
+    else
+      ''
     end
   end
 

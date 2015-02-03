@@ -1,0 +1,167 @@
+<!--
+    Custom layout & coding by Mark Reeves / Clearbold, incorporating baseline styles and structure from Salted.
+    mjr@clearbold.com
+-->
+<!--
+
+    SALTED | A RESPONSIVE EMAIL TEMPLATE
+    =====================================
+
+    Based on code used and tested by Litmus (@litmusapp)
+    Originally developed by Kevin Mandeville (@KEVINgotbounce)
+    Cleaned up by Jason Rodriguez (@rodriguezcommaj)
+    Presented by A List Apart (@alistapart)
+
+    Email is surprisingly hard. While this has been thoroughly tested, your mileage may vary.
+    It's highly recommended that you test using a service like Litmus and your own devices.
+
+    Enjoy!
+
+ -->
+<meta charset="utf-8" style="-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;" >
+<meta name="viewport" content="width=device-width, initial-scale=1" style="-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;" />
+<!--[if !mso]><!-- -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" style="-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;" />
+<!--<![endif]-->
+<style type="text/css">
+    @import 'http://fonts.googleapis.com/css?family=Lato:300,400';
+    /*@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic);*/
+    /* CLIENT-SPECIFIC STYLES */
+    #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
+    .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
+    .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
+    body, table, td, a{-webkit-text-size-adjust:none; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
+    table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
+    img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
+
+    /* RESET STYLES */
+    body{margin:0; padding:0;}
+    img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
+    table{border-collapse:collapse !important;}
+    body{height:100% !important; margin:0; padding:0; width:100% !important;}
+
+    /* iOS BLUE LINKS */
+    .appleBody a {color:#68440a; text-decoration: none;}
+    .appleFooter a {color:#999999; text-decoration: none;}
+
+    /* START DESIGN STYLES */
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    body {
+        background-color: #373737;
+        color: #FFFFFF;
+        font-family: tahoma,verdana,arial,sans-serif;
+        font-size: 16px;
+        letter-spacing: 1px;
+        line-height: normal;
+    }
+    .button {
+        font-family: tahoma,verdana,arial,sans-serif;
+        font-size: 16px;
+        letter-spacing: 1px;
+        line-height: normal;
+    }
+    a {
+        color: #00FDFF;
+        text-decoration: none;
+    }
+
+    .header {
+        color: #FFFFFF;
+        font-size: 20px;
+    }
+
+    .event-name {
+        font-size: 17px;
+        text-align: left;
+    }
+    .event-museum,
+    .event-misc {
+        font-size: 14px;
+        text-align: left;
+    }
+    .event-museum {
+        text-transform: uppercase;
+    }
+        .event-museum a,
+        .event-misc a {
+            color: #FFFFFF;
+        }
+    .footer {
+        color: #FFFFFF;
+        font-size: 14px;
+        padding-bottom: 40px;
+    }
+        .footer table tr td {
+            color: #ffffff;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #00FDFF;
+            text-decoration: none;
+        }
+
+    @media screen {
+        body {
+            font-family: 'Lato','lucida grande',tahoma,verdana,arial,sans-serif !important;
+            font-weight: 300 !important;
+        }
+        .button {
+            font-family: 'Lato','lucida grande',tahoma,verdana,arial,sans-serif !important;
+            font-weight: 300 !important;
+        }
+        .header {
+            font-weight: 400;
+        }
+        .event-name {
+            font-weight: 400;
+        }
+    }
+
+    /* MOBILE STYLES */
+    @media screen and (max-width: 580px) {
+        /* ALLOWS FOR FLUID TABLES */
+        table[class="wrapper"] {
+            width: 100% !important;
+        }
+        td[class=mobile-stack] {
+            display: block !important;
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+            width: 100% !important;
+        }
+        div[class=mobile-padding] {
+            padding-right: 20px !important;
+            padding-left: 20px !important;
+        }
+        img[class=responsive] {
+            width: 100% !important;
+        }
+        td[class=header],
+        td[class=text],
+        /*td[class=event-name],
+        td[class=event-museum],*/
+        td[class=footer] {
+            padding-right: 20px !important;
+            padding-left: 20px !important;
+        }
+        td[class=list-thumbnail] {
+            width: 100px !important;
+        }
+        td[class=list-thumbnail] img {
+            height: 66px !important;
+            width: 94px !important;
+        }
+        td[class=list-text] td[class=event-name] {
+            font-size: 16px;
+            padding-left: 0px !important;
+        }
+        td[class=list-text] td[class=event-museum],
+        td[class=list-text] td[class=event-misc] {
+            font-size: 12px;
+            padding-left: 0px !important;
+        }
+    }
+</style>

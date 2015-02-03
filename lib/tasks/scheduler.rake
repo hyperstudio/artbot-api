@@ -43,36 +43,20 @@ namespace :scrape do
     end
 end
 
-namespace :check do
-    desc 'check images on all events and update any that no longer work'
-    task :event_health => :environment do
-        errors = []
-        Event.all.find_each do |event|
-            begin
-                puts 'Trying event %s' % event.url
-                response = HttpRequester.get(event.url)
-                if response.code.to_i >= 400
-                    errors << [event, 'event', response.code]
-                end
-                response = HttpRequester.get(event.image.url)
-                if response.code.to_i >= 400
-                    errors << [event, 'image', response.code]
-                    event.update(image: event.location.image.url)
-                end
-            rescue
-                errors << [event, 'unknown', @error_message]
-                event.update(image: event.location.image.url)
-            end
-        end
-        AdminMailer.delay.event_checkup(errors) if errors.any?
-    end
-end
-
 namespace :email do
     desc 'compile and send weekly email to users'
     task :weekly => :environment do
         User.where(send_weekly_emails: true).find_each do |user|
             user.delay.send_weekly_digest_email
+        end
+    end
+end
+
+namespace :email do
+    desc 'send event close notification emails to users'
+    task :reminder => :environment do
+        User.where(send_day_before_event_reminders: true).find_each do |user|
+            user.delay.send_event_reminder_email
         end
     end
 end

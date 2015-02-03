@@ -12,4 +12,14 @@ class UserMailer < ActionMailer::Base
             :subject => 'Artbot weekly digest'
         )
     end
+
+    def event_reminder(user, featured_event, upcoming_events)
+        @featured_event = featured_event
+        @upcoming_events = upcoming_events
+        mail(
+            :to => user.email,
+            :template_name => 'event_reminder',
+            :subject => "Don't miss " + featured_event.name
+        )
+    end
 end

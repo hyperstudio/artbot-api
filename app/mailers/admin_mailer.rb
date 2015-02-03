@@ -11,12 +11,4 @@ class AdminMailer < ActionMailer::Base
             :subject => 'Scraper update'
         )
     end
-    
-    def event_checkup(errors)
-        @errors = errors
-        mail(
-            :template_name => 'event_checkup',
-            :subject => 'Event health checkup'
-        )
-    end
 end

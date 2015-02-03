@@ -26,6 +26,27 @@ class User < ActiveRecord::Base
     true
   end
 
+  def send_weekly_digest_email
+    if send_weekly_emails
+      suggested_events = prepare_weekly_email
+      mailer = UserMailer.weekly_digest(self, *suggested_events)
+      mailer.deliver
+    end
+  end
+
+  def send_event_reminder_email
+    if send_day_before_event_reminders
+      closing_event = sniff_for_closing_event
+      if closing_event.present?
+        suggested_events = prepare_event_reminder_email(closing_event)
+        mailer = UserMailer.event_reminder(self, *suggested_events)
+        mailer.deliver
+      end
+    end
+  end
+  
+  private
+
   def prepare_weekly_email
     recommended = Event.recommended_for(self).take(2)
     used_ids = recommended.map {|r| r.id}
@@ -39,16 +60,19 @@ class User < ActiveRecord::Base
 
     [recommended, ending_soon, favorite_exhibitions, favorite_events]
   end
-
-  def send_weekly_digest_email
-    if send_weekly_emails
-      suggested_events = prepare_weekly_email
-      mailer = UserMailer.weekly_digest(self, *suggested_events)
-      mailer.deliver
+  
+  def sniff_for_closing_event
+    favorite_events = Event.closing_soon.order('end_date')
+    if favorite_events.present?
+      favorite_events.first
     end
   end
-  
-  private
+
+  def prepare_event_reminder_email(event)
+    used_ids = [event.id]
+    other_events = events.current.where.not(id: used_ids).order('end_date').take(2)
+    [event, other_events]
+  end
 
   def create_authentication_token
     self.authentication_token = loop do

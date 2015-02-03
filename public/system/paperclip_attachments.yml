@@ -1,0 +1,10 @@
+---
+:Event:
+  :image:
+  - :email
+  - :large
+  - :small
+:Location:
+  :image:
+  - :large
+  - :small
