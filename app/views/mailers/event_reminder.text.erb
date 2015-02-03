@@ -1,0 +1,43 @@
+This is an upcoming event reminder from Artbot. To change which emails you receive, you may update your Artbot settings.
+
+http://artbotapp.com/settings.html
+
+
+
+///// Upcoming Event
+
+<%= @featured_event.name %>
+<%= @featured_event.location.name.upcase %>
+<%= @featured_event.dates %>
+<%= @featured_event.truncated_description %>
+http://artbotapp.com/event.html?eventid=<%= @featured_event.id %>
+
+
+
+<% unless @upcoming_events.empty? %>
+///// More Upcoming Events
+
+<% @upcoming_events.each do |event| %>
+<%= event.name %>
+<%= event.location.name.upcase %>
+<%= event.dates %>
+http://artbotapp.com/event.html?eventid=<%= event.id %>
+
+<% end %>
+<% end %>
+
+
+///// View all your favorites:
+
+http://artbotapp.com/favorites.html
+
+
+
+
+Copyright 2015, HyperStudio
+
+Massachusetts Institute of Technology, Bldg 16-635
+77 Massachusetts Ave.
+Cambridge, MA 02139
+
+To unsubscribe from these emails, update your Artbot settings.

@@ -1,0 +1,73 @@
+This is your weekly update from Artbot. To change which emails you receive, you may update your Artbot settings.
+
+http://artbotapp.com/settings.html
+
+
+<% unless @recommended.empty? %>
+///// Artbot thinks you might like:
+
+<% @recommended.each do |event| %>
+<%= event.name %>
+<%= event.location.name.upcase %>
+http://artbotapp.com/event.html?eventid=<%= event.id %>
+
+<% end %>
+<% end %>
+
+
+<% unless @ending_soon.empty? %>
+///// Don't miss these!
+
+<% @ending_soon.each do |event| %>
+<%= event.name %>
+<%= event.location.name.upcase %>
+http://artbotapp.com/event.html?eventid=<%= event.id %>
+
+<% end %>
+<% end %>
+
+
+///// Discover more events & exhibitions near you:
+
+http://artbotapp.com/bylocation.html
+
+
+<% unless @favorite_events.empty? %>
+///// Your Upcoming Events
+
+<% @favorite_events.each do |event| %>
+<%= event.name %>
+<%= event.location.name.upcase %>
+<%= event.dates %>
+http://artbotapp.com/event.html?eventid=<%= event.id %>
+
+<% end %>
+<% end %>
+
+
+<% unless @favorite_exhibitions.empty? %>
+///// Your Upcoming Exhibitions
+
+<% @favorite_exhibitions.each do |event| %>
+<%= event.name %>
+<%= event.location.name.upcase %>
+<%= event.dates %>
+http://artbotapp.com/event.html?eventid=<%= event.id %>
+
+<% end %>
+<% end %>
+
+
+///// View all your favorites:
+
+http://artbotapp.com/favorites.html
+
+
+
+Copyright 2015, HyperStudio
+
+Massachusetts Institute of Technology, Bldg 16-635
+77 Massachusetts Ave.
+Cambridge, MA 02139
+
+To unsubscribe from these emails, update your Artbot settings.

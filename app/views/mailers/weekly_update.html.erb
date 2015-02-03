@@ -11,18 +11,27 @@
     
     <%= render partial: 'mailers/opening', locals: {message: 'Your weekly update from Artbotapp.com'} %>
 
-    <%= render partial: 'mailers/section_header', locals: {message: 'Artbot thinks you might like:'} %>
-    <%= render partial: 'mailers/featured_events_weekly', locals: {events: @recommended} %>
-    <%= render partial: 'mailers/section_header', locals: {message: "Don't miss these!"} %>
-    <%= render partial: 'mailers/featured_events_weekly', locals: {events: @ending_soon} %>
+    <% unless @recommended.empty? %>
+        <%= render partial: 'mailers/section_header', locals: {message: 'Artbot thinks you might like:'} %>
+        <%= render partial: 'mailers/featured_events_weekly', locals: {events: @recommended} %>
+    <% end %>
+    <% unless @ending_soon.empty? %>
+        <%= render partial: 'mailers/section_header', locals: {message: "Don't miss these!"} %>
+        <%= render partial: 'mailers/featured_events_weekly', locals: {events: @ending_soon} %>
+    <% end %>
+
     <%= render partial: 'mailers/link_to_site', locals: {message: 'Discover more near you &raquo;', href: 'bylocation.html'} %>
 
-    <%= render partial: 'mailers/section_header', locals: {message: 'Your Upcoming Events'} %>
-    <%= render partial: 'mailers/upcoming_events', locals: {events: @favorite_events} %>
-    <%= render partial: 'mailers/section_header', locals: {message: 'Your Upcoming Exhibitions'} %>
-    <%= render partial: 'mailers/upcoming_events', locals: {events: @favorite_exhibitions} %>
-    <%= render partial: 'mailers/link_to_site', locals: {message: 'View all your favorites', href: 'favorites.html'} %>
+    <% unless @favorite_events.empty? %>
+        <%= render partial: 'mailers/section_header', locals: {message: 'Your Upcoming Events'} %>
+        <%= render partial: 'mailers/upcoming_events', locals: {events: @favorite_events} %>
+    <% end %>
+    <% unless @favorite_exhibitions.empty? %>
+        <%= render partial: 'mailers/section_header', locals: {message: 'Your Upcoming Exhibitions'} %>
+        <%= render partial: 'mailers/upcoming_events', locals: {events: @favorite_exhibitions} %>
+    <% end %>
 
+    <%= render partial: 'mailers/link_to_site', locals: {message: 'View all your favorites &raquo;', href: 'favorites.html'} %>
     <%= render partial: 'mailers/footer' %>
 
 </div>
