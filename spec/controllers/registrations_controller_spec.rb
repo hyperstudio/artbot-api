@@ -43,9 +43,11 @@ describe RegistrationsController do
   context '#update' do
     it 'updates a user password' do
       reset_password_token = 'foobar'
+
       user = create(:user, 
         password: 'old_password', 
-        reset_password_token: described_class.digest(reset_password_token)
+        reset_password_token: Devise.token_generator.digest(User, :reset_password_token, reset_password_token),
+        reset_password_sent_at: Time.now
       )
 
       request.env['HTTP_RESET_PASSWORD_TOKEN'] = reset_password_token
@@ -61,7 +63,8 @@ describe RegistrationsController do
       reset_password_token = 'foobar'
       user = create(:user,
         password: 'old_password',
-        reset_password_token: described_class.digest(reset_password_token)
+        reset_password_token: Devise.token_generator.digest(User, :reset_password_token, reset_password_token),
+        reset_password_sent_at: Time.now
       )
 
       put :update, {
@@ -72,11 +75,12 @@ describe RegistrationsController do
 
       expect(response.code.to_i).to eq 422
     end
-    it 'returns a 404 if the user does not exist' do
+    it 'returns a 422 if the user does not exist' do
       reset_password_token = 'foobar'
       user = create(:user,
         password: 'old_password',
-        reset_password_token: described_class.digest(reset_password_token)
+        reset_password_token: Devise.token_generator.digest(User, :reset_password_token, reset_password_token),
+        reset_password_sent_at: Time.now
       )
 
       put :update, {
@@ -85,7 +89,7 @@ describe RegistrationsController do
         reset_password_token: 'invalid_reset_token'
       }
 
-      expect(response.code.to_i).to eq 404
+      expect(response.code.to_i).to eq 422
     end
     it 'returns an error if no token is provided' do
       user = create(:user, password: 'old_password')

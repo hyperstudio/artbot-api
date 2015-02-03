@@ -26,7 +26,8 @@ describe TokensController do
 
       post :create, { email: user.email, password: 'wrong password' }
 
-      expect(response).to be_forbidden
+      expect(response.status).to eq 422
+      expect(response.body).to include('is invalid')
     end
   end
 
