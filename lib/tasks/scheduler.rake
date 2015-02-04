@@ -46,7 +46,9 @@ end
 namespace :email do
     desc 'compile and send weekly email to users'
     task :weekly => :environment do
-        User.where(send_weekly_emails: true).find_each do |user|
+        # TODO: once we're confident in these, remove the admin filter
+        users = User.where(send_weekly_emails: true, admin: true)
+        users.find_each do |user|
             user.delay.send_weekly_digest_email
         end
     end
@@ -55,7 +57,9 @@ end
 namespace :email do
     desc 'send event close notification emails to users'
     task :reminder => :environment do
-        User.where(send_day_before_event_reminders: true).find_each do |user|
+        # TODO: once we're confident in these, remove the admin filter
+        users = User.where(send_weekly_emails: true, admin: true)
+        users.find_each do |user|
             user.delay.send_event_reminder_email
         end
     end
