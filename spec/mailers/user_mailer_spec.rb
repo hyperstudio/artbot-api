@@ -32,4 +32,17 @@ describe UserMailer do
         last_email.subject.should include(new_event.name)
         last_email.parts[0].body.should include(new_event.name, other_upcoming_event.name, third_upcoming_event.name)
     end
+
+    it "takes custom options" do
+        user = create(:user, email: 'not_an_admin@example.com')
+        fake_user = {email: 'not_an_admin@example.com'}
+        new_event = create(:event)
+        other_new_event = create(:event)
+
+        opts = {cc: fake_user[:email]}
+        mailer = described_class.weekly_digest(user, [new_event], [other_new_event], [], [], opts)
+        mailer.deliver
+
+        last_email.cc.should include(fake_user[:email])
+    end
 end
