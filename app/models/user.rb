@@ -52,8 +52,6 @@ class User < ActiveRecord::Base
     other_events = Event.current.where.not(id: used_ids).order('end_date').take(2)
     [event, other_events]
   end
-
-  private
   
   def prepare_weekly_email
     recommended = Event.recommended_for(self).take(2)
@@ -70,6 +68,8 @@ class User < ActiveRecord::Base
       [recommended, ending_soon, favorite_exhibitions, favorite_events]
     end
   end
+
+  private
   
   def sniff_for_closing_event
     favorite_events = Event.ending_soon.order('end_date')

@@ -5,7 +5,7 @@ class EventReminderPreview < ActionMailer::Preview
 		closing_event = Event.first
 		if closing_event.present?
 			suggested_events = user.prepare_event_reminder_email(closing_event)
-			UserMailer.event_reminder(user, *suggested_events)
+			UserMailer.event_reminder(user, *suggested_events, {cc: 'test@example.com'})
 		end
 	end
 end
