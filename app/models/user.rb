@@ -61,11 +61,11 @@ class User < ActiveRecord::Base
     used_ids += ending_soon.map {|r| r.id}
 
     favorites = events.current.where.not(id: used_ids)
-    favorite_exhibitions = favorites.where(event_type: 'exhibition').order('end_date').take(2)
     favorite_events = favorites.where(event_type: 'event').order('end_date').take(2)
+    favorite_exhibitions = favorites.where(event_type: 'exhibition').order('end_date').take(2)
 
     unless recommended.empty? && ending_soon.empty?
-      [recommended, ending_soon, favorite_exhibitions, favorite_events]
+      [recommended, ending_soon, favorite_events, favorite_exhibitions]
     end
   end
 
