@@ -46,10 +46,13 @@ end
 namespace :email do
     desc 'compile and send weekly email to users'
     task :weekly => :environment do
-        # TODO: once we're confident in these, remove the admin filter
-        users = User.where(send_weekly_emails: true, admin: true)
-        users.find_each do |user|
-            user.delay.send_weekly_digest_email
+        # Heroku scheduler doesn't have a "weekly" option, so we have to include this
+        if Time.now.monday?
+            # TODO: once we're confident in these, remove the admin filter
+            users = User.where(send_weekly_emails: true, admin: true)
+            users.find_each do |user|
+                user.delay.send_weekly_digest_email
+            end
         end
     end
 end
