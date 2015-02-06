@@ -14,14 +14,15 @@ class Event < ActiveRecord::Base
   after_commit :revert_to_last_admin_change, :if => :bot_overrode_admin?, on: :update
 
   has_attached_file :image,
-    :default_url => :location_image,
-    :styles => {
-      :small => "200x200>",
-      :large => "600x600>",
-      :email => "564x376"
+    default_format: :jpg,
+    default_url: lambda {|instance| instance.location_image},
+    styles: {
+      small: "200x200>",
+      large: "600x600>",
+      email: "564x376"
     },
-    :convert_options => {
-      :email => "-quality 60"
+    convert_options: {
+      email: "-scale '564x376^' -background '#3b3b3b' -gravity center -extent 564x376 -quality 60"
     }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
