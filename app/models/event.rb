@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
 
   has_attached_file :image,
     default_format: :jpg,
-    default_url: lambda {|instance| instance.location_image},
+    default_url: lambda {|attachment| attachment.instance.location_image},
     styles: {
       small: "200x200>",
       large: "600x600>",
@@ -186,8 +186,6 @@ class Event < ActiveRecord::Base
       ''
     end
   end
-
-  private 
 
   def location_image
     location.present? ? location.image.url : "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png"
