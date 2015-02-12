@@ -181,7 +181,8 @@ class Event < ActiveRecord::Base
 
   def truncated_description(max_word_length=25)
     if description.present?
-      description.split(' ')[0..max_word_length].join(' ') + '...'
+      descrip = description.split(' ')[0..max_word_length].join(' ') + '...'
+      descrip.gsub('<br/><br/>', ' ')
     else
       ''
     end
