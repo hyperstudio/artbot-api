@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   private
   
   def sniff_for_closing_event
-    favorite_events = Event.ending_soon.order('end_date')
+    favorite_events = Event.favorited_by(self).ending_soon.order('end_date')
     if favorite_events.present?
       favorite_events.first
     end

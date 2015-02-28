@@ -103,6 +103,10 @@ class Event < ActiveRecord::Base
     joins(entities: [taggings: [:tag]]).where('tags.id IN (?)', tag_ids).distinct
   end
 
+  def self.favorited_by(user)
+    where(id: user.favorites.pluck('event_id'))
+  end
+
   def self.not_favorited_by(user)
     where.not(id: user.favorites.pluck('event_id'))
   end
