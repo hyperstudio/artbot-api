@@ -15,6 +15,10 @@ namespace :scrape do
                 url.query_scraper_app.each do |event_result|
                     begin
                         event = EventCreator.new(event_result, url.location_id).event
+                        # Check for blacklisted URLs
+                        if event.blacklisted?
+                            next
+                        end
                         if event.description_changed?
                             # Either the record is new or has changed, so re-categorize it
                             event.save

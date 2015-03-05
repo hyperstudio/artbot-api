@@ -26,6 +26,12 @@ class Event < ActiveRecord::Base
     }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
+  @@blacklisted_urls = ["harvardartmuseums.org/visit/calendar/student-guide-tour-"]
+
+  def blacklisted?
+    @@blacklisted_urls.map {|u| url.include? u}.any?
+  end
+
   def process_dates
     dates = DateParser.parse(self.dates)
 
