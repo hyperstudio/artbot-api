@@ -1,5 +1,5 @@
 ActiveAdmin.register Location do
-  permit_params :name, :url, :description, :image, :latitude, :longitude, :address, :hours
+  permit_params :name, :url, :description, :image, :latitude, :longitude, :address, :hours, :price
 
   index do
     selectable_column
