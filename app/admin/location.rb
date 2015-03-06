@@ -13,6 +13,7 @@ ActiveAdmin.register Location do
     column :longitude
     column :address
     column :hours
+    column :price
   end
 
   form do |f|
@@ -26,6 +27,7 @@ ActiveAdmin.register Location do
       f.input :address
       f.input :image, :required => false, :hint => f.template.image_tag(f.object.image.url(:small))
       f.input :hours
+      f.input :price
     end
     f.actions
   end
@@ -47,6 +49,7 @@ ActiveAdmin.register Location do
         link_to ad.image.url, ad.image.url, :target => :blank
       end
       row :hours
+      row :price
     end
   end
 
