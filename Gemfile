@@ -27,6 +27,7 @@ gem 'hirefire-resource'
 gem 'paper_trail', '~> 3.0.5'
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk'
+gem 'newrelic_rpm'
 
 group :development do
   gem "foreman"
