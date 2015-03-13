@@ -202,6 +202,6 @@ class Event < ActiveRecord::Base
   end
 
   def location_image
-    location.present? ? location.image.url : "http://images.artbotapp.com.s3-website-us-west-2.amazonaws.com/3b3b3b.png"
+    location.present? ? location.image.url : "http://#{ENV['ARTBOT_CDN_HOST']}/3b3b3b.png"
   end
 end

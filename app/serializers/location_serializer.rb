@@ -12,7 +12,7 @@ class LocationSerializer < ActiveModel::Serializer
 
   def attributes
     data = super
-    data[:image] = object.image.nil? ? "" : object.image.url
+    data[:image] = object.image.nil? ? "" : object.image.url(:large)
     data
   end
 end
