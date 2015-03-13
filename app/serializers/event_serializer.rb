@@ -19,7 +19,8 @@ class EventSerializer < ActiveModel::Serializer
 
   def attributes
     data = super
-    data[:image] = object.image.nil? ? "" : object.image.url
+    data[:image] = object.image.nil? ? "" : object.image.url(:large)
+    data[:image_small] = object.image.nil? ? "" : object.image.url(:small)
     if (defined? params != nil) && (params.present?) && (booleanize(params[:related]) == true)
         data[:related] = object.related_events
     end
