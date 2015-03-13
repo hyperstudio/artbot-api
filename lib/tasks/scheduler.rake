@@ -52,8 +52,7 @@ namespace :email do
     task :weekly => :environment do
         # Heroku scheduler doesn't have a "weekly" option, so we have to include this
         if Time.now.monday?
-            # TODO: once we're confident in these, remove the admin filter
-            users = User.where(send_weekly_emails: true, admin: true)
+            users = User.where(send_weekly_emails: true)
             users.find_each do |user|
                 user.delay.send_weekly_digest_email
             end
@@ -64,8 +63,7 @@ end
 namespace :email do
     desc 'send event close notification emails to users'
     task :reminder => :environment do
-        # TODO: once we're confident in these, remove the admin filter
-        users = User.where(send_weekly_emails: true, admin: true)
+        users = User.where("send_week_before_close_reminders = ? OR send_day_before_event_reminders = ?",true,true)
         users.find_each do |user|
             user.delay.send_event_reminder_email
         end
