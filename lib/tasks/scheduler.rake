@@ -19,26 +19,30 @@ namespace :scrape do
                         if event.blacklisted?
                             next
                         end
-                        if event.description_changed?
+                        changes = event.changed_attributes.keys.to_set
+                        if changes.include? 'description'
                             # Either the record is new or has changed, so re-categorize it
                             event.save
                             # Query the NER app here
                             puts "...New event, %s, querying NER" % event.url
                             ALL_NER_PATHS.each {|path| event.get_and_process_entities(path)}
                             new_events << event
-                        elsif event.changed?
+                        # Paperclip updates these automatically, so don't let it update the whole record
+                        elsif (changes - ['image_updated_at', 'image_file_name'].to_set).present?
                             puts "...Event %s updated" % event.url
                             event.save
                             changed_events << event
                         end
-                    rescue
-                        errors << @error_message
-                        puts "...ERROR %s" % @error_message
+                    rescue Exception => exc
+                        msg = "Error on scraper url #{url.url}, event #{event_result[:url]} with message #{exc.message}"
+                        errors << msg
+                        puts msg
                     end
                 end
-            rescue
-                errors << @error_message
-                puts "...ERROR %s" % @error_message
+            rescue Exception => exc
+                msg = "Error on scraper url #{url.url} with message #{exc.message}"
+                errors << msg
+                puts msg
             end
         end
         if new_events.present? || changed_events.present? || errors.present?
