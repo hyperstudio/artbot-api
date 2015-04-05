@@ -8,7 +8,8 @@ class LocationSerializer < ActiveModel::Serializer
     :latitude,
     :longitude,
     :address,
-    :hours
+    :hours,
+    :price
 
   def attributes
     data = super
