@@ -28,7 +28,10 @@ class Event < ActiveRecord::Base
 
   @@blacklisted_urls = [
     "harvardartmuseums.org/visit/calendar/student-guide-tour-",
-    "harvardartmuseums.org/visit/calendar/materials-lab-plaster-workshop-"
+    "harvardartmuseums.org/visit/calendar/materials-lab-plaster-workshop-",
+    "harvardartmuseums.org/visit/calendar/midday-organ-recital",
+    "harvardartmuseums.org/visit/calendar/members-collections-tour",
+    "harvardartmuseums.org/visit/calendar/arts-first-at-the-harvard-art-museums-harvard-student-production-of-john-"
   ]
 
   def blacklisted?
