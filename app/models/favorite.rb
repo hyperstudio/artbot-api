@@ -4,6 +4,7 @@ class Favorite < ActiveRecord::Base
 
   validates :user, presence: true
   validates :event, presence: true
+  validates_uniqueness_of :user, :scope => [:event]
 
   def self.for_current_events
     joins(:event).where('events.end_date >= ? AND start_date <= ?', Time.now, Time.now + 1.month)
