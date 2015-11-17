@@ -1,6 +1,6 @@
 class ScraperQuerier
     SCRAPER_BASE_URL = Rails.configuration.parserbot_url + "/scrape"
-    SCRAPER_API_KEY = ENV['PARSERBOT_API_KEY']
+    SCRAPER_API_KEY = ENV['SCRAPERBOT_API_KEY']
 
     def initialize(path)
         @path = path
