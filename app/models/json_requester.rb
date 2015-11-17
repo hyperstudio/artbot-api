@@ -1,3 +1,5 @@
+require 'multi_json'
+
 class JsonRequester < HttpRequester
 
     def self.access(endpoint, method, params)
